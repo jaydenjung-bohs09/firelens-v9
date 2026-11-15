@@ -1,0 +1,24 @@
+{
+  "archive_count": 34,
+  "country_year_rows": 7033,
+  "total_raw_records": 267356689,
+  "total_vegetation_records": 252915305,
+  "product_years": {
+    "MODIS": "2000–2025",
+    "VIIRS_NOAA20": "2018–2025"
+  },
+  "sources": [
+    "modis_2000_all_countries.zip … modis_2025_all_countries.zip",
+    "viirs-jpss1_2018_all_countries.zip … viirs-jpss1_2025_all_countries.zip"
+  ],
+  "source_format": "NASA FIRMS yearly per-country original CSV files inside annual ZIPs",
+  "type_filter": "Only NASA type=0 presumed vegetation fires (all other thermal anomaly types excluded)",
+  "partial_first_year": {
+    "MODIS": 2000,
+    "VIIRS_NOAA20": 2018
+  },
+  "interpretation": "Counts are positive hotspot records. Not unique wildfire events, burned area, sensor-normalized rates, full observation coverage, or verified negatives.",
+  "methods": "Per-country CSV archive streaming; type=0 filter; calendar year/date checks; monthly aggregation; 34 archive integrity checksums in separately exported source manifest archive.",
+  "generated_at_utc": "2026-11-15",
+  "archive_source": "https://firms.modaps.eosdis.nasa.gov/data/country/"
+}
