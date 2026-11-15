@@ -1,5 +1,5 @@
-# FireLens V11 — Evidence Before Assumptions
-**Global Atlas → Country Comparison → California Fire Laboratory.** FireLens V11 now combines the preserved V10 Amazon/California research with 34 NASA worldwide annual country archives (MODIS 2000–2025, VIIRS NOAA-20 2018–2025). The worldwide analysis uses **252,915,305 NASA type-0 presumed vegetation-fire positive records** summarized into 7,033 country-year entries, not unique wildfire counts or sensor-calibrated fire rates.
+# MODVIIR V11 — Evidence Before Assumptions
+**Global Atlas → Country Comparison → California Fire Laboratory.** MODVIIR V11 now combines the preserved V10 Amazon/California research with 34 NASA worldwide annual country archives (MODIS 2000–2025, VIIRS NOAA-20 2018–2025). The worldwide analysis uses **252,915,305 NASA type-0 presumed vegetation-fire positive records** summarized into 7,033 country-year entries, not unique wildfire counts or sensor-calibrated fire rates.
 
 Navigate using the **three primary workspaces in the Streamlit sidebar**. The California workspace retains Sensor Harmonization, AI Forecasting & Validation, the Amazon field study and source methods as secondary tools. Details, exact source hashes and reproducible methods: [V11 research documentation](v11/README.md).
 
@@ -18,7 +18,7 @@ The lightweight regional summaries, 1° spatial raster and source checksums are 
 
 The sections and methodology documented below are retained.
 
-# FireLens V9 — Evidence Before Assumptions
+# MODVIIR V9 — Evidence Before Assumptions
 
 NASA Space Apps Challenge 2026 • Harmonization of MODIS and VIIRS Hot Spots • California pilot
 
@@ -38,7 +38,7 @@ The new V9 includes:
 3. **Replay the model** — frozen 2025 ConvLSTM V2 proxy scores, recorded positives, overlap/error grid, and a locked validation-selected threshold.
 4. **Methods & sources** — direct sources, limitations, provenance, and a numerical audit JSON.
 
-**Preserved:** `legacy_v8/` is an unchanged copy of `FireLens_V8_Coverage_Aware.zip`. To use the legacy application instead, run `streamlit run legacy_v8/app.py` (its original V8 synthetic demo starts enabled; upload real data after disabling it). We deliberately do not alter any original V8 Python module.
+**Preserved:** `legacy_v8/` is an unchanged copy of the archived original source bundle. To use the legacy application instead, run `streamlit run legacy_v8/app.py` (its original V8 synthetic demo starts enabled; upload real data after disabling it). We deliberately do not alter any original V8 Python module.
 
 ## What the numbers mean
 
@@ -95,15 +95,15 @@ The numerical test reconstructs counts directly from the frozen prediction grids
 
 ```bash
 python reproduction/build_dataset.py --input-root path/to/archive_folder --out data_new --start 2022-01-01 --end 2025-12-31 --km 10 --history 7
-python reproduction/train_predict_v2.py --data data_new/firelens_sequences.npz --manifest data_new/sequence_manifest.csv --out training_new --epochs 20 --batch-size 8 --hidden 8 --lr 0.001 --seed 42
+python reproduction/train_predict_v2.py --data data_new/MODVIIR_sequences.npz --manifest data_new/sequence_manifest.csv --out training_new --epochs 20 --batch-size 8 --hidden 8 --lr 0.001 --seed 42
 ```
 
 **Prerequisites:** Both MODIS and VIIRS California archive exports, available from NASA FIRMS. Reproduction may vary by PyTorch/CUDA version and data archive changes. The historic model weights and resulting frozen outputs provided in V9 are the measured artifacts.
 
 ## Submission materials
 
-- `submission/FireLens_V9_Seven_Slide_Pitch.pptx` — concise visual narrative with actual plots.
-- `submission/FireLens_V9_Seven_Slide_Pitch.pdf` — presentation preview.
+- `submission/MODVIIR_V9_Seven_Slide_Pitch.pptx` — concise visual narrative with actual plots.
+- `submission/MODVIIR_V9_Seven_Slide_Pitch.pdf` — presentation preview.
 - `submission/PROJECT_PAGE.md` — draft description and technical claims.
 - `submission/DEMO_SCRIPT_30_SECONDS.md` — short demonstration narration and shot list.
 - `submission/FINAL_CHECKLIST.md` — eligibility, deployment, risk, link and claims checklist.

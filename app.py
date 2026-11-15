@@ -1,4 +1,4 @@
-"""FireLens V11: Global Atlas, Country Comparison and California Fire Laboratory.
+"""MODVIIR V11: Global Atlas, Country Comparison and California Fire Laboratory.
 
 Run: streamlit run app.py
 Data: NASA FIRMS archives; all results are detection proxies, NOT fire truth.
@@ -29,7 +29,7 @@ BLUE = "#77ACF8"
 RED = "#FA6C75"
 PALETTE = ["#101F2B", "#15394B", "#236576", "#C98A43", "#F2B36E", "#FA7355"]
 
-st.set_page_config(page_title="FireLens | NASA Hotspot Evidence", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="MODVIIR | NASA Hotspot Evidence", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"]{background:linear-gradient(155deg,#071422 0%,#081B28 55%,#0A1422 100%);}
@@ -130,7 +130,7 @@ def _jump_to_california(section):
 # Three primary workspaces are intentionally routed before loading California's
 # frozen model arrays. Global browsing stays fast and memory-conscious.
 with st.sidebar:
-    st.markdown("## FIRELENS")
+    st.markdown("## MODVIIR")
     st.caption("NASA SATELLITE EVIDENCE")
     workspace = st.radio(
         "MAIN SECTIONS",
@@ -148,7 +148,7 @@ with st.sidebar:
 if workspace.startswith("01"):
     st.info(
         "**Explore the whole planet—or follow the Park Fire case study.** "
-        "FireLens moves from recorded hotspots to a documented California "
+        "MODVIIR moves from recorded hotspots to a documented California "
         "satellite-data gap and an experimental model comparison."
     )
     st.button("Follow the flagship story: Park Fire → California",
@@ -177,7 +177,7 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.stop()
 
 section_eyebrow('NASA SPACE APPS CHALLENGE 2026 / HARMONIZING MODIS & VIIRS HOTSPOTS')
-st.markdown("<h1 style='font-size:3.2rem;letter-spacing:-.04em;margin:.12rem 0 .32rem'>FireLens <span style='color:#FFAE65'>/ California</span></h1>",unsafe_allow_html=True)
+st.markdown("<h1 style='font-size:3.2rem;letter-spacing:-.04em;margin:.12rem 0 .32rem'>MODVIIR <span style='color:#FFAE65'>/ California</span></h1>",unsafe_allow_html=True)
 st.markdown("<div style='font-size:1.38rem;color:#E4F1F8;font-weight:620;margin-bottom:.7rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
 paragraph('One fire, two satellite records, one critical question: did a missing detection mean less burning or missing evidence? Investigate the July 2024 Park Fire and test whether historical hotspot patterns improve next-day recorded-cell forecasts.')
 # This headline uses the exact, unchanged groups powering the reference bar chart.
@@ -221,7 +221,7 @@ k2.metric('Park Fire positive groups','316')
 k3.metric('Time-aligned groups','45 / 316',help='Time-compatible positive groups in the Park Fire reference audit')
 k4.metric('California ConvLSTM F1','0.4212')
 st.caption('Comparison reference: persistence F1 0.3818.')
-st.markdown('**For emergency managers, land managers and scientists:** FireLens helps investigate historical hotspot reporting gaps and time-aligned satellite evidence before interpreting burning-activity records. The separate California forecasting experiment is retrospective research.')
+st.markdown('**For emergency managers, land managers and scientists:** MODVIIR helps investigate historical hotspot reporting gaps and time-aligned satellite evidence before interpreting burning-activity records. The separate California forecasting experiment is retrospective research.')
 
 
 if section == '01  EXPLORE HISTORY':
@@ -352,9 +352,9 @@ if section == '01  EXPLORE HISTORY':
         st.info('No consecutive periods meet these descriptive settings in the selected year. You can change the screening controls.')
     cexp1,cexp2=st.columns(2)
     with cexp1:
-        st.download_button('Export candidate periods CSV',critical_periods.to_csv(index=False),file_name='firelens_v91_candidate_periods.csv',mime='text/csv')
+        st.download_button('Export candidate periods CSV',critical_periods.to_csv(index=False),file_name='MODVIIR_v91_candidate_periods.csv',mime='text/csv')
     with cexp2:
-        st.download_button('Export evidence-aware daily screen',critical_daily.to_csv(index=False),file_name='firelens_v91_daily_screen.csv',mime='text/csv')
+        st.download_button('Export evidence-aware daily screen',critical_daily.to_csv(index=False),file_name='MODVIIR_v91_daily_screen.csv',mime='text/csv')
     st.caption('Retrospective screening: ±14 calendar days in other archive years, ≥30 comparable reference days, ≥20 positive cells, configurable percentile, median ratio and duration. See Methods & Sources for inference limits.')
     st.divider()
     section_eyebrow('Study area / California observations')
@@ -433,7 +433,7 @@ if section == '01  EXPLORE HISTORY':
 if section == '02  INVESTIGATE EVIDENCE':
     section_eyebrow('Interpret / Park Fire evidence investigation')
     st.header('The missing data that changes the story')
-    paragraph('July 2024 provides a case study in why raw sensor disagreements can mislead. FireLens compares positive-only cell/day/day-night groups within the final historical Park Fire footprint, then checks temporal compatibility and the documented S-NPP disruption window.')
+    paragraph('July 2024 provides a case study in why raw sensor disagreements can mislead. MODVIIR compares positive-only cell/day/day-night groups within the final historical Park Fire footprint, then checks temporal compatibility and the documented S-NPP disruption window.')
     groups,parkrec,status,geometry=load_park()
     st.markdown('### What NASA recorded during the Park Fire')
     st.write(
@@ -546,7 +546,7 @@ if section == '02  INVESTIGATE EVIDENCE':
         if len(selection):
             st.dataframe(selection[['Cell ID','Day/night','MODIS records','VIIRS records','At least one time-matched pair','Evidence classification']],hide_index=True,use_container_width=True,height=240)
     with st.expander('Export the complete 316-group audit'):
-        st.download_button('Download Park Fire reference audit CSV',groups.to_csv(index=False).encode(),file_name='firelens_v9_park_evidence_316_groups.csv',mime='text/csv')
+        st.download_button('Download Park Fire reference audit CSV',groups.to_csv(index=False).encode(),file_name='MODVIIR_v9_park_evidence_316_groups.csv',mime='text/csv')
         st.write('Scope: July 15–31, 2024, exact unbuffered retrospective final Park Fire footprint, 5 km EPSG:6933 grid, UTC date & day/night, 3-hour time tolerance.')
         st.write('The archived geometry was user-exported in the original reference workflow and has not been independently re-downloaded and compared with the live CAL FIRE service in this package.')
     st.button("Next: evaluate the experimental model",key="v13_park_to_model",
@@ -601,7 +601,7 @@ if section == '03  REPLAY THE MODEL':
         )
         st.download_button('Download auditable model evaluation (JSON)',
                            json.dumps(audit,indent=2),
-                           file_name='firelens_model_research_audit.json',
+                           file_name='MODVIIR_model_research_audit.json',
                            mime='application/json')
     st.caption(
         'The archived test period was previously inspected in model development, '
@@ -726,7 +726,7 @@ if section == '03  REPLAY THE MODEL':
                              'proxy_score':scores[idx][idxs[:,0],idxs[:,1]],
                              'above_frozen_threshold':predicted[idxs[:,0],idxs[:,1]],
                              'recorded_positive':observed[idxs[:,0],idxs[:,1]]})
-        st.download_button('Download selected-day positive-union cell audit',export.to_csv(index=False),file_name=f'FireLens_California_replay_{replay_date}.csv',mime='text/csv')
+        st.download_button('Download selected-day positive-union cell audit',export.to_csv(index=False),file_name=f'MODVIIR_California_replay_{replay_date}.csv',mime='text/csv')
     st.divider()
     with st.expander('Training curve and validation-only model selection'):
         hist=pd.read_csv(PRED/'training_history.csv')
@@ -748,7 +748,7 @@ if section == 'METHODS & SOURCES':
     st.markdown('''
 **Observed:** A FIRMS hotspot report at a reported geolocation and acquisition time. **Not observed here:** whether a satellite imaged every no-record pixel, and whether an unreported pixel was truly fire-free.
 
-**Common cell-day unit:** For any chosen MODIS + VIIRS pair, FireLens can project NASA type-0 presumed vegetation-fire records using the original EPSG:6933 transformer into 10-km cells (configurable). One cell/date is active per sensor if it contains at least one positive record; optional day/night splitting and supplied, documented UTC outage flags preserve context. The resulting table has cell_id, date, modis_active, viirs_active and outage_flag. This is a positive-record union, so unlisted grid days are not verified negatives. This utility is not yet a calibrated global time series.\n\n**Harmonization method:** Bin geolocations into equal-area EPSG:6933 spatial cells; compare matched UTC dates and day/night phases; require acquisition-time compatibility within three hours for the Park Fire audit. No sensor-physics calibration, cloud correction, view-footprint inference, or false-negative sensitivity estimate is claimed.
+**Common cell-day unit:** For any chosen MODIS + VIIRS pair, MODVIIR can project NASA type-0 presumed vegetation-fire records using the original EPSG:6933 transformer into 10-km cells (configurable). One cell/date is active per sensor if it contains at least one positive record; optional day/night splitting and supplied, documented UTC outage flags preserve context. The resulting table has cell_id, date, modis_active, viirs_active and outage_flag. This is a positive-record union, so unlisted grid days are not verified negatives. This utility is not yet a calibrated global time series.\n\n**Harmonization method:** Bin geolocations into equal-area EPSG:6933 spatial cells; compare matched UTC dates and day/night phases; require acquisition-time compatibility within three hours for the Park Fire audit. No sensor-physics calibration, cloud correction, view-footprint inference, or false-negative sensitivity estimate is claimed.
 
 **Historical geometry:** The Park Fire boundary is the **retrospective final perimeter**, approximately 429,603 acres from the earlier CAL FIRE archive export. It must not be portrayed as the extent of fire on each July 2024 date.
 

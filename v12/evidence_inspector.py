@@ -506,14 +506,14 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
         st.download_button(
             "Export selected satellite records",
             selected_records.to_csv(index=False),
-            file_name=f"firelens_park_{selected_date}_{chosen['Cell ID']}_{chosen['Day/night']}.csv",
+            file_name=f"MODVIIR_park_{selected_date}_{chosen['Cell ID']}_{chosen['Day/night']}.csv",
             mime="text/csv", key="v12_export_cell"
         )
     with x2:
         st.download_button(
             "Export full recalculated audit",
             groups.to_csv(index=False),
-            file_name=f"firelens_park_audit_{tolerance}min.csv",
+            file_name=f"MODVIIR_park_audit_{tolerance}min.csv",
             mime="text/csv", key="v12_export_audit"
         )
 

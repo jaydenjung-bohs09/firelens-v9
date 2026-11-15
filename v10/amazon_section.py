@@ -1,4 +1,4 @@
-"""FireLens V10: Amazon research panel backed by verified NASA FIRMS archive summaries.
+"""MODVIIR V10: Amazon research panel backed by verified NASA FIRMS archive summaries.
 
 Does not alter or retrain the California ConvLSTM. No operational fire alerts.
 """
@@ -69,7 +69,7 @@ def _layout(fig, height=350, **kwargs):
     return fig
 
 def render_amazon():
-    st.caption("FIRELENS V10 RESEARCH PREVIEW / NASA FIRMS 2022–2025")
+    st.caption("MODVIIR V10 RESEARCH PREVIEW / NASA FIRMS 2022–2025")
     st.header("Amazon Study Region · Four Years of Satellite Evidence")
     st.write(
         "Explore actual NASA FIRMS hotspot records within the selected "
@@ -265,11 +265,11 @@ def render_amazon():
     with st.expander("Data audit, methods and downloads"):
         st.json(inv)
         st.download_button("Download Amazon daily summary CSV",daily.to_csv(index=False),
-                           "firelens_v10_amazon_daily.csv","text/csv")
+                           "MODVIIR_v10_amazon_daily.csv","text/csv")
         st.download_button("Download Amazon annual summary CSV",annual.to_csv(index=False),
-                           "firelens_v10_amazon_annual.csv","text/csv")
+                           "MODVIIR_v10_amazon_annual.csv","text/csv")
         st.download_button("Download regional candidate periods CSV",periods.to_csv(index=False),
-                           "firelens_v10_amazon_critical_periods.csv","text/csv")
+                           "MODVIIR_v10_amazon_critical_periods.csv","text/csv")
     st.caption(
         "NASA FIRMS historical archive sources: MODIS Collection 6.1 and "
         "VIIRS S-NPP 375 m. Original files: fire_archive_M-C61_850616.csv "

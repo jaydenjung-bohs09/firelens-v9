@@ -1,4 +1,4 @@
-"""FireLens — global map and country-level seasonal comparison.
+"""MODVIIR — global map and country-level seasonal comparison.
 
 NASA FIRMS archived active-fire/hotspot observations. Distinct sensors are
 never implicitly treated as equivalent or converted to unique wildfire counts.
@@ -193,7 +193,7 @@ def render_global_atlas():
     st.plotly_chart(fig,use_container_width=True)
     st.caption("Each year is normalized to 100% of its positive records, revealing seasonal timing. The first archive year is partial.")
     st.download_button("Export this year's country records",selected.to_csv(index=False),
-                       f"firelens_{sensor.lower()}_{year}_countries.csv","text/csv")
+                       f"MODVIIR_{sensor.lower()}_{year}_countries.csv","text/csv")
     with st.expander("Additional study · Amazon 2022–2025", expanded=False):
         st.write("Separate NASA MODIS + VIIRS S-NPP research from the Amazon study rectangle.")
         if st.checkbox("Open Amazon regional panel",value=False,key="v13_open_amazon"):
@@ -383,7 +383,7 @@ def render_country_compare():
             ". No satellite-coverage normalization or calibrated significance."
         )
         st.download_button("Export monthly screening audit",evidence.to_csv(index=False),
-                           f"firelens_{focus.lower()}_{choice_year}_screen.csv","text/csv")
+                           f"MODVIIR_{focus.lower()}_{choice_year}_screen.csv","text/csv")
 
     st.divider()
     st.subheader("Two-satellite geographic perspectives")
@@ -419,5 +419,5 @@ def render_country_compare():
 
     st.download_button("Export selected country's historical table",
                        rows.to_csv(index=False),
-                       f"firelens_{focus.lower()}_archive.csv","text/csv")
+                       f"MODVIIR_{focus.lower()}_archive.csv","text/csv")
     evidence_notes()

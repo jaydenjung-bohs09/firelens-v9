@@ -1,4 +1,4 @@
-# FireLens — Evidence Before Assumptions
+# MODVIIR — Evidence Before Assumptions
 
 **Challenge:** Harmonization of MODIS and VIIRS Hot Spots — NASA Space Apps Challenge 2026
 
@@ -8,7 +8,7 @@ NASA's MODIS and VIIRS sensors report active-fire hotspots with different spatia
 
 ### The solution
 
-FireLens is an interactive California research prototype with three connected experiences. **Explore** presents a four-year calendar of daily 10 km grid-cell hotspot-record activity, with flags when one or both sensors have no records that day. **Investigate** reconstructs the July 2024 Park Fire case using equal-area grid cells, day/night distinction, three-hour temporal matching, and documented S-NPP disruptions, without calling one-sided records sensor failures. **Replay** displays a trained ConvLSTM's saved next-day **recorded-hotspot** scores and compares them against actual archived reports and a persistence baseline.
+MODVIIR is an interactive California research prototype with three connected experiences. **Explore** presents a four-year calendar of daily 10 km grid-cell hotspot-record activity, with flags when one or both sensors have no records that day. **Investigate** reconstructs the July 2024 Park Fire case using equal-area grid cells, day/night distinction, three-hour temporal matching, and documented S-NPP disruptions, without calling one-sided records sensor failures. **Replay** displays a trained ConvLSTM's saved next-day **recorded-hotspot** scores and compares them against actual archived reports and a persistence baseline.
 
 ### Empirical evidence
 
@@ -18,7 +18,7 @@ A separate ConvLSTM trained on California NASA FIRMS data from 2022–2025 achie
 
 ### Impact, boundaries, and next steps
 
-The immediate contribution is **interpretable scientific evidence**, with an experimental extension for retrospective forecast exploration. FireLens is not connected to emergency alerts and is not appropriate for operational fire decisions. Its next scientific steps are pixel-level overpass/clear-sky opportunity, better cross-sensor calibration, independent event-based validation, and expansion beyond California.
+The immediate contribution is **interpretable scientific evidence**, with an experimental extension for retrospective forecast exploration. MODVIIR is not connected to emergency alerts and is not appropriate for operational fire decisions. Its next scientific steps are pixel-level overpass/clear-sky opportunity, better cross-sensor calibration, independent event-based validation, and expansion beyond California.
 
 ### Resources and code
 
