@@ -1,0 +1,77 @@
+{
+  "evaluation": "exploratory, previously inspected chronological 2025 test",
+  "target": "recorded next-day MODIS-or-VIIRS S-NPP positive 10km cell",
+  "common_dates": 285,
+  "first_date": "2025-03-22",
+  "last_date": "2025-12-31",
+  "locked_model_threshold": 0.675,
+  "bootstrap": {
+    "method": "circular moving blocks of 14 consecutive days",
+    "replicates": 3000,
+    "block_days": 14,
+    "seed": 20261115
+  },
+  "methods": {
+    "ConvLSTM": {
+      "tp": 3545,
+      "fp": 4326,
+      "fn": 5381,
+      "f1": 0.42209918437816274,
+      "ci95_f1": [
+        0.3863267596308836,
+        0.4567171295527766
+      ]
+    },
+    "One-day persistence": {
+      "tp": 3424,
+      "fp": 5523,
+      "fn": 5502,
+      "f1": 0.38314776478487106,
+      "ci95_f1": [
+        0.3503428057673144,
+        0.41726792364933674
+      ],
+      "model_minus_baseline_f1": 0.03895141959329168,
+      "ci95_model_minus_baseline": [
+        0.029669150937062128,
+        0.04780959109940837
+      ]
+    },
+    "Seven-day union": {
+      "tp": 5554,
+      "fp": 29714,
+      "fn": 3372,
+      "f1": 0.2513463366067792,
+      "ci95_f1": [
+        0.2311979260025221,
+        0.271712335113724
+      ],
+      "model_minus_baseline_f1": 0.17075284777138355,
+      "ci95_model_minus_baseline": [
+        0.15029569392755418,
+        0.18915628019298372
+      ]
+    },
+    "At least three of seven days": {
+      "tp": 3029,
+      "fp": 3492,
+      "fn": 5897,
+      "f1": 0.3921797112707969,
+      "ci95_f1": [
+        0.3551139357752191,
+        0.4274994848079454
+      ],
+      "model_minus_baseline_f1": 0.02991947310736584,
+      "ci95_model_minus_baseline": [
+        0.02205199763355766,
+        0.03808727446332272
+      ]
+    }
+  },
+  "interpretation": [
+    "F1 scores overlap with archived positive-cell labels; these are not independently verified fire/no-fire cells.",
+    "No satellite observation-opportunity mask is available.",
+    "The previously inspected test period is exploratory, not an untouched holdout.",
+    "First seven test dates were excluded consistently from every method."
+  ]
+}
