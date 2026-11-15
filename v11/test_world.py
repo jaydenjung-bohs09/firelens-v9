@@ -34,6 +34,20 @@ class GlobalAtlasTests(unittest.TestCase):
                          self.df.vegetation_records.to_numpy()))
         self.assertTrue((self.df.vegetation_records>=0).all())
 
+    def test_archive_checksums_and_sensor_totals(self):
+        archive=pd.read_csv(DATA/"archive_checksums.csv")
+        self.assertEqual(len(archive),34)
+        self.assertFalse(archive.archive.duplicated().any())
+        self.assertTrue(archive.sha256.astype(str).str.fullmatch(r"[a-f0-9]{64}").all())
+        self.assertEqual(int(archive.raw_rows.sum()),267356689)
+        self.assertEqual(int(archive.type0_rows.sum()),252915305)
+        for row in archive.itertuples(index=False):
+            product="MODIS" if row.archive.startswith("modis_") else "VIIRS_NOAA20"
+            year=int(row.archive.split("_")[1])
+            subset=self.df.loc[self.df.sensor.eq(product)&self.df.year.eq(year)]
+            self.assertEqual(int(subset.raw_records.sum()),row.raw_rows)
+            self.assertEqual(int(subset.vegetation_records.sum()),row.type0_rows)
+
     def test_sensor_periods(self):
         years=self.df.groupby("sensor").year.agg(["min","max"]).to_dict("index")
         self.assertEqual(years["MODIS"],{"min":2000,"max":2025})
