@@ -1,0 +1,62 @@
+{
+  "region": "amazon",
+  "bounds_west_south_east_north": [
+    -74,
+    -15,
+    -48,
+    2
+  ],
+  "period_utc": [
+    "2022-01-01",
+    "2025-12-31"
+  ],
+  "input_scope": "NASA FIRMS archive, MODIS Collection 6.1 and VIIRS S-NPP 375 m, historical positive thermal anomaly records",
+  "type_filter": "FIRMS type=0 (presumed vegetation fire); all raw records counted in source metadata; agricultural and managed burning may remain",
+  "grid": "10-km projected equal-area EPSG:6933",
+  "sources": [
+    {
+      "archive": "DL_FIRE_M-C61_850616.zip",
+      "csv": "fire_archive_M-C61_850616.csv",
+      "sha256": "694f4994123de45edc59d9c90537962b9ba43e80d358185da2fb10f648cf8a1d",
+      "sensor": "MODIS",
+      "raw_rows": 923438,
+      "type0_rows": 916619,
+      "excluded_non_type0": 6819,
+      "raw_rows_by_year": {
+        "2022": 250650,
+        "2023": 228404,
+        "2024": 358514,
+        "2025": 85870
+      }
+    },
+    {
+      "archive": "DL_FIRE_SV-C2_850617.zip",
+      "csv": "fire_archive_SV-C2_850617.csv",
+      "sha256": "8001a6a7382e034c07170afe95e3553d7eae66ce1e8a0593575778fe609cc927",
+      "sensor": "VIIRS S-NPP",
+      "raw_rows": 3480950,
+      "type0_rows": 3469505,
+      "excluded_non_type0": 11445,
+      "raw_rows_by_year": {
+        "2022": 944454,
+        "2023": 849660,
+        "2024": 1367294,
+        "2025": 319542
+      }
+    }
+  ],
+  "counts": {
+    "raw_total": 4404388,
+    "type0_total": 4386124,
+    "union_positive_10km_cell_days": 917907,
+    "utc_days": 1461
+  },
+  "notes": [
+    "Zero archive records on a UTC date do not establish satellite coverage or absence of fire.",
+    "Two sensors being positive in the same UTC date and 10-km cell is not a time-matched concordant detection or a measure of accuracy.",
+    "Source type=0 denotes presumed vegetation fire, which may include agricultural or managed burning and can contain classification errors.",
+    "Archive observational comparisons have not been normalized for overpass opportunities or sensor sensitivity.",
+    "1-degree spatial summaries allocate 10-km grid cell-days to approximate cell-centroid lat/lon bins; these are not counts of individual fires or burned area.",
+    "Historical VIIRS S-NPP platform anomalies in July 2024 warrant separate interpretation; other zero-record days are not automatically outages."
+  ]
+}
