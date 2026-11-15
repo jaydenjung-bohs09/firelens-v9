@@ -258,12 +258,16 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
     active_groups = len(base)
     a, b, c, d = st.columns(4)
     a.metric("Positive-report groups", f"{active_groups:,}")
-    b.metric("Both sensors positive", f"{both:,}",
-             f"{100*both/active_groups:.1f}% of groups"
-             if active_groups else "No eligible groups", delta_color="off")
-    c.metric("Within selected tolerance", f"{match:,}",
-             f"{100*match/both:.1f}% of both-positive"
-             if both else "No both-positive groups", delta_color="off")
+    b.metric("Both sensors positive", f"{both:,}")
+    c.metric("Within selected tolerance", f"{match:,}")
+    st.caption(
+        f"Both-sensor share: {100*both/active_groups:.1f}% of groups"
+        if active_groups else "Both-sensor share: no eligible groups"
+    )
+    st.caption(
+        f"Time-compatible share: {100*match/both:.1f}% of both-positive"
+        if both else "Time-compatible share: no both-positive groups"
+    )
     d.metric("One-to-one time pairs", f"{int(base['One-to-one matched pairs'].sum()):,}")
 
     if tolerance == 180 and not type0_only and not exclude_flags:

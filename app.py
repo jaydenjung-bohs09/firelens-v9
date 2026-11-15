@@ -201,7 +201,8 @@ k1,k2,k3,k4=st.columns(4)
 k1.metric('California training-archive records','173,471')
 k2.metric('Park Fire positive groups','316')
 k3.metric('Time-compatible positive groups','45 / 316')
-k4.metric('California ConvLSTM F1','0.4212',delta='Persistence F1 0.3818',delta_color='off')
+k4.metric('California ConvLSTM F1','0.4212')
+st.caption('Comparison reference: persistence F1 0.3818.')
 st.caption('Intended user: a wildfire intelligence analyst who needs to separate satellite reporting gaps from real changes in recorded activity before interpreting historical patterns. Forecast scores come from a separate 2025 California archive experiment.')
 
 
@@ -473,9 +474,10 @@ if section == '02  INVESTIGATE EVIDENCE':
     st.markdown("### Reference audit · fixed three-hour rule")
     st.caption("The reference results below use the unchanged July 2024 Park Fire archive and the independently preserved grouping method. They are independent of the inspector sliders above.")
     p1,p2,p3=st.columns(3)
-    p1.metric('Both positive · of 316 groups','54','17.09% of positive groups',delta_color='off')
-    p2.metric('Within 3h · of 54 both-positive','45','83.33% conditional',delta_color='off')
-    p3.metric('Within 3h · of all 316','45','14.24% of positive groups',delta_color='off')
+    p1.metric('Both positive · of 316 groups','54')
+    p2.metric('Within 3h · of 54 both-positive','45')
+    p3.metric('Within 3h · of all 316','45')
+    st.caption('54/316 = 17.09% of positive groups; 45/54 = 83.33% conditional; 45/316 = 14.24% of positive groups.')
     st.warning('None of these percentages measure satellite sensitivity, operational coverage, accuracy, or observed no-fire locations. The final Park Fire polygon is retrospective, not the daily fire boundary.')
     categories=groups['Evidence classification'].value_counts().reset_index()
     categories.columns=['Evidence class','Groups']
