@@ -78,7 +78,9 @@ def render_continuity_chart(code):
                       xaxis=dict(title="Full calendar year",dtick=2),
                       yaxis_title="Annual archived positive reports",
                       paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(15,33,51,.8)",
-                      margin=dict(l=30,r=20,t=25,b=45),legend=dict(orientation="h"))
+                      margin=dict(l=30,r=20,t=105,b=45),
+                      legend=dict(orientation="h",yanchor="bottom",y=1.02,
+                                  xanchor="left",x=0))
     st.plotly_chart(fig,use_container_width=True)
     st.caption("2001–2002: Terra-only MODIS — modeled values likely low; "
                "Aqua began observations in 2002. The fitted calibration uses later Terra+Aqua years.")
