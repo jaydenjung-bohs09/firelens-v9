@@ -202,7 +202,7 @@ def render_global_atlas():
     available_months=int(np.count_nonzero(last_months>0))
     fig.add_annotation(
         x=last_year,y=int(annual.vegetation_records.iloc[-1]),
-        text=f"{last_year}: {available_months} positive-record months; completeness unverified",
+        text=f"{last_year}: {available_months} of 12 months with records",
         showarrow=True,ax=-106,ay=-60,
         font=dict(color=AMBER,size=11)
     )
