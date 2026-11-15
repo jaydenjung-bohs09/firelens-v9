@@ -1,0 +1,5 @@
+year,modis_record_rows,viirs_record_rows,modis_positive_cell_days,viirs_positive_cell_days,both_positive_cell_days,union_positive_cell_days,days_with_modis_positive_records,days_with_viirs_positive_records
+2022,248899,941650,104818,219797,69153,255462,364,349
+2023,226708,846594,104491,226445,64497,266439,365,363
+2024,356482,1363592,124445,233487,81843,276089,366,347
+2025,84530,317669,42689,99343,22115,119917,365,365
