@@ -1,0 +1,317 @@
+UTC date,Cell ID,Day/night,MODIS records,VIIRS records,Both sensors have hotspot records,At least one time-matched pair,Matched pairs,Minimum paired time difference (min),Instrument anomaly window,FIRMS listed VIIRS missing-data date,Evidence classification,Observation opportunity,cell_center_lon,cell_center_lat
+2024-07-25,-2349_937,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.800994933613836
+2024-07-25,-2349_937,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.800994933613836
+2024-07-25,-2349_938,D,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.8517485456447
+2024-07-25,-2349_939,D,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.90253911752522
+2024-07-25,-2349_940,D,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.95336677079905
+2024-07-25,-2349_941,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.00423162757676
+2024-07-25,-2349_942,D,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.05513381053964
+2024-07-25,-2350_937,D,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.800994933613836
+2024-07-25,-2350_937,N,22,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.800994933613836
+2024-07-25,-2350_938,D,24,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.8517485456447
+2024-07-25,-2350_938,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.8517485456447
+2024-07-25,-2350_939,D,29,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.90253911752522
+2024-07-25,-2350_939,N,16,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.90253911752522
+2024-07-25,-2350_940,D,29,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.95336677079905
+2024-07-25,-2350_940,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.95336677079905
+2024-07-25,-2350_941,D,27,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.00423162757676
+2024-07-25,-2350_942,D,18,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.05513381053964
+2024-07-25,-2350_943,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.106073442943575
+2024-07-25,-2351_937,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.800994933613836
+2024-07-25,-2351_937,N,9,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.800994933613836
+2024-07-25,-2351_938,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.8517485456447
+2024-07-25,-2351_938,N,29,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.8517485456447
+2024-07-25,-2351_939,N,25,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.90253911752522
+2024-07-25,-2351_940,D,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.95336677079905
+2024-07-25,-2351_940,N,17,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,39.95336677079905
+2024-07-25,-2351_941,D,23,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.00423162757676
+2024-07-25,-2351_941,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.00423162757676
+2024-07-25,-2351_942,D,27,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.05513381053964
+2024-07-25,-2351_943,D,16,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.106073442943575
+2024-07-25,-2352_938,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,39.8517485456447
+2024-07-25,-2352_939,N,31,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,39.90253911752522
+2024-07-25,-2352_940,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,39.95336677079905
+2024-07-25,-2352_940,N,19,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,39.95336677079905
+2024-07-25,-2352_941,D,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.00423162757676
+2024-07-25,-2352_941,N,24,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.00423162757676
+2024-07-25,-2352_942,D,28,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.05513381053964
+2024-07-25,-2352_942,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.05513381053964
+2024-07-25,-2352_943,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.106073442943575
+2024-07-25,-2353_939,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.90253911752522
+2024-07-25,-2353_939,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.90253911752522
+2024-07-25,-2353_940,D,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.95336677079905
+2024-07-25,-2353_940,N,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.95336677079905
+2024-07-25,-2353_941,D,18,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.00423162757676
+2024-07-25,-2353_941,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.00423162757676
+2024-07-25,-2353_942,D,17,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.05513381053964
+2024-07-25,-2353_942,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.05513381053964
+2024-07-25,-2353_943,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.106073442943575
+2024-07-26,-2348_939,D,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,39.90253911752522
+2024-07-26,-2348_939,N,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,39.90253911752522
+2024-07-26,-2348_940,D,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,39.95336677079905
+2024-07-26,-2348_940,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,39.95336677079905
+2024-07-26,-2348_941,D,17,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-26,-2348_941,N,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-26,-2348_942,D,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-26,-2349_937,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.800994933613836
+2024-07-26,-2349_938,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.8517485456447
+2024-07-26,-2349_939,D,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.90253911752522
+2024-07-26,-2349_939,N,23,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.90253911752522
+2024-07-26,-2349_940,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.95336677079905
+2024-07-26,-2349_940,N,34,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,39.95336677079905
+2024-07-26,-2349_941,D,28,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.00423162757676
+2024-07-26,-2349_941,N,28,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.00423162757676
+2024-07-26,-2349_942,D,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.05513381053964
+2024-07-26,-2349_942,N,17,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.05513381053964
+2024-07-26,-2349_943,D,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.106073442943575
+2024-07-26,-2349_943,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.106073442943575
+2024-07-26,-2349_944,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-26,-2350_937,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.800994933613836
+2024-07-26,-2350_938,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.8517485456447
+2024-07-26,-2350_939,N,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.90253911752522
+2024-07-26,-2350_940,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,39.95336677079905
+2024-07-26,-2350_941,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.00423162757676
+2024-07-26,-2350_941,N,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.00423162757676
+2024-07-26,-2350_942,D,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.05513381053964
+2024-07-26,-2350_942,N,15,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.05513381053964
+2024-07-26,-2350_943,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.106073442943575
+2024-07-26,-2350_943,N,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.106073442943575
+2024-07-26,-2350_944,D,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-26,-2350_944,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-26,-2351_942,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.05513381053964
+2024-07-26,-2351_944,D,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.15705064862293
+2024-07-26,-2351_944,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.15705064862293
+2024-07-26,-2352_943,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.106073442943575
+2024-07-26,-2352_943,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.106073442943575
+2024-07-26,-2352_944,D,16,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.15705064862293
+2024-07-26,-2352_944,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.15705064862293
+2024-07-26,-2352_945,D,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.2080655519944
+2024-07-26,-2352_946,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.25911827806102
+2024-07-26,-2353_939,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.90253911752522
+2024-07-26,-2353_940,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.95336677079905
+2024-07-26,-2353_940,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,39.95336677079905
+2024-07-26,-2353_941,D,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.00423162757676
+2024-07-26,-2353_941,N,18,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.00423162757676
+2024-07-26,-2353_942,N,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.05513381053964
+2024-07-26,-2353_943,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.106073442943575
+2024-07-26,-2353_943,N,24,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.106073442943575
+2024-07-26,-2353_944,D,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.15705064862293
+2024-07-26,-2353_944,N,22,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.15705064862293
+2024-07-26,-2353_945,D,12,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.2080655519944
+2024-07-26,-2353_945,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.2080655519944
+2024-07-26,-2353_946,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.25911827806102
+2024-07-26,-2354_941,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.00423162757676
+2024-07-26,-2354_941,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.00423162757676
+2024-07-26,-2354_942,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.05513381053964
+2024-07-26,-2354_942,N,12,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.05513381053964
+2024-07-26,-2354_943,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.106073442943575
+2024-07-26,-2354_943,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.106073442943575
+2024-07-26,-2354_944,D,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.15705064862293
+2024-07-26,-2354_944,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.15705064862293
+2024-07-26,-2354_945,D,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.2080655519944
+2024-07-27,-2347_942,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-27,-2347_943,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-27,-2347_943,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-27,-2347_944,D,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-27,-2347_944,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-27,-2348_939,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,39.90253911752522
+2024-07-27,-2348_940,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,39.95336677079905
+2024-07-27,-2348_941,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-27,-2348_941,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-27,-2348_942,D,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-27,-2348_942,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-27,-2348_943,D,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-27,-2348_943,N,12,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-27,-2348_944,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-27,-2348_944,N,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-27,-2349_941,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.00423162757676
+2024-07-27,-2349_942,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.05513381053964
+2024-07-27,-2349_943,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.106073442943575
+2024-07-27,-2349_944,N,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-27,-2349_945,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-27,-2350_944,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-27,-2350_944,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-27,-2350_945,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-27,-2350_946,N,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-27,-2350_947,N,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-27,-2351_944,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.15705064862293
+2024-07-27,-2351_944,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.15705064862293
+2024-07-27,-2351_945,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.2080655519944
+2024-07-27,-2351_946,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.25911827806102
+2024-07-27,-2351_946,N,12,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.25911827806102
+2024-07-27,-2351_947,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.31020895241605
+2024-07-27,-2351_948,N,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.36133770124707
+2024-07-27,-2352_944,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.15705064862293
+2024-07-27,-2352_945,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.2080655519944
+2024-07-27,-2352_946,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.25911827806102
+2024-07-27,-2352_947,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.31020895241605
+2024-07-27,-2352_948,N,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.85670304033462,40.36133770124707
+2024-07-27,-2353_943,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.106073442943575
+2024-07-27,-2353_946,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.25911827806102
+2024-07-27,-2353_947,N,9,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.31020895241605
+2024-07-27,-2353_948,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.36133770124707
+2024-07-27,-2353_948,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.90852387939069,40.36133770124707
+2024-07-27,-2354_942,N,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.05513381053964
+2024-07-27,-2354_943,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.106073442943575
+2024-07-27,-2354_943,N,14,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.106073442943575
+2024-07-27,-2354_944,N,9,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.15705064862293
+2024-07-27,-2354_945,N,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.2080655519944
+2024-07-27,-2354_946,N,13,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.25911827806102
+2024-07-27,-2354_947,N,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.31020895241605
+2024-07-27,-2354_948,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.36133770124707
+2024-07-27,-2354_948,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.36133770124707
+2024-07-27,-2355_943,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.106073442943575
+2024-07-27,-2355_943,N,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.106073442943575
+2024-07-27,-2355_944,N,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.15705064862293
+2024-07-27,-2355_945,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-27,-2355_945,N,9,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-27,-2355_946,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.25911827806102
+2024-07-27,-2355_946,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.25911827806102
+2024-07-27,-2355_947,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.31020895241605
+2024-07-28,-2347_942,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-28,-2347_942,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-28,-2347_943,D,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-28,-2347_943,N,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-28,-2347_944,D,11,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-28,-2347_944,N,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-28,-2348_941,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-28,-2348_941,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-28,-2348_942,D,16,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-28,-2348_942,N,10,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-28,-2348_943,D,7,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-28,-2348_943,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-28,-2348_944,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-28,-2348_944,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-28,-2349_945,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-28,-2350_944,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-28,-2350_944,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-28,-2350_945,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-28,-2350_945,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-28,-2350_946,D,15,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-28,-2350_946,N,6,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-28,-2350_947,D,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-28,-2350_947,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-28,-2350_948,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.36133770124707
+2024-07-28,-2350_948,N,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.75306136222248,40.36133770124707
+2024-07-28,-2351_945,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.2080655519944
+2024-07-28,-2351_945,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.2080655519944
+2024-07-28,-2351_946,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.80488220127855,40.25911827806102
+2024-07-28,-2354_942,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.05513381053964
+2024-07-28,-2354_942,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-121.96034471844675,40.05513381053964
+2024-07-28,-2355_943,D,3,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.106073442943575
+2024-07-28,-2355_943,N,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.106073442943575
+2024-07-28,-2355_944,D,8,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.15705064862293
+2024-07-28,-2355_945,D,4,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-28,-2355_945,N,5,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-28,-2355_946,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.25911827806102
+2024-07-28,-2355_946,N,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.01216555750283,40.25911827806102
+2024-07-28,-2356_943,D,2,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.06398639655889,40.106073442943575
+2024-07-28,-2356_946,D,1,0,False,False,0,,True,True,MODIS positive; VIIRS missing-data flag,Not established by hotspot-only FIRMS files,-122.06398639655889,40.25911827806102
+2024-07-29,-2347_942,D,2,9,True,True,2,157.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-29,-2347_942,N,2,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-29,-2347_943,D,10,51,True,True,10,59.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-29,-2347_943,N,15,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-29,-2347_944,D,2,21,True,True,2,144.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-29,-2347_944,N,5,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-29,-2348_942,D,1,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-29,-2348_942,N,1,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-29,-2348_943,D,2,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-29,-2348_943,N,3,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-29,-2348_944,D,7,15,True,True,7,57.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-29,-2348_944,N,4,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-29,-2349_943,D,1,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.106073442943575
+2024-07-29,-2349_944,D,0,1,False,False,0,,True,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-29,-2349_945,D,0,18,False,False,0,,True,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-29,-2349_945,N,5,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-29,-2349_946,D,1,4,True,False,0,,True,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.70124052316642,40.25911827806102
+2024-07-29,-2349_946,N,2,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.25911827806102
+2024-07-29,-2350_944,D,1,3,True,True,1,157.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-29,-2350_945,D,0,6,False,False,0,,True,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-29,-2350_945,N,4,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-29,-2350_946,D,8,22,True,True,8,157.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-29,-2350_946,N,11,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-29,-2350_947,D,1,5,True,True,1,157.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-29,-2350_947,N,2,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-29,-2350_948,D,1,3,True,True,1,144.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.36133770124707
+2024-07-29,-2350_948,N,7,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.36133770124707
+2024-07-29,-2351_947,D,1,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.80488220127855,40.31020895241605
+2024-07-29,-2354_948,D,2,3,True,True,2,57.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.96034471844675,40.36133770124707
+2024-07-29,-2355_943,D,0,1,False,False,0,,True,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.106073442943575
+2024-07-29,-2355_943,N,2,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.106073442943575
+2024-07-29,-2355_944,N,1,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.15705064862293
+2024-07-29,-2355_945,D,0,4,False,False,0,,True,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-29,-2355_945,N,3,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-29,-2355_946,D,2,9,True,True,2,144.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-122.01216555750283,40.25911827806102
+2024-07-29,-2355_946,N,5,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.25911827806102
+2024-07-29,-2355_947,D,1,16,True,True,1,157.0,True,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-122.01216555750283,40.31020895241605
+2024-07-29,-2355_947,N,2,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.31020895241605
+2024-07-29,-2356_943,N,1,0,False,False,0,,True,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.06398639655889,40.106073442943575
+2024-07-29,-2356_945,D,0,1,False,False,0,,True,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-122.06398639655889,40.2080655519944
+2024-07-30,-2347_942,D,5,2,True,True,2,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-30,-2347_942,N,2,20,True,True,2,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-30,-2347_943,D,17,18,True,True,12,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-30,-2347_943,N,17,110,True,True,11,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-30,-2347_944,D,3,5,True,True,2,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-30,-2347_944,N,10,39,True,True,6,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-30,-2348_942,N,3,0,False,False,0,,False,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.05513381053964
+2024-07-30,-2348_943,N,1,1,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.64941968411037,40.106073442943575
+2024-07-30,-2348_944,D,3,5,True,True,1,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-30,-2348_944,N,8,42,True,True,5,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-30,-2348_945,D,2,6,True,True,2,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.2080655519944
+2024-07-30,-2349_944,D,5,3,True,True,3,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-30,-2349_944,N,1,22,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-30,-2349_945,D,17,19,True,True,12,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-30,-2349_945,N,13,97,True,True,5,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-30,-2349_946,D,5,4,True,True,4,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.25911827806102
+2024-07-30,-2349_946,N,5,25,True,True,3,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.25911827806102
+2024-07-30,-2349_947,D,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.31020895241605
+2024-07-30,-2349_947,N,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.31020895241605
+2024-07-30,-2350_944,D,1,0,False,False,0,,False,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-30,-2350_944,N,0,6,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-30,-2350_945,D,5,3,True,True,3,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-30,-2350_945,N,4,6,True,True,1,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-30,-2350_946,D,7,9,True,True,7,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-30,-2350_946,N,3,65,True,True,1,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-30,-2350_947,D,2,2,True,True,2,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-30,-2350_947,N,4,24,True,True,2,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-30,-2350_948,N,0,7,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.36133770124707
+2024-07-30,-2351_944,N,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.80488220127855,40.15705064862293
+2024-07-30,-2351_945,D,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.80488220127855,40.2080655519944
+2024-07-30,-2353_948,N,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.90852387939069,40.36133770124707
+2024-07-30,-2354_948,N,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.96034471844675,40.36133770124707
+2024-07-30,-2355_944,N,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.15705064862293
+2024-07-30,-2355_945,D,1,0,False,False,0,,False,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.2080655519944
+2024-07-30,-2355_947,D,2,3,True,True,1,18.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-122.01216555750283,40.31020895241605
+2024-07-30,-2355_947,N,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-122.01216555750283,40.31020895241605
+2024-07-30,-2356_945,D,0,5,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-122.06398639655889,40.2080655519944
+2024-07-30,-2356_945,N,1,4,True,True,1,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-122.06398639655889,40.2080655519944
+2024-07-30,-2356_947,N,3,9,True,True,1,36.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-122.06398639655889,40.31020895241605
+2024-07-31,-2347_942,N,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.5975988450543,40.05513381053964
+2024-07-31,-2347_943,D,0,9,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-31,-2347_943,N,9,26,True,True,2,96.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.106073442943575
+2024-07-31,-2347_944,D,2,12,True,True,2,78.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-31,-2347_944,N,5,12,True,True,2,96.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.5975988450543,40.15705064862293
+2024-07-31,-2348_940,N,1,1,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.64941968411037,39.95336677079905
+2024-07-31,-2348_941,N,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.64941968411037,40.00423162757676
+2024-07-31,-2348_944,D,3,10,True,True,3,78.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-31,-2348_944,N,6,19,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.64941968411037,40.15705064862293
+2024-07-31,-2348_945,D,2,14,True,True,2,78.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.2080655519944
+2024-07-31,-2348_945,N,9,25,True,True,2,96.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.64941968411037,40.2080655519944
+2024-07-31,-2349_940,N,1,0,False,False,0,,False,False,MODIS positive only; VIIRS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,39.95336677079905
+2024-07-31,-2349_944,D,3,3,True,True,3,78.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-31,-2349_944,N,3,15,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.70124052316642,40.15705064862293
+2024-07-31,-2349_945,D,0,6,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-31,-2349_945,N,9,37,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.70124052316642,40.2080655519944
+2024-07-31,-2349_946,D,2,13,True,True,2,78.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.25911827806102
+2024-07-31,-2349_946,N,8,39,True,True,1,96.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.70124052316642,40.25911827806102
+2024-07-31,-2349_947,D,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.31020895241605
+2024-07-31,-2349_947,N,0,4,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.70124052316642,40.31020895241605
+2024-07-31,-2350_944,N,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.15705064862293
+2024-07-31,-2350_945,N,1,4,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.75306136222248,40.2080655519944
+2024-07-31,-2350_946,D,2,4,True,True,2,78.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-31,-2350_946,N,4,14,True,False,0,,False,False,Both positive; no pair within tolerance,Not established by hotspot-only FIRMS files,-121.75306136222248,40.25911827806102
+2024-07-31,-2350_947,D,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-31,-2350_947,N,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.75306136222248,40.31020895241605
+2024-07-31,-2351_944,D,0,2,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.80488220127855,40.15705064862293
+2024-07-31,-2351_945,D,2,2,True,True,2,126.0,False,False,Both positive; time-compatible,Not established by hotspot-only FIRMS files,-121.80488220127855,40.2080655519944
+2024-07-31,-2352_944,D,0,1,False,False,0,,False,False,VIIRS positive only; MODIS opportunity unknown,Not established by hotspot-only FIRMS files,-121.85670304033462,40.15705064862293

@@ -1,0 +1,35 @@
+{
+  "dataset": {
+    "modis_raw_records": 4851,
+    "viirs_raw_records": 7770,
+    "total": 12621
+  },
+  "park_fire": {
+    "union": 316,
+    "both": 54,
+    "time_matched": 45,
+    "modis_only": 234,
+    "viirs_only": 28,
+    "both_outside_window": 9,
+    "positive_overlap_pct": 17.088607594936708,
+    "conditional_temporal_pct": 83.33333333333333,
+    "union_time_match_pct": 14.240506329113924,
+    "single_sensor": 262,
+    "flagged_modis_only": 208
+  },
+  "park_records": 3092,
+  "experiment": {
+    "test_tp": 3581,
+    "test_fp": 4363,
+    "test_fn": 5480,
+    "test_f1": 0.42117024404586884,
+    "test_iou": 0.26676102502979737,
+    "selected_threshold": 0.675,
+    "target_dates": [
+      "2025-03-15",
+      "2025-12-31"
+    ]
+  },
+  "sequence_rows": 1454,
+  "checks_passed": true
+}

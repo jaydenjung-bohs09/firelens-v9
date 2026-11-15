@@ -1,0 +1,32 @@
+UTC date,MODIS hotspot records,VIIRS hotspot records,S-NPP anomaly window,FIRMS listed VIIRS missing date,VIIRS record status,Non-detection imaging coverage verified
+2024-07-01,38,154,False,False,Positive records present,No — hotspot records only
+2024-07-02,28,201,False,False,Positive records present,No — hotspot records only
+2024-07-03,42,185,False,False,Positive records present,No — hotspot records only
+2024-07-04,21,101,False,False,Positive records present,No — hotspot records only
+2024-07-05,16,102,False,False,Positive records present,No — hotspot records only
+2024-07-06,143,459,False,False,Positive records present,No — hotspot records only
+2024-07-07,80,595,False,False,Positive records present,No — hotspot records only
+2024-07-08,197,645,False,False,Positive records present,No — hotspot records only
+2024-07-09,147,460,True,False,Documented anomaly window; status may be partial,No — hotspot records only
+2024-07-10,96,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-11,111,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-12,47,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-13,87,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-14,97,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-15,35,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-16,90,78,True,False,Documented anomaly window; status may be partial,No — hotspot records only
+2024-07-17,83,562,False,False,Positive records present,No — hotspot records only
+2024-07-18,116,450,False,False,Positive records present,No — hotspot records only
+2024-07-19,48,376,False,False,Positive records present,No — hotspot records only
+2024-07-20,94,363,False,False,Positive records present,No — hotspot records only
+2024-07-21,79,308,False,False,Positive records present,No — hotspot records only
+2024-07-22,39,185,False,False,Positive records present,No — hotspot records only
+2024-07-23,113,539,False,False,Positive records present,No — hotspot records only
+2024-07-24,45,0,True,False,Documented anomaly window; status may be partial,No — hotspot records only
+2024-07-25,674,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-26,707,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-27,570,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-28,401,0,True,True,NASA-listed missing-data date,No — hotspot records only
+2024-07-29,191,457,True,False,Documented anomaly window; status may be partial,No — hotspot records only
+2024-07-30,278,941,False,False,Positive records present,No — hotspot records only
+2024-07-31,138,609,False,False,Positive records present,No — hotspot records only

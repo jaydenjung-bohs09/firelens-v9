@@ -1,0 +1,100 @@
+{
+  "project": "FireLens Predict - experimental 7-day-to-next-day detected-hotspot forecast",
+  "intended_date_range": [
+    "2022-01-01",
+    "2025-12-31"
+  ],
+  "history_days": 7,
+  "grid_km": 10,
+  "grid_projection": "EPSG:6933",
+  "fixed_bbox_lonlat": [
+    -124.5,
+    32.5,
+    -114.0,
+    42.1
+  ],
+  "frame_note": "Geographic bounding rectangle, not an exact California state polygon; input files must already be California-filtered.",
+  "channels": [
+    "MODIS_positive_hotspot",
+    "VIIRS_S_NPP_positive_hotspot",
+    "VIIRS_has_any_record_that_day_global_proxy",
+    "SNPP_known_2024_anomaly_window_indicator"
+  ],
+  "target": "Next-day MODIS-or-VIIRS S-NPP recorded positive hotspot in grid cell (not wildfire ignition).",
+  "data_sources": [
+    {
+      "source": "DL_FIRE_M-C61_850338.zip::fire_archive_M-C61_850338.csv",
+      "sensor": "MODIS",
+      "raw_rows": 33738,
+      "rows_in_date_and_bbox": 33738,
+      "min_date_in_scope": "2022-01-04",
+      "max_date_in_scope": "2025-12-29"
+    },
+    {
+      "source": "DL_FIRE_SV-C2_850339.zip::fire_archive_SV-C2_850339.csv",
+      "sensor": "VIIRS",
+      "raw_rows": 139733,
+      "rows_in_date_and_bbox": 139733,
+      "min_date_in_scope": "2022-01-01",
+      "max_date_in_scope": "2025-12-30"
+    }
+  ],
+  "unique_records_by_sensor": {
+    "MODIS": 33738,
+    "VIIRS": 139733
+  },
+  "shape_X": [
+    1454,
+    7,
+    99,
+    103,
+    4
+  ],
+  "shape_y": [
+    1454,
+    99,
+    103
+  ],
+  "split_sizes": {
+    "train": 870,
+    "validation": 292,
+    "test": 292
+  },
+  "calendar_day_split_boundaries": {
+    "train": [
+      "2022-01-01",
+      "2024-05-26"
+    ],
+    "validation": [
+      "2024-05-27",
+      "2025-03-14"
+    ],
+    "test": [
+      "2025-03-15",
+      "2025-12-31"
+    ]
+  },
+  "split_target_date_ranges": {
+    "train": [
+      "2022-01-08",
+      "2024-05-26"
+    ],
+    "validation": [
+      "2024-05-27",
+      "2025-03-14"
+    ],
+    "test": [
+      "2025-03-15",
+      "2025-12-31"
+    ]
+  },
+  "warnings": [
+    "No-record grid cells are NOT confirmed nonfires or valid sensor negatives.",
+    "Satellite overpasses, cloud masking and viewing footprints are absent from FIRMS hotspot archives.",
+    "Global VIIRS any-record indicator is not proven pixel/day satellite coverage.",
+    "The 2024 S-NPP anomaly indicator covers known dates ONLY; other unverified outages are not encoded.",
+    "Validation/test target dates are held out; their historical input windows may share earlier days, which is valid for next-day forecasting.",
+    "This data supports a detection-proxy experiment only, not wildfire ignition prediction or operational accuracy.",
+    "Background grid cells include areas outside the state polygon; never interpret background as validated fire-free area."
+  ]
+}

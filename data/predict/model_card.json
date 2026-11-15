@@ -1,0 +1,23 @@
+{
+  "task": "next-day presence of positive MODIS-or-VIIRS S-NPP hotspot records, NOT ignition/real fire absence",
+  "architecture": "Single ConvLSTM (hidden 8 default) + convolutional output head",
+  "model_prediction_type": "uncalibrated detection-proxy score",
+  "device": "cuda",
+  "split_sizes": {
+    "train": 870,
+    "validation": 292,
+    "test": 292
+  },
+  "best_epoch": 20,
+  "selected_threshold_on_validation_only": 0.675,
+  "positive_label_cell_prevalence_in_train": 0.003078548006569433,
+  "positive_loss_weight": 10.0,
+  "max_train_samples": 0,
+  "remarks": [
+    "No-hotspot pixels are unlabeled / not observed positives, not verified negatives.",
+    "Precision/recall/F1/IoU measure proxy hotspot-record overlap and cannot establish fire detection accuracy.",
+    "The final test period was not used to tune the threshold or early stopping.",
+    "Known S-NPP anomalies must be disclosed; see sequence_manifest.csv for target-day flags.",
+    "Positive grids from one fire may persist many days; temporal test cannot prove independent-event generalization."
+  ]
+}

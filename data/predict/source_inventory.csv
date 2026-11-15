@@ -1,0 +1,3 @@
+source,sensor,raw_rows,rows_in_date_and_bbox,min_date_in_scope,max_date_in_scope
+DL_FIRE_M-C61_850338.zip::fire_archive_M-C61_850338.csv,MODIS,33738,33738,2022-01-04,2025-12-29
+DL_FIRE_SV-C2_850339.zip::fire_archive_SV-C2_850339.csv,VIIRS,139733,139733,2022-01-01,2025-12-30

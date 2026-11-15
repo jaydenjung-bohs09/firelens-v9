@@ -1,0 +1,4 @@
+Window (hours),Grid (km),Cell-day-phases with records from both,Cell-day-phases with time match,Matched / both-record cell-day-phases (%),One-to-one matched pairs,Median time difference (minutes)
+1,5,414,232,56.04,713,18.0
+3,5,414,316,76.33,1045,76.0
+6,5,414,414,100.0,1633,116.0
