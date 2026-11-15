@@ -1,4 +1,12 @@
-# FireLens V10 — Evidence Before Assumptions
+# FireLens V11 — Evidence Before Assumptions
+**Global Atlas → Country Comparison → California Fire Laboratory.** FireLens V11 now combines the preserved V10 Amazon/California research with 34 NASA worldwide annual country archives (MODIS 2000–2025, VIIRS NOAA-20 2018–2025). The worldwide analysis uses **252,915,305 NASA type-0 presumed vegetation-fire positive records** summarized into 7,033 country-year entries, not unique wildfire counts or sensor-calibrated fire rates.
+
+Navigate using the **three primary workspaces in the Streamlit sidebar**. The California workspace retains Sensor Harmonization, AI Forecasting & Validation, the Amazon field study and source methods as secondary tools. Details, exact source hashes and reproducible methods: [V11 research documentation](v11/README.md).
+
+The original V8 modules and frozen California ConvLSTM are unchanged. **The California model is not validated for global use.** This is not a real-time fire-warning system.
+
+---
+
 
 **Now includes a verified Amazon regional research panel.** The two user-provided NASA archive ZIPs (MODIS `DL_FIRE_M-C61_850616.zip`; VIIRS S-NPP `DL_FIRE_SV-C2_850617.zip`) contain **4,404,388** raw thermal-anomaly records for the Amazon study rectangle `[-74, -15, -48, 2]` spanning 2022–2025. After filtering to NASA Type-0 presumed vegetation-fire observations, **4,386,124** records contribute **917,907 union 10-km cell-days**. These are not distinct wildfires, burned area, or ground-truth labels.
 
