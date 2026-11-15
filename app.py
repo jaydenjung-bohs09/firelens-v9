@@ -176,7 +176,7 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.error('Sequence manifest failed 60/20/20 date split checks.')
     st.stop()
 
-section_eyebrow('NASA SPACE APPS CHALLENGE 2026 / HARMONIZING MODIS & VIIRS HOTSPOTS')
+section_eyebrow('NASA SPACE APPS 2026 / MODIS & VIIRS HOTSPOT EVIDENCE')
 st.markdown("<h1 style='font-size:3.2rem;letter-spacing:-.04em;margin:.12rem 0 .32rem'>MODVIIR <span style='color:#FFAE65'>/ California</span></h1>",unsafe_allow_html=True)
 st.markdown("<div style='font-size:1.38rem;color:#E4F1F8;font-weight:620;margin-bottom:.7rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
 paragraph('One fire, two satellite records, one critical question: did a missing detection mean less burning or missing evidence? Investigate the July 2024 Park Fire and test whether historical hotspot patterns improve next-day recorded-cell forecasts.')
@@ -194,9 +194,10 @@ st.metric(
     help="Positive-only 5-km cell/date/day-night groups inside the retrospective final Park Fire footprint; the affected groups are dated July 25–28, 2024.",
 )
 st.write(
-    "These MODIS-positive records coincide with documented VIIRS S-NPP "
-    "missing-data dates. Treating VIIRS silence as no fire would discard "
-    "this evidence. **A calibrated replacement series has not yet been built.**"
+    "208 of 316 Park Fire evidence groups are MODIS-only during a documented "
+    "VIIRS S-NPP data interruption (Jul 24–28, 2024); VIIRS was not observed, "
+    "not zero. This is positive-record evidence, not verified per-cell "
+    "satellite coverage. **No calibrated replacement series has been built.**"
 )
 st.markdown("### Choose a California investigation")
 section=st.radio(
@@ -748,7 +749,7 @@ if section == 'METHODS & SOURCES':
     st.markdown('''
 **Observed:** A FIRMS hotspot report at a reported geolocation and acquisition time. **Not observed here:** whether a satellite imaged every no-record pixel, and whether an unreported pixel was truly fire-free.
 
-**Common cell-day unit:** For any chosen MODIS + VIIRS pair, MODVIIR can project NASA type-0 presumed vegetation-fire records using the original EPSG:6933 transformer into 10-km cells (configurable). One cell/date is active per sensor if it contains at least one positive record; optional day/night splitting and supplied, documented UTC outage flags preserve context. The resulting table has cell_id, date, modis_active, viirs_active and outage_flag. This is a positive-record union, so unlisted grid days are not verified negatives. This utility is not yet a calibrated global time series.\n\n**Harmonization method:** Bin geolocations into equal-area EPSG:6933 spatial cells; compare matched UTC dates and day/night phases; require acquisition-time compatibility within three hours for the Park Fire audit. No sensor-physics calibration, cloud correction, view-footprint inference, or false-negative sensitivity estimate is claimed.
+**Common cell-day unit:** For any chosen MODIS + VIIRS pair, MODVIIR can project NASA type-0 presumed vegetation-fire records using the original EPSG:6933 transformer into 10-km cells (configurable). One cell/date is active per sensor if it contains at least one positive record; optional day/night splitting and supplied, documented UTC outage flags preserve context. The resulting table has cell_id, date, modis_active, viirs_active and outage_flag. This is a positive-record union, so unlisted grid days are not verified negatives. This utility is not yet a calibrated global time series.\n\n**Common-unit comparison:** Bin geolocations into equal-area EPSG:6933 spatial cells; compare matched UTC dates and day/night phases; require acquisition-time compatibility within three hours for the Park Fire audit. No sensor-physics calibration, cloud correction, view-footprint inference, or false-negative sensitivity estimate is claimed.
 
 **Historical geometry:** The Park Fire boundary is the **retrospective final perimeter**, approximately 429,603 acres from the earlier CAL FIRE archive export. It must not be portrayed as the extent of fire on each July 2024 date.
 

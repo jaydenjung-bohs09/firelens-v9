@@ -34,7 +34,7 @@
 ## Three possible submission failures
 
 1. **Validity failure:** Calling record gap a true negative or inference about fire absence.
-2. **Relevance failure:** AI prediction overwhelms the official harmonized calendar problem.
+2. **Relevance failure:** AI prediction overwhelms the official MODIS–VIIRS calibration and calendar goal.
 3. **Delivery failure:** A locally running notebook exists but judges cannot access the deployed app, source, or demo—or the team is ineligible for the judging track.
 
 ## Sources for requirements

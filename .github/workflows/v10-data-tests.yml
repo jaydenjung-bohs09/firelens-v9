@@ -1,13 +1,15 @@
 name: FireLens global archive and app checks
 on:
   push:
-    branches: [v11-global-navigation, v12-california-evidence-inspector, v13-judge-readiness, v14-visual-usability, round4-engineering, main]
+    branches: [v11-global-navigation, v12-california-evidence-inspector, v13-judge-readiness, v14-visual-usability, round4-engineering, round5-modviir, main]
     paths:
       - "v10/**"
       - "v11/**"
       - "v12/**"
       - "v13/**"
       - "v14/**"
+      - "v15/**"
+      - "tests/**"
       - "app.py"
       - "critical_periods.py"
       - ".github/workflows/v10-data-tests.yml"

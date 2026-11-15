@@ -390,7 +390,7 @@ def render_country_compare():
     st.write(
         "Compare each selected country's **share of the worldwide recorded "
         "positives of each separate sensor**. The shares do not represent "
-        "harmonized fire rates or detection agreement."
+        "calibrated fire rates or detection agreement."
     )
     overlap_year=st.select_slider("Common archive year",options=list(range(2019,2026)),
                                   value=2024,key="v11_overlap_year")
