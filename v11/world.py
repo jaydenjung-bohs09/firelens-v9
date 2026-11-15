@@ -1,4 +1,4 @@
-"""FireLens V11 — global map and country-level seasonal comparison.
+"""FireLens — global map and country-level seasonal comparison.
 
 NASA FIRMS archived active-fire/hotspot observations. Distinct sensors are
 never implicitly treated as equivalent or converted to unique wildfire counts.
@@ -141,9 +141,7 @@ def render_global_atlas():
         ))
         style(chart,430,xaxis_title="Type-0 archived records")
         st.plotly_chart(chart,use_container_width=True)
-    st.caption("Map shading is logarithmic to show both low and high positive-record "
-               "counts. This is **not** a fire-risk map: country size, observation "
-               "frequency and sensor properties are not normalized.")
+    st.caption("Color shows log-scaled NASA hotspot-record counts by country; ranking bars show source counts.")
 
     st.divider()
     st.subheader("A historical signal—not a climate attribution")
@@ -158,9 +156,7 @@ def render_global_atlas():
                        showarrow=True,ax=55,ay=-40)
     style(fig,300,xaxis_title="Archive year",yaxis_title="Type-0 positive records")
     st.plotly_chart(fig,use_container_width=True)
-    st.caption("Within-sensor changes describe the archive. They do not establish "
-               "changes in true fire occurrence without overpass and environmental "
-               "observation-opportunity corrections.")
+    st.caption("Tracking one satellite product through time reveals shifts in its recorded activity; see Data provenance for measurement limits.")
 
     st.subheader("Global historical calendar")
     vals=annual[MCOLS].to_numpy(dtype=float)
@@ -173,10 +169,14 @@ def render_global_atlas():
     ))
     style(fig,480,yaxis=dict(autorange="reversed"),xaxis_title="UTC acquisition month")
     st.plotly_chart(fig,use_container_width=True)
-    st.caption("Each year sums to 100% of its own archived positive records; "
-               "the starting year of each sensor is only partially covered.")
+    st.caption("Each year is normalized to 100% of its positive records, revealing seasonal timing. The first archive year is partial.")
     st.download_button("Export this year's country records",selected.to_csv(index=False),
                        f"firelens_{sensor.lower()}_{year}_countries.csv","text/csv")
+    with st.expander("Additional study · Amazon 2022–2025", expanded=False):
+        st.write("Separate NASA MODIS + VIIRS S-NPP research from the Amazon study rectangle.")
+        if st.checkbox("Open Amazon regional panel",value=False,key="v13_open_amazon"):
+            from v10.amazon_section import render_amazon
+            render_amazon()
     evidence_notes()
 
 
@@ -241,9 +241,7 @@ def render_country_compare():
         "NASA presumed vegetation-fire records"
     ))
     st.plotly_chart(fig,use_container_width=True)
-    st.caption("Country size, archive coverage and satellite sampling are "
-               "not normalized. An indexed trend is a change in records, "
-               "not in independently verified wildfire incidence.")
+    st.caption("Switch between source counts and each country’s own indexed archive trajectory.")
 
     st.divider()
     st.subheader("Seasonal fingerprints · Relative monthly distribution")
@@ -261,11 +259,9 @@ def render_country_compare():
     style(fig,245+len(chosen)*32,xaxis_title="UTC acquisition month",
           yaxis=dict(autorange="reversed"))
     st.plotly_chart(fig,use_container_width=True)
-    st.caption("Each row sums to 100% of a country's own archived positives "
-               "for the selected years. This describes seasonal shape without "
-               "claiming calibrated cross-country fire intensity.")
+    st.caption("Each country sums to 100%; compare the timing of its monthly archived hotspot reports.")
 
-    st.subheader("Seasonal resemblance experiment")
+    st.subheader("Calendar-month resemblance")
     pair_rows=[]
     for a,b in combinations(chosen,2):
         pa,pb=profiles[a],profiles[b]
@@ -274,18 +270,33 @@ def render_country_compare():
         similarity=max(0,1-float(jensenshannon(pa,pb,base=2)))
         pair_rows.append({
             "Country A":names[a],"Country B":names[b],
-            "Seasonal resemblance (0–1)":round(similarity,3),
+            "Calendar resemblance (0–1)":round(similarity,3),
             "Peak A":MONTHS[int(np.argmax(pa))],
-            "Peak B":MONTHS[int(np.argmax(pb))]
+            "Peak B":MONTHS[int(np.argmax(pb))],
+            "Peak gap (months)":min(abs(int(np.argmax(pa))-int(np.argmax(pb))),12-abs(int(np.argmax(pa))-int(np.argmax(pb))))
         })
     if pair_rows:
         st.dataframe(pd.DataFrame(pair_rows).sort_values(
-            "Seasonal resemblance (0–1)",ascending=False),
+            "Calendar resemblance (0–1)",ascending=False),
             hide_index=True,use_container_width=True)
-    st.caption("Exploratory score = 1 minus Jensen–Shannon distance between "
-               "monthly record proportions. A higher score describes similar "
-               "archive-seasonality shapes; it is not a causal inference, "
-               "forecast, or statistical significance test.")
+    st.caption(
+        "Resemblance = 1 − Jensen–Shannon distance between 12 monthly "
+        "record shares. This compares the **same calendar months**, "
+        "not weather seasons or climate patterns. The peak-gap column "
+        "makes timing differences visible."
+    )
+    if "USA" in profiles and "AUS" in profiles:
+        us=profiles["USA"];au=profiles["AUS"]
+        similarity_usa_aus=1-float(jensenshannon(us,au,base=2))
+        st.info(
+            f"**Why U.S. ↔ Australia ≈ {similarity_usa_aus:.3f}?** "
+            f"National hotspot totals include many burning regimes, and "
+            f"their monthly distributions overlap even across opposite hemispheres. "
+            f"For these years, the U.S. peaks in "
+            f"**{MONTHS[int(np.argmax(us))]}** and Australia in "
+            f"**{MONTHS[int(np.argmax(au))]}**. "
+            "This is shared monthly shape, not proof of equivalent fire seasons."
+        )
 
     st.divider()
     st.subheader("One-country historical calendar")
