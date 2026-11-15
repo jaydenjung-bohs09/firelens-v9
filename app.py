@@ -496,7 +496,13 @@ if section == '02  INVESTIGATE EVIDENCE':
     p2.metric('Within 3h · of 54 both-positive','45')
     p3.metric('Within 3h · of all 316','45')
     st.caption('54/316 = 17.09% of positive groups; 45/54 = 83.33% conditional; 45/316 = 14.24% of positive groups.')
-    st.warning('None of these percentages measure satellite sensitivity, operational coverage, accuracy, or observed no-fire locations. The final Park Fire polygon is retrospective, not the daily fire boundary.')
+    st.caption(
+        "These group shares do not measure detection sensitivity or confirmed "
+        "satellite observation coverage. The outline is the retrospective "
+        "final Park Fire perimeter."
+    )
+    st.button("Methods & Sources",key="v14_ref_to_methods",
+              on_click=_jump_to_california,args=("METHODS & SOURCES",))
     categories=groups['Evidence classification'].value_counts().reset_index()
     categories.columns=['Evidence class','Groups']
     order=['Both positive; time-compatible','Both positive; no pair within tolerance','MODIS positive; VIIRS missing-data flag','MODIS positive only; VIIRS opportunity unknown','VIIRS positive only; MODIS opportunity unknown']
