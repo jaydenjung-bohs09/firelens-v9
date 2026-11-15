@@ -221,7 +221,7 @@ k2.metric('Park Fire positive groups','316')
 k3.metric('Time-aligned groups','45 / 316',help='Time-compatible positive groups in the Park Fire reference audit')
 k4.metric('California ConvLSTM F1','0.4212')
 st.caption('Comparison reference: persistence F1 0.3818.')
-st.caption('Intended user: a wildfire intelligence analyst who needs to separate satellite reporting gaps from real changes in recorded activity before interpreting historical patterns. Forecast scores come from a separate 2025 California archive experiment.')
+st.markdown('**For emergency managers, land managers and scientists:** FireLens helps investigate historical hotspot reporting gaps and time-aligned satellite evidence before interpreting burning-activity records. The separate California forecasting experiment is retrospective research.')
 
 
 if section == '01  EXPLORE HISTORY':
