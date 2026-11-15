@@ -268,10 +268,19 @@ if section == '01  EXPLORE HISTORY':
     else:
         starts=pd.to_datetime(critical_periods['start_date'],errors='coerce',utc=True)
         periods_year=critical_periods.loc[starts.dt.year.eq(yr)].copy()
-    r1,r2,r3=st.columns(3)
-    r1.metric('Candidate multi-day periods',len(periods_year))
-    r2.metric('Year days not comparable (coarse proxy)',int((~dyear.comparison_eligible).sum()))
-    r3.metric('Candidate high-activity days',int(dyear.candidate_day.sum()))
+    # Evidence-review candidates are deliberately separate from the
+    # comparable activity-anomaly screen: they reveal missing observation
+    # context, NOT anomalous fire intensity or a wildfire prediction.
+    gap_review=dyear.loc[
+        dyear['target_snpp_known_anomaly_window'].astype(bool)
+        & dyear['target_modis_has_any_hotspot_record'].astype(bool)
+        & ~dyear['target_viirs_has_any_hotspot_record'].astype(bool)
+    ].copy()
+    r1,r2,r3,r4=st.columns(4)
+    r1.metric('Candidate activity periods',len(periods_year))
+    r2.metric('Days not comparable',int((~dyear.comparison_eligible).sum()))
+    r3.metric('Candidate activity days',int(dyear.candidate_day.sum()))
+    r4.metric('S-NPP data-gap review days',len(gap_review))
     trace=go.Figure()
     trace.add_trace(go.Scatter(x=dyear.date,y=dyear.occupied_cells,name='Recorded occupied cells',mode='lines',line=dict(color=TEAL,width=2.4)))
     trace.add_trace(go.Scatter(x=dyear.date,y=dyear.peer_median,name='Other-years seasonal median',mode='lines',line=dict(color=BLUE,width=1.8,dash='dash')))
@@ -279,6 +288,16 @@ if section == '01  EXPLORE HISTORY':
     limited=dyear[~dyear.comparison_eligible]
     if len(limited):
         trace.add_trace(go.Scatter(x=limited.date,y=limited.occupied_cells,mode='markers',name='Comparison limited',text=limited.record_context,hovertemplate='%{x|%Y-%m-%d}<br>%{text}<br>Positive cells %{y}<extra></extra>',marker=dict(color=RED,size=6,symbol='x')))
+    if not gap_review.empty:
+        trace.add_trace(go.Scatter(
+            x=gap_review.date,y=gap_review.occupied_cells,
+            mode='markers',name='S-NPP data-gap review (separate from anomaly)',
+            marker=dict(color=RED,size=12,symbol='triangle-up',
+                        line=dict(color='#EAF4F8',width=.7)),
+            hovertemplate='%{x|%Y-%m-%d}<br>Known S-NPP issue'
+                          '<br>MODIS source records present'
+                          '<br>Recorded union cells %{y:,}<extra></extra>'
+        ))
     for _,p0 in periods_year.iterrows():
         trace.add_vrect(x0=p0.start_date,x1=p0.end_date+pd.Timedelta(days=1),fillcolor=TEAL,opacity=.12,line_width=0)
     theme(trace,345,title=f'{yr} recorded activity vs other-year seasonal reference',xaxis_title='UTC target date',yaxis_title='Occupied 10 km grid cells')
@@ -293,7 +312,8 @@ if section == '01  EXPLORE HISTORY':
             "wildfire onset. The July 24–28, 2024 S-NPP disruption overlaps "
             f"the Park Fire's growth; {flagged} of those 5 days are flagged "
             f"and only {eligible} pass the two-sensor comparison filter. "
-            "They are deliberately excluded from the candidate ranking. "
+            "They are deliberately excluded from the activity-anomaly "
+            "ranking but **shown separately as data-gap review markers**. "
             "This is an evidence-quality safeguard, not evidence that the "
             "fire was minor. Inspect it under **Park Fire Evidence**."
         )
