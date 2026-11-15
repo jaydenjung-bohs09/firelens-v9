@@ -287,6 +287,8 @@ if section == '01  EXPLORE HISTORY':
         chosen=periods_year.iloc[selected_index]
         st.info(f"Selected period: **{chosen.start_date:%Y-%m-%d} to {chosen.end_date:%Y-%m-%d}**. Peak **{chosen.peak_occupied_cells:.0f}** recorded occupied 10 km cells on {chosen.peak_date:%Y-%m-%d}; **{chosen.peak_ratio:.2f}×** the comparable peer-year seasonal median at peak. This does not identify a particular wildfire or establish a sensor-normalized increase.")
         show=periods_year[['start_date','end_date','days','peak_occupied_cells','sum_excess_cell_days','peak_ratio']].copy()
+        for date_col in ('start_date','end_date'):
+            show[date_col]=pd.to_datetime(show[date_col]).dt.strftime('%b %d, %Y')
         st.dataframe(show.rename(columns={
             "start_date":"Start (UTC)",
             "end_date":"End (UTC)",
@@ -382,6 +384,57 @@ if section == '02  INVESTIGATE EVIDENCE':
     st.header('The missing data that changes the story')
     paragraph('July 2024 provides a case study in why raw sensor disagreements can mislead. FireLens compares positive-only cell/day/day-night groups within the final historical Park Fire footprint, then checks temporal compatibility and the documented S-NPP disruption window.')
     groups,parkrec,status,geometry=load_park()
+    st.markdown('### What NASA recorded during the Park Fire')
+    st.write(
+        "The Park Fire began on July 24, 2024. In our NASA archive, "
+        "MODIS reports many positives while VIIRS S-NPP has a documented "
+        "data interruption. The chart below uses the **Park Fire vicinity "
+        "screening rectangle**, not the eventual fire footprint."
+    )
+    july_park=load_july()
+    vicinity=july_park.loc[
+        july_park.latitude.between(39.2,40.3)
+        & july_park.longitude.between(-122.5,-121.0)
+        & july_park.date.between('2024-07-24','2024-07-31')
+    ].copy()
+    by_day=(vicinity.groupby(['date','sensor_group']).size()
+            .unstack(fill_value=0)
+            .reindex(pd.date_range('2024-07-24','2024-07-31'),fill_value=0))
+    for sensor_name in ('MODIS','VIIRS'):
+        if sensor_name not in by_day:
+            by_day[sensor_name]=0
+    timeline=go.Figure()
+    timeline.add_trace(go.Bar(
+        x=by_day.index,y=by_day.MODIS,name='MODIS (Terra/Aqua)',
+        marker_color=BLUE
+    ))
+    timeline.add_trace(go.Bar(
+        x=by_day.index,y=by_day.VIIRS,name='VIIRS S-NPP',
+        marker_color=ORANGE
+    ))
+    timeline.add_vrect(
+        x0='2024-07-24',x1='2024-07-29',
+        fillcolor='rgba(250,108,117,.18)',opacity=.5,line_width=0,
+        annotation_text='S-NPP data gap',annotation_position='top left'
+    )
+    theme(timeline,320,title='Park Fire vicinity · archived positive records by UTC date',
+          barmode='group',xaxis_title='Date (UTC)',yaxis_title='Raw satellite hotspot records')
+    st.plotly_chart(timeline,use_container_width=True)
+    st.warning(
+        "**Evidence gap, not a disappearance of fire:** NASA documents "
+        "an S-NPP processing interruption beginning July 24 at 05:28 UTC, "
+        "and its FIRMS missing-data list explicitly includes July 25–28. "
+        "VIIRS S-NPP archive positives return here on July 29. "
+        "[NASA outage notice](https://firms2.modaps.eosdis.nasa.gov/content/notifications/firms/outages.html) · "
+        "[FIRMS missing dates](https://firms.modaps.eosdis.nasa.gov/api/missing_data/)"
+    )
+    with st.expander('Show exact Park Fire vicinity source counts'):
+        st.dataframe(by_day.reset_index().rename(columns={
+            'index':'UTC date','MODIS':'MODIS records','VIIRS':'VIIRS S-NPP records'
+        }).assign(**{'UTC date':lambda df:df['UTC date'].dt.strftime('%b %d, %Y')}),
+        hide_index=True,use_container_width=True)
+        st.caption('Counts are archived positives within 39.2–40.3°N, 122.5–121°W; they are not burned area or a daily mapped perimeter.')
+    st.divider()
     from v12.evidence_inspector import render_inspector
     render_inspector(parkrec, status, groups, geometry)
     st.divider()
