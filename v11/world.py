@@ -283,42 +283,42 @@ def render_country_compare():
     st.plotly_chart(fig,use_container_width=True)
     st.caption("Each country sums to 100%; compare the timing of its monthly archived hotspot reports.")
 
-    st.subheader("Calendar-month resemblance")
-    pair_rows=[]
-    for a,b in combinations(chosen,2):
-        pa,pb=profiles[a],profiles[b]
-        if pa.sum()==0 or pb.sum()==0:continue
-        # Jensen–Shannon distance uses base-2; outputs range 0..1.
-        similarity=max(0,1-float(jensenshannon(pa,pb,base=2)))
-        pair_rows.append({
-            "Country A":names[a],"Country B":names[b],
-            "Calendar resemblance (0–1)":round(similarity,3),
-            "Peak A":MONTHS[int(np.argmax(pa))],
-            "Peak B":MONTHS[int(np.argmax(pb))],
-            "Peak gap (months)":min(abs(int(np.argmax(pa))-int(np.argmax(pb))),12-abs(int(np.argmax(pa))-int(np.argmax(pb))))
-        })
-    if pair_rows:
-        st.dataframe(pd.DataFrame(pair_rows).sort_values(
-            "Calendar resemblance (0–1)",ascending=False),
-            hide_index=True,use_container_width=True)
-    st.caption(
-        "Resemblance = 1 − Jensen–Shannon distance between 12 monthly "
-        "record shares. This compares the **same calendar months**, "
-        "not weather seasons or climate patterns. The peak-gap column "
-        "makes timing differences visible."
-    )
-    if "USA" in profiles and "AUS" in profiles:
-        us=profiles["USA"];au=profiles["AUS"]
-        similarity_usa_aus=1-float(jensenshannon(us,au,base=2))
-        st.info(
-            f"**Why U.S. ↔ Australia ≈ {similarity_usa_aus:.3f}?** "
-            f"National hotspot totals include many burning regimes, and "
-            f"their monthly distributions overlap even across opposite hemispheres. "
-            f"For these years, the U.S. peaks in "
-            f"**{MONTHS[int(np.argmax(us))]}** and Australia in "
-            f"**{MONTHS[int(np.argmax(au))]}**. "
-            "This is shared monthly shape, not proof of equivalent fire seasons."
+    with st.expander("Calendar-month resemblance", expanded=False):
+        pair_rows=[]
+        for a,b in combinations(chosen,2):
+            pa,pb=profiles[a],profiles[b]
+            if pa.sum()==0 or pb.sum()==0:continue
+            # Jensen–Shannon distance uses base-2; outputs range 0..1.
+            similarity=max(0,1-float(jensenshannon(pa,pb,base=2)))
+            pair_rows.append({
+                "Country A":names[a],"Country B":names[b],
+                "Calendar resemblance (0–1)":round(similarity,3),
+                "Peak A":MONTHS[int(np.argmax(pa))],
+                "Peak B":MONTHS[int(np.argmax(pb))],
+                "Peak gap (months)":min(abs(int(np.argmax(pa))-int(np.argmax(pb))),12-abs(int(np.argmax(pa))-int(np.argmax(pb))))
+            })
+        if pair_rows:
+            st.dataframe(pd.DataFrame(pair_rows).sort_values(
+                "Calendar resemblance (0–1)",ascending=False),
+                hide_index=True,use_container_width=True)
+        st.caption(
+            "Resemblance = 1 − Jensen–Shannon distance between 12 monthly "
+            "record shares. This compares the **same calendar months**, "
+            "not weather seasons or climate patterns. The peak-gap column "
+            "makes timing differences visible."
         )
+        if "USA" in profiles and "AUS" in profiles:
+            us=profiles["USA"];au=profiles["AUS"]
+            similarity_usa_aus=1-float(jensenshannon(us,au,base=2))
+            st.info(
+                f"**Why U.S. ↔ Australia ≈ {similarity_usa_aus:.3f}?** "
+                f"National hotspot totals include many burning regimes, and "
+                f"their monthly distributions overlap even across opposite hemispheres. "
+                f"For these years, the U.S. peaks in "
+                f"**{MONTHS[int(np.argmax(us))]}** and Australia in "
+                f"**{MONTHS[int(np.argmax(au))]}**. "
+                "This is shared monthly shape, not proof of equivalent fire seasons."
+            )
 
     st.divider()
     st.subheader("One-country historical calendar")
