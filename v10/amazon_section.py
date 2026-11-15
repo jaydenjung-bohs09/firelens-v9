@@ -28,7 +28,7 @@ def load_amazon_data():
         raise ValueError("Amazon daily dates do not match NASA archive scope")
     if daily["union_positive_cells"].sum() != inventory["counts"]["union_positive_10km_cell_days"]:
         raise ValueError("Amazon daily cell totals failed source inventory check")
-    if daily[["date_utc"]].duplicated().any().iloc[0]:
+    if daily["date_utc"].duplicated().any():
         raise ValueError("Duplicate Amazon UTC dates")
     if annual["union_positive_cell_days"].sum() != spatial["union_cell_days"].sum():
         raise ValueError("Spatial grid totals failed annual audit")
