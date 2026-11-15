@@ -1,8 +1,9 @@
 """Country month calendar in VIIRS NOAA-20 archived-positive-record units.
 
 2000–2017 are MODIS-modeled NOAA-20 count estimates, NOT observed NOAA-20.
-2018+ source counts are observed NOAA-20 archived positives; Jan–Mar 2018
-are unavailable, and 2000 MODIS Jan–Oct are unavailable.
+April 2018 onward source counts are observed NOAA-20 archived positives;
+Jan–Mar 2018 uses the existing MODIS-based model because NOAA-20
+observations are unavailable, and 2000 MODIS Jan–Oct are unavailable.
 80% bounds are empirical 2019–2025 LOYO residual quantiles, NOT
 verified coverage for historical years or actual wildfires.
 """
@@ -22,15 +23,15 @@ def country_calendar(rows:pd.DataFrame,validation:pd.DataFrame,
     model=fit_calibration(rows,years=complete_overlap_years(rows))
     bounds=prediction_intervals(heldout,winner)
     qlo,qhi=bounds.get(str(chosen.continent.iloc[0]),bounds["GLOBAL"])
-    historic=chosen.loc[chosen.year.lt(2018)].copy()
-    observed=chosen.loc[chosen.year.ge(2018)].copy()
+    missing_2018=chosen.year.eq(2018)&chosen.month.lt(4)
+    historic=chosen.loc[chosen.year.lt(2018)|missing_2018].copy()
+    observed=chosen.loc[chosen.year.ge(2018)&~missing_2018].copy()
     historic["value"]=model.predict(historic,winner).predicted.to_numpy()
     historic["source"]="modeled"
     historic["lower"]=np.maximum(0,np.expm1(np.log1p(historic.value)+qlo))
     historic["upper"]=np.expm1(np.log1p(historic.value)+qhi)
     observed["source"]="observed"
     observed["value"]=observed.viirs.copy()
-    observed.loc[observed.year.eq(2018)&observed.month.lt(4),"value"]=np.nan
     observed["lower"]=np.nan
     observed["upper"]=np.nan
     out=pd.concat([historic,observed],ignore_index=True)

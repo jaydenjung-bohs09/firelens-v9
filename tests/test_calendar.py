@@ -23,9 +23,11 @@ class CalendarTests(unittest.TestCase):
                 self.assertEqual(result.columns.tolist(),OUTPUT_COLUMNS)
                 self.assertEqual(len(result),312)
                 self.assertTrue(result.loc[result.year.lt(2018),"source"].eq("modeled").all())
-                self.assertTrue(result.loc[result.year.ge(2018),"source"].eq("observed").all())
                 self.assertTrue(result.loc[
-                    result.year.eq(2018)&result.month.le(3),"value"].isna().all())
+                    result.year.gt(2018)|(result.year.eq(2018)&result.month.ge(4)),
+                    "source"].eq("observed").all())
+                self.assertTrue(result.loc[
+                    result.year.eq(2018)&result.month.le(3),"source"].eq("modeled").all())
                 self.assertTrue(result.loc[
                     result.year.eq(2000)&result.month.le(10),"value"].isna().all())
                 prior=result.loc[result.year.between(2001,2017)&result.value.notna()]

@@ -19,7 +19,7 @@ class HeldOutValidationTests(unittest.TestCase):
     def test_2018_partial_year_excluded_and_every_year_withheld(self):
         self.assertEqual(self.years,tuple(range(2019,2026)))
         self.assertEqual(set(self.pred.year.unique()),set(self.years))
-        self.assertEqual(set(self.pred.method),{"none","ratio","log"})
+        self.assertEqual(set(self.pred.method),{"none","ratio","log","global_ratio"})
 
     def test_recomputed_values_match_saved_csv(self):
         keys=["level","continent","method"]

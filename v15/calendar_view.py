@@ -90,7 +90,8 @@ def render_country_calendar():
     st.caption(
         "Historical MODIS records mapped statistically onto a **VIIRS NOAA-20 "
         "positive-record count scale**. Before 2018 the values are estimates; "
-        "from April 2018 they are actual NOAA-20 archive counts. These are "
+        "from April 2018 they are actual NOAA-20 archive counts. Jan–Mar 2018 "
+        "are MODIS-based modeled values because the NOAA-20 archive is absent. These are " 
         "not wildfire counts, burned area or physical satellite calibration."
     )
     data=_country_rows()
@@ -151,15 +152,15 @@ def render_country_calendar():
     )
     st.plotly_chart(fig,use_container_width=True)
     st.caption(
-        "2000–2017: modeled NOAA-20-equivalent archived positives (not satellite "
-        "observations). 2018–2025: observed NOAA-20 archive counts, starting "
-        "April 2018. Blank months have no supported estimate. The first MODIS "
+        "2000–2017 and Jan–Mar 2018: modeled NOAA-20-equivalent positives, "
+        "not observed NOAA-20. April 2018 onward: observed NOAA-20 records. "
+        "Blank months have no supported estimate. The first MODIS " 
         "source year starts November 2000. Anomaly colors saturate at the "
         "90th percentile of absolute anomalies for legibility; hover shows "
         "the underlying unmodified value."
         if view!="Positive-record count" else
-        "2000–2017 is MODIS-modeled; 2018–2025 is observed NOAA-20 "
-        "archive data (from April 2018). Blank indicates unavailable or "
+        "2000–2017 and Jan–Mar 2018 are MODIS-modeled; April 2018 onward "
+        "is observed NOAA-20 archive data. Blank indicates unavailable or " 
         "undefined; the horizontal line separates modeled from observed years."
     )
     st.caption("2000–2002: Terra-only MODIS — modeled values likely low; "

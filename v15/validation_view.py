@@ -67,6 +67,18 @@ def render_validation():
             all_points.method.eq(method)&all_points.predicted.gt(0)&
             all_points.viirs.gt(0)
         ]
+        eligible=values.copy()
+        eligible["absolute_pct_error"]=(
+            (eligible.predicted-eligible.viirs).abs()/eligible.viirs*100
+        )
+        small=eligible.loc[eligible.viirs.lt(100),"absolute_pct_error"]
+        large=eligible.loc[eligible.viirs.ge(100),"absolute_pct_error"]
+        if len(small) and len(large):
+            st.caption(
+                f"Median held-out error: <100 actual records: {small.median():.1f}% "
+                f"({len(small):,} country-months); ≥100 records: "
+                f"{large.median():.1f}% ({len(large):,} country-months)."
+            )
         # Deterministic sampling for responsiveness; all metrics above use
         # every eligible held-out month, not the scatter sample.
         if len(values)>2000:
@@ -101,6 +113,7 @@ def render_validation():
             margin=dict(l=40,r=20,t=60,b=45),
         )
         st.plotly_chart(fig,use_container_width=True)
+        st.caption("Errors are larger for small country-months (fewer than ~100 records).")
         st.caption(
             "Scatter shows up to 2,000 seeded positive/positive country-months; "
             "the table uses all eligible pairs. When MODIS has zero reports, "
