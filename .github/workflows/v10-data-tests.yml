@@ -1,7 +1,7 @@
-name: V10 archive preprocessing tests
+name: FireLens global archive and app checks
 on:
   push:
-    branches: [v10-data-foundation]
+    branches: [v11-global-navigation, main]
     paths:
       - "v10/**"
       - "v11/**"
