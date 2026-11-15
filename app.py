@@ -253,7 +253,8 @@ if section == '01  EXPLORE HISTORY':
     a,b=st.columns([1,3])
     with a:
         yr=st.selectbox('Explore year',[2022,2023,2024,2025],index=2)
-        only_both=st.checkbox('Show days with hotspot records from both sensors only',value=False)
+        only_both=st.checkbox('Both sensors only',value=False,
+                              help='Show days with hotspot records from both sensors only')
         st.caption('Zero here means no archived positive records on that date.')
     with b:
         local=m[m.year==yr].copy()

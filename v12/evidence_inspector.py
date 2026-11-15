@@ -269,7 +269,7 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
         f"Time-compatible share: {100*match/both:.1f}% of both-positive"
         if both else "Time-compatible share: no both-positive groups"
     )
-    d.metric("Matched acquisition pairs", f"{int(base['One-to-one matched pairs'].sum()):,}",
+    d.metric("Matched pairs", f"{int(base['One-to-one matched pairs'].sum()):,}",
              help="One-to-one positive hotspot-record time matches, not verified coincident satellite passes or confirmed individual fires.")
 
     if tolerance == 180 and not type0_only and not exclude_flags:
