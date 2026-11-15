@@ -48,6 +48,8 @@ class RegionPreparationTests(unittest.TestCase):
             self.assertEqual(inv["row_counts"]["MODIS"]["outside_scope_rows"], 1)
             self.assertFalse((out / "staging_cells.sqlite").exists())
             self.assertTrue((out / "grid_10km_daily.csv.gz").exists())
+            spatial=pd.read_csv(out / "annual_spatial_1deg.csv")
+            self.assertEqual(int(spatial["union_cell_days"].sum()),3)
             annual = pd.read_csv(out / "annual_summary.csv")
             self.assertEqual(int(annual.loc[0, "union_positive_cell_days"]), 3)
 
