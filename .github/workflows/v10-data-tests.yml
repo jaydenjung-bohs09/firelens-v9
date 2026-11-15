@@ -26,7 +26,7 @@ jobs:
       - name: Install processing dependencies
         run: python -m pip install -r requirements.txt pycountry
       - name: Compile V10 code
-        run: python -m compileall -q app.py critical_periods.py v10 v11 v12 v13 v14
+        run: python -m compileall -q app.py critical_periods.py v10 v11 v12 v13 v14 v15
       - name: Test V10 regional pipeline
         run: python -m unittest discover -s v10 -p "test_*.py" -v
       - name: Check 34-source global archive totals
@@ -37,6 +37,8 @@ jobs:
         run: python -m unittest discover -s v13 -p "test_*.py" -v
       - name: Test common harmonization grid unit
         run: python -m unittest discover -s v14 -p "test_*.py" -v
+      - name: Test Tier-1 satellite record calibration
+        run: python -m unittest discover -s tests -p "test_calibration.py" -v
       - name: Test full Streamlit world dashboard
         run: python v10/smoke_app.py
       - name: Test interactive Evidence Inspector controls
