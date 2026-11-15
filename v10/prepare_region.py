@@ -28,7 +28,7 @@ REGIONS = {
     "siberia": (90.0, 50.0, 135.0, 70.0),
 }
 SENSORS = {"modis": "MODIS", "viirs": "VIIRS_S_NPP"}
-REQUIRED_COLUMNS = {"latitude", "longitude", "acq_date"}
+REQUIRED_COLUMNS = {"latitude", "longitude", "acq_date", "type"}
 CHUNK_SIZE = 100_000
 GRID_METERS = 10_000
 TRANSFORM = Transformer.from_crs("EPSG:4326", "EPSG:6933", always_xy=True)
@@ -69,12 +69,18 @@ def clean_chunk(chunk: pd.DataFrame, sensor: str, bounds, start: pd.Timestamp,
         raise ValueError(f"{sensor} file missing FIRMS columns: {sorted(missing)}")
     if "instrument" in chunk:
         values = chunk["instrument"].dropna().astype(str).str.upper().str.strip().unique()
-        expected = "MODIS" if sensor == "MODIS" else "VIIRS"
-        unexpected = [v for v in values if v and v != expected]
+        allowed = {"MODIS"} if sensor == "MODIS" else {"SNPP", "VIIRS"}
+        unexpected = [v for v in values if v and v not in allowed]
         if unexpected:
             raise ValueError(f"File labeled {sensor}, but instrument={unexpected}")
 
     counts[(sensor, "input_rows")] += len(chunk)
+    # Type 0 is NASA's presumed vegetation-fire classification. Preserve
+    # counts for non-vegetation anomalies, but exclude those from this view.
+    fire_type = pd.to_numeric(chunk["type"], errors="coerce")
+    not_vegetation = fire_type.ne(0)
+    counts[(sensor, "excluded_nonvegetation_or_unknown_type")] += int(not_vegetation.sum())
+    chunk = chunk.loc[~not_vegetation].copy()
     lat = pd.to_numeric(chunk["latitude"], errors="coerce")
     lon = pd.to_numeric(chunk["longitude"], errors="coerce")
     dates = pd.to_datetime(chunk["acq_date"], errors="coerce", utc=True)
@@ -153,7 +159,7 @@ def prepare(region: str, modis_files: list[Path], viirs_files: list[Path],
                     counts[(sensor, "csv_chunks")] += 1
                     if normalized.empty:
                         continue
-                    values = [tuple(row) for row in normalized.itertuples(
+                    values = [tuple(row) for row in normalized.drop_duplicates().itertuples(
                         index=False, name=None)]
                     for day, howmany in normalized["date_utc"].value_counts().items():
                         raw_counts[(day, sensor)] += int(howmany)
@@ -220,11 +226,13 @@ def prepare(region: str, modis_files: list[Path], viirs_files: list[Path],
             "source_files": source_inventory,
             "row_counts": {sensor: {
                 name: counts[(sensor, name)]
-                for name in ("input_rows", "invalid_rows", "outside_scope_rows",
+                for name in ("input_rows", "excluded_nonvegetation_or_unknown_type",
+                             "invalid_rows", "outside_scope_rows",
                              "accepted_rows", "csv_chunks")}
                 for sensor in SENSORS.values()},
             "interpretation": (
-                "Archive positive hotspot records only, summarized in UTC-date and "
+                "NASA Type-0 presumed vegetation-fire positive hotspot records only, "
+                "summarized in UTC-date and "
                 "equal-area 10-km cells. Zero records are NOT verified no-fire "
                 "observations or proven satellite coverage. Both-positive is "
                 "same-cell same-UTC-date co-occurrence, NOT matched acquisition "
@@ -232,6 +240,8 @@ def prepare(region: str, modis_files: list[Path], viirs_files: list[Path],
                 "Do not compare sensors as if equally sensitive."
             ),
             "known_limitations": (
+                "Type-0 includes agricultural and other vegetation burning and may "
+                "carry source-classification errors; not verified wildfire. "
                 "No independent coverage mask, overpass normalization, thermal "
                 "background context, or geolocation-anomaly correction is applied."
             ),
