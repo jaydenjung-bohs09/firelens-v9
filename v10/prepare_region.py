@@ -55,8 +55,9 @@ def read_chunks(path: Path):
                     for chunk in pd.read_csv(stream, chunksize=CHUNK_SIZE, low_memory=False):
                         yield name, chunk
     elif path.suffix.lower() == ".csv":
-        for chunk in pd.read_csv(path, chunksize=CHUNK_SIZE, low_memory=False):
-            yield path.name, chunk
+        with pd.read_csv(path, chunksize=CHUNK_SIZE, low_memory=False) as reader:
+            for chunk in reader:
+                yield path.name, chunk
     else:
         raise ValueError(f"Expected .csv or .zip: {path}")
 
@@ -218,6 +219,44 @@ def prepare(region: str, modis_files: list[Path], viirs_files: list[Path],
                        days_with_modis_positive_records=("modis_has_positive_records", "sum"),
                        days_with_viirs_positive_records=("viirs_has_positive_records", "sum")))
         annual.to_csv(output / "annual_summary.csv", index=False)
+
+        # Prepare a compact spatial raster suitable for a Streamlit view.
+        # Bins are approximate 1-degree geographic tiles built from equal-area
+        # 10-km cell centers; the tiles are NOT equal area.
+        reverse = Transformer.from_crs("EPSG:6933", "EPSG:4326",
+                                       always_xy=True)
+        spatial_counts = defaultdict(lambda: [0, 0, 0])
+        for spatial_chunk in pd.read_csv(grid_path, chunksize=CHUNK_SIZE):
+            px = (spatial_chunk["grid_x"].to_numpy(dtype=float) + .5) * GRID_METERS
+            py = (spatial_chunk["grid_y"].to_numpy(dtype=float) + .5) * GRID_METERS
+            lo, la = reverse.transform(px, py)
+            spatial_chunk["lon_bin"] = np.floor(lo).astype(int)
+            spatial_chunk["lat_bin"] = np.floor(la).astype(int)
+            spatial_chunk["year"] = spatial_chunk["date_utc"].str.slice(0,4).astype(int)
+            aggregated = spatial_chunk.groupby(
+                ["year","lon_bin","lat_bin"], as_index=False).agg(
+                union_cell_days=("modis_positive","size"),
+                modis_cell_days=("modis_positive","sum"),
+                viirs_cell_days=("viirs_positive","sum"))
+            for row in aggregated.itertuples(index=False):
+                bucket = spatial_counts[(int(row.year), int(row.lon_bin),
+                                         int(row.lat_bin))]
+                bucket[0] += int(row.union_cell_days)
+                bucket[1] += int(row.modis_cell_days)
+                bucket[2] += int(row.viirs_cell_days)
+        spatial_rows = [
+            {"year":year, "lon_bin":lo, "lat_bin":la,
+             "union_cell_days":values[0],
+             "modis_cell_days":values[1],
+             "viirs_cell_days":values[2]}
+            for (year,lo,la), values in sorted(spatial_counts.items())
+        ]
+        pd.DataFrame(spatial_rows,columns=[
+            "year","lon_bin","lat_bin","union_cell_days",
+            "modis_cell_days","viirs_cell_days"]).to_csv(
+            output / "annual_spatial_1deg.csv",index=False)
+        if sum(row["union_cell_days"] for row in spatial_rows) != int(daily["union_positive_cells"].sum()):
+            raise ValueError("Spatial aggregation failed daily-grid total audit")
         inventory = {
             "region": region, "bounds_west_south_east_north": bounds,
             "utc_period": [start, end],
