@@ -1,0 +1,6 @@
+# Keep the large NASA source archives and generated stage files out of GitHub.
+raw/
+processed/
+*.sqlite
+*.csv.gz
+__pycache__/
