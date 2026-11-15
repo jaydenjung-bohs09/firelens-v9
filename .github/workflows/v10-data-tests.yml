@@ -45,6 +45,8 @@ jobs:
         run: python -m unittest discover -s tests -p "test_calendar.py" -v
       - name: Verify Amazon source-year calibration
         run: python -m unittest discover -s tests -p "test_amazon_tier2.py" -v
+      - name: Verify seeded Amazon placebo outage windows
+        run: python -m unittest discover -s tests -p "test_amazon_placebo.py" -v
       - name: Test full Streamlit world dashboard
         run: python v10/smoke_app.py
       - name: Test interactive Evidence Inspector controls

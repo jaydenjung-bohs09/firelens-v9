@@ -480,6 +480,33 @@ if section == '02  INVESTIGATE EVIDENCE':
         "[NASA outage notice](https://firms2.modaps.eosdis.nasa.gov/content/notifications/firms/outages.html) · "
         "[FIRMS missing dates](https://firms.modaps.eosdis.nasa.gov/api/missing_data/)"
     )
+    with st.expander("How accurate would a MODIS-based estimate be?", expanded=False):
+        placebo=json.loads((ROOT/'v15'/'amazon_placebo_results.json').read_text())
+        rec=placebo['records']
+        cells=placebo['positive_cells']
+        st.write(
+            f"**Independent regional stress test, not a Park Fire correction.** "
+            f"In {placebo['window_count']} seeded, nonoverlapping five-day "
+            f"Amazon VIIRS S-NPP placebo windows ({placebo['sampled_day_count']} "
+            f"days from 2025), the MODIS-based monthly ratio produced "
+            f"**{rec['median_abs_pct_error']:.2f}%** median absolute error "
+            f"for record counts and **{cells['median_abs_pct_error']:.2f}%** "
+            f"for positive 10-km cells."
+        )
+        st.write(
+            f"Nominal 80% residual intervals covered "
+            f"**{100*rec['coverage_80pct_nominal']:.1f}%** of tested record-count "
+            f"days and **{100*cells['coverage_80pct_nominal']:.1f}%** of "
+            f"positive-cell days. These intervals were estimated from "
+            f"2022–2024 training-year holdouts."
+        )
+        st.caption(
+            "Sample windows have positive VIIRS records and no recorded "
+            "disruption flag in the limited available outage table; that is "
+            "not verification of complete satellite observation coverage. "
+            "Amazon performance cannot establish Park Fire reconstruction "
+            "accuracy. **No missing Park Fire VIIRS values were filled.**"
+        )
     with st.expander('Show exact Park Fire vicinity source counts'):
         st.dataframe(by_day.reset_index().rename(columns={
             'index':'UTC date','MODIS':'MODIS records','VIIRS':'VIIRS S-NPP records'
