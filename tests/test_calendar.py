@@ -8,7 +8,15 @@ from v15.calendar import (
     country_calendar,monthly_anomalies,selected_month_summary,OUTPUT_COLUMNS,
 )
 
+from v15.calendar_view import MIN_MEDIAN_FOR_PCT,month_difference_display
+
 class CalendarTests(unittest.TestCase):
+    def test_month_comparison_small_median_display_guard(self):
+        self.assertEqual(MIN_MEDIAN_FOR_PCT,10)
+        self.assertIsNone(month_difference_display(-100.0,1))
+        self.assertEqual(month_difference_display(-37.7,91666),"-37.7%")
+
+
     @classmethod
     def setUpClass(cls):
         cls.rows=country_month_rows()

@@ -9,6 +9,15 @@ from v15.validation import VALIDATION_CSV,selected_method,prediction_intervals
 from v15.validation_view import _out_of_sample_points
 
 MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+MIN_MEDIAN_FOR_PCT = 10
+
+
+def month_difference_display(anomaly_pct, historical_median):
+    """Suppress misleading percentage comparisons with tiny monthly medians."""
+    if np.isfinite(historical_median) and historical_median < MIN_MEDIAN_FOR_PCT:
+        return None
+    return f"{anomaly_pct:+.1f}%" if np.isfinite(anomaly_pct) else "N/A"
+
 
 @st.cache_data(show_spinner=False)
 def _country_rows():
@@ -181,7 +190,10 @@ def render_country_calendar():
              help="Source monthly positive-record count or modeled equivalent.")
     b.metric("Historical median",f"{median:,.0f}" if np.isfinite(median) else "N/A",
              help="Median of available same-calendar-month values across source years.")
-    c.metric("Difference from median",f"{anomaly:+.1f}%" if np.isfinite(anomaly) else "N/A")
+    difference=month_difference_display(anomaly,median)
+    c.metric("Difference from median",difference if difference is not None else "—")
+    if difference is None:
+        st.caption("Too few records for a meaningful % comparison (historical median below 10).")
     d.metric("Rank",f"{result['rank']} of {result['comparable_years']}"
              if result["rank"] else "N/A")
     st.caption(
