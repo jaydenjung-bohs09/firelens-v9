@@ -491,13 +491,13 @@ if section == '02  INVESTIGATE EVIDENCE':
         fig=go.Figure()
         # Original polygon geometry, rendered as coastline-like outline in lon/lat; no approximate replacement.
         polycoords=geometry['coordinates']
-        for polygon in polycoords if geometry['type']=='MultiPolygon' else [polycoords]:
+        for poly_i, polygon in enumerate(polycoords if geometry['type']=='MultiPolygon' else [polycoords]):
             ring=polygon[0]
             # Use a light geometry simplification only for plotting; the actual spatial filter used full resolution.
             step=max(1,len(ring)//450)
             pts=ring[::step]
             if pts[-1]!=ring[-1]:pts.append(ring[-1])
-            fig.add_trace(go.Scattergl(x=[p[0] for p in pts],y=[p[1] for p in pts],mode='lines',line=dict(color='#CFB78A',width=1.2),name='Retrospective final footprint',hoverinfo='skip'))
+            fig.add_trace(go.Scattergl(x=[p[0] for p in pts],y=[p[1] for p in pts],mode='lines',line=dict(color='#CFB78A',width=1.2),name='Retrospective final footprint',hoverinfo='skip',showlegend=(poly_i==0)))
         if len(selection):
             for name in order:
                 d=selection[selection['Evidence classification']==name]
