@@ -134,3 +134,7 @@ python reproduction/train_predict_v2.py --data data_new/MODVIIR_sequences.npz --
 2. Calibrate sensor-to-sensor detection sensitivity and physically meaningful measures, rather than equating raw positives.
 3. Evaluate forecasting against new **independent** future periods and independently attributed fire events, other regions, and per-event and seasonal outcomes.
 4. Broaden global geographical coverage only after a reproducible source-and-quality pipeline exists.
+
+## AI disclosure
+
+ChatGPT (OpenAI) wrote and debugged most code under the author's direction. Claude (Anthropic) reviewed the project, re-ran tests, suggested validation methods, and helped draft text and the logo graphic (watermarked 'AI-generated graphic'). All numerical results come from code run on NASA FIRMS data.
