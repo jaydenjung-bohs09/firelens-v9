@@ -43,6 +43,8 @@ jobs:
         run: python -m unittest discover -s tests -p "test_validation.py" -v
       - name: Test four-country historical calibrated calendar
         run: python -m unittest discover -s tests -p "test_calendar.py" -v
+      - name: Verify Amazon source-year calibration
+        run: python -m unittest discover -s tests -p "test_amazon_tier2.py" -v
       - name: Test full Streamlit world dashboard
         run: python v10/smoke_app.py
       - name: Test interactive Evidence Inspector controls

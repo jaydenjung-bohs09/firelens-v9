@@ -91,6 +91,10 @@ def render_amazon():
         "counts, or relative sensor accuracy."
     )
 
+    from v15.amazon_tier2_view import render_tier2
+    render_tier2()
+    st.divider()
+
     yr = st.selectbox("Inspect calendar year", [2022,2023,2024,2025], index=2,
                       key="amazon_year")
     yday = daily.loc[daily.year.eq(yr)].copy()
