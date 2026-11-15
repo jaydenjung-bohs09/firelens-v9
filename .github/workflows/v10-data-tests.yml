@@ -31,3 +31,5 @@ jobs:
         run: python -m unittest discover -s v12 -p "test_*.py" -v
       - name: Test full Streamlit world dashboard
         run: python v10/smoke_app.py
+      - name: Test interactive Evidence Inspector controls
+        run: python v12/smoke_inspector.py
