@@ -1,7 +1,7 @@
 name: FireLens global archive and app checks
 on:
   push:
-    branches: [v11-global-navigation, v12-california-evidence-inspector, v13-judge-readiness, v14-visual-usability, round4-engineering, round5-modviir, main]
+    branches: [v11-global-navigation, v12-california-evidence-inspector, v13-judge-readiness, v14-visual-usability, round4-engineering, round5-modviir, round6-engineering, main]
     paths:
       - "v10/**"
       - "v11/**"
@@ -24,7 +24,9 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install processing dependencies
-        run: python -m pip install -r requirements.txt pycountry
+        run: python -m pip install -r requirements.txt pycountry pytest
+      - name: Run complete pytest suite
+        run: python -m pytest -q
       - name: Compile V10 code
         run: python -m compileall -q app.py critical_periods.py v10 v11 v12 v13 v14 v15
       - name: Test V10 regional pipeline

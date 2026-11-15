@@ -3,9 +3,9 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-from v15.calibration import country_month_rows
+from v15.calibration import country_month_rows,fit_calibration,complete_overlap_years
 from v15.calendar import country_calendar,monthly_anomalies,selected_month_summary
-from v15.validation import VALIDATION_CSV
+from v15.validation import VALIDATION_CSV,selected_method,prediction_intervals
 from v15.validation_view import _out_of_sample_points
 
 MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -22,6 +22,66 @@ def _validated_summary():
 def _country_calendar_cached(code):
     return country_calendar(_country_rows(),_validated_summary(),
                             _out_of_sample_points(),code)
+
+
+@st.cache_data(show_spinner=False, max_entries=8)
+def _continuity_series(code):
+    source=_country_rows()
+    selected=source.loc[source.iso3.eq(code)&source.year.between(2001,2025)].copy()
+    if selected.empty:
+        return pd.DataFrame()
+    method=selected_method(_validated_summary())
+    fitted=fit_calibration(source,years=complete_overlap_years(source))
+    modeled=fitted.predict(selected,method)
+    qlo,qhi=prediction_intervals(_out_of_sample_points(),method).get(
+        str(selected.continent.iloc[0]),prediction_intervals(_out_of_sample_points(),method)["GLOBAL"]
+    )
+    modeled["lower"]=np.maximum(0,np.expm1(np.log1p(modeled.predicted)+qlo))
+    modeled["upper"]=np.expm1(np.log1p(modeled.predicted)+qhi)
+    annual=[]
+    for year,group in modeled.groupby("year"):
+        full=(len(group)==12 and set(group.month)==set(range(1,13))
+              and group.predicted.notna().all())
+        observed_full=(year>=2019 and len(group)==12 and group.viirs.notna().all())
+        annual.append(dict(
+            year=int(year),
+            modeled=float(group.predicted.sum()) if full else np.nan,
+            lower=float(group.lower.sum()) if full else np.nan,
+            upper=float(group.upper.sum()) if full else np.nan,
+            observed=float(group.viirs.sum()) if observed_full else np.nan,
+        ))
+    return pd.DataFrame(annual)
+
+
+def render_continuity_chart(code):
+    st.subheader("Does the MODIS-based estimate track what VIIRS actually recorded?")
+    annual=_continuity_series(code)
+    if annual.empty or annual.modeled.notna().sum()<2:
+        st.info("Insufficient complete-year, nonzero MODIS observations for this country.")
+        return
+    fig=go.Figure()
+    valid=annual.loc[annual.modeled.notna()].sort_values("year")
+    fig.add_trace(go.Scatter(x=valid.year,y=valid.upper,mode="lines",
+                            line=dict(width=0),showlegend=False,hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=valid.year,y=valid.lower,mode="lines",
+                            fill="tonexty",fillcolor="rgba(57,216,194,.16)",
+                            line=dict(width=0),name="Nominal 80% band",hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=valid.year,y=valid.modeled,mode="lines+markers",
+                            name="MODIS-based modeled NOAA-20-equivalent",
+                            line=dict(color="#39D8C2",width=2)))
+    observed=annual.loc[annual.year.between(2019,2025)&annual.observed.notna()]
+    if not observed.empty:
+        fig.add_trace(go.Scatter(x=observed.year,y=observed.observed,
+                                mode="lines+markers",name="Observed VIIRS NOAA-20",
+                                line=dict(color="#FFAE65",width=2)))
+    fig.update_layout(template="plotly_dark",height=360,
+                      xaxis=dict(title="Full calendar year",dtick=2),
+                      yaxis_title="Annual archived positive reports",
+                      paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(15,33,51,.8)",
+                      margin=dict(l=30,r=20,t=25,b=45),legend=dict(orientation="h"))
+    st.plotly_chart(fig,use_container_width=True)
+    st.caption("Annual values count satellite positive-record reports, not individual fires; "
+               "modeled intervals are empirical held-out residual bands, not verified historical coverage.")
 
 def render_country_calendar():
     st.subheader("Country burning-activity record calendar · 2000–2025")
@@ -96,6 +156,7 @@ def render_country_calendar():
         "archive data (from April 2018). Blank indicates unavailable or "
         "undefined; the horizontal line separates modeled from observed years."
     )
+    render_continuity_chart(code)
     ycol,mcol=st.columns(2)
     with ycol:
         year=st.selectbox("Inspect year",list(range(2025,1999,-1)),
