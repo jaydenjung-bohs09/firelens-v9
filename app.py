@@ -267,13 +267,34 @@ if section == '01  EXPLORE HISTORY':
         trace.add_vrect(x0=p0.start_date,x1=p0.end_date+pd.Timedelta(days=1),fillcolor=TEAL,opacity=.12,line_width=0)
     theme(trace,345,title=f'{yr} recorded activity vs other-year seasonal reference',xaxis_title='UTC target date',yaxis_title='Occupied 10 km grid cells')
     st.plotly_chart(trace,use_container_width=True)
+    if yr == 2024:
+        july_window=dyear.loc[dyear.date.between("2024-07-24","2024-07-28")]
+        flagged=int(july_window["target_snpp_known_anomaly_window"].sum())
+        eligible=int(july_window["comparison_eligible"].sum())
+        st.info(
+            "**Why doesn't the Park Fire appear as a candidate?** The screen "
+            "compares *statewide* positive 10-km cell counts, not individual "
+            "wildfire onset. The July 24–28, 2024 S-NPP disruption overlaps "
+            f"the Park Fire's growth; {flagged} of those 5 days are flagged "
+            f"and only {eligible} pass the two-sensor comparison filter. "
+            "They are deliberately excluded from the candidate ranking. "
+            "This is an evidence-quality safeguard, not evidence that the "
+            "fire was minor. Inspect it under **Park Fire Evidence**."
+        )
     if len(periods_year):
         labels=[f"{row.start_date:%b %d}–{row.end_date:%b %d, %Y} · {int(row.days)} day(s)" for row in periods_year.itertuples()]
         selected_index=st.selectbox('Inspect candidate period',list(range(len(periods_year))),format_func=lambda i: labels[i],key='selected_critical')
         chosen=periods_year.iloc[selected_index]
         st.info(f"Selected period: **{chosen.start_date:%Y-%m-%d} to {chosen.end_date:%Y-%m-%d}**. Peak **{chosen.peak_occupied_cells:.0f}** recorded occupied 10 km cells on {chosen.peak_date:%Y-%m-%d}; **{chosen.peak_ratio:.2f}×** the comparable peer-year seasonal median at peak. This does not identify a particular wildfire or establish a sensor-normalized increase.")
         show=periods_year[['start_date','end_date','days','peak_occupied_cells','sum_excess_cell_days','peak_ratio']].copy()
-        st.dataframe(show,hide_index=True,use_container_width=True,height=225)
+        st.dataframe(show.rename(columns={
+            "start_date":"Start (UTC)",
+            "end_date":"End (UTC)",
+            "days":"Consecutive days",
+            "peak_occupied_cells":"Peak positive cells",
+            "sum_excess_cell_days":"Excess cell-days vs seasonal median",
+            "peak_ratio":"Peak relative to seasonal median",
+        }),hide_index=True,use_container_width=True,height=225)
     else:
         st.info('No consecutive periods meet these descriptive settings in the selected year. You can change the screening controls.')
     cexp1,cexp2=st.columns(2)
@@ -315,8 +336,42 @@ if section == '01  EXPLORE HISTORY':
         fig.add_trace(go.Scatter(x=active.index,y=active.values,name='Union occupied cells',line=dict(color=TEAL,width=3)))
         fig.add_trace(go.Scatter(x=cnt.index,y=cnt.MODIS,name='MODIS positive cells',line=dict(color=BLUE,dash='dot')))
         fig.add_trace(go.Scatter(x=cnt.index,y=cnt.VIIRS,name='VIIRS positive cells',line=dict(color=ORANGE,dash='dot')))
+        if preset.startswith('Park Fire'):
+            # NASA's reported S-NPP CDP disruption began July 24, 05:28 UTC.
+            # July 25–28 are listed as missing for VIIRS S-NPP in FIRMS.
+            fig.add_vrect(x0='2024-07-24',x1='2024-07-29',
+                          fillcolor='rgba(250,108,117,.20)',
+                          opacity=.5,line_width=0,
+                          annotation_text='S-NPP data disruption',
+                          annotation_position='top left')
         theme(fig,305,title='Selected area · July 2024 · 5 km grid',xaxis_title='UTC date',yaxis_title='Positive occupied cells')
         st.plotly_chart(fig,use_container_width=True)
+        if preset.startswith('Park Fire'):
+            st.warning(
+                "**NASA-documented satellite data gap:** VIIRS S-NPP "
+                "has no positive archive records in this area on July 24–28, "
+                "while MODIS recorded extensive activity during July 25–28. "
+                "NASA reports an S-NPP command-processor disruption beginning "
+                "**July 24 at 05:28 UTC**; FIRMS lists **July 25–28** as "
+                "missing VIIRS S-NPP archive dates. Positive records resume "
+                "in the selected area on **July 29**. This is not evidence "
+                "that the fire disappeared. "
+                "[NASA outage record](https://firms2.modaps.eosdis.nasa.gov/content/notifications/firms/outages.html) · "
+                "[NASA FIRMS missing dates](https://firms.modaps.eosdis.nasa.gov/api/missing_data/)"
+            )
+            status_park=pd.read_csv(HIST/'july_2024_sensor_status.csv')
+            status_park=status_park.loc[status_park['UTC date'].between('2024-07-24','2024-07-30')]
+            with st.expander('Examine the affected dates and statewide archive counts'):
+                st.dataframe(status_park[[
+                    'UTC date','MODIS hotspot records','VIIRS hotspot records',
+                    'S-NPP anomaly window','FIRMS listed VIIRS missing date'
+                ]].rename(columns={
+                    'UTC date':'UTC date',
+                    'MODIS hotspot records':'Statewide MODIS records',
+                    'VIIRS hotspot records':'Statewide VIIRS S-NPP records',
+                    'S-NPP anomaly window':'NASA platform anomaly flagged',
+                    'FIRMS listed VIIRS missing date':'FIRMS missing date flagged'
+                }),hide_index=True,use_container_width=True)
     else:
         st.warning('No positive hotspot records in the selected area and month. This is not proof there were no fires.')
     st.caption(f'{len(region):,} positive FIRMS observations in selected rectangle. 5 km grid; rectangle is not a verified fire footprint. Sensor values should not be compared as equal-detection-efficiency measurements.')
