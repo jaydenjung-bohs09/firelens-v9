@@ -444,16 +444,51 @@ if section == '03  REPLAY THE MODEL':
     section_eyebrow('Anticipate / Frozen experimental model')
     st.header('Can seven days of hotspots improve on tomorrow = today?')
     paragraph('This is a retrospective 2025 replay from the saved ConvLSTM V2 checkpoint. The score is an uncalibrated prediction of next-day positive NASA hotspot records in a 10 km grid—not the probability of ignition, spread, or observed absence of fire.')
-    bm=baselines[(baselines.subset=='test')&(baselines.model=='Persistence')].iloc[0]
-    mm=metrics[(metrics.subset=='test')&(metrics.model=='ConvLSTM')].iloc[0]
-    valm=metrics[metrics.subset=='validation'].iloc[0]
-    valb=baselines[(baselines.subset=='validation')&(baselines.model=='Persistence')].iloc[0]
+    # Judge-facing matched-day comparison: identical dates for all four
+    # methods; figures come from the separately reproducible frozen-audit script.
+    from v13.forecast_audit import compute as recompute_forecast_audit
+    audit=json.loads((ROOT/'v13'/'forecast_audit_results.json').read_text())
+    results=audit['methods']
+    main_model=results['ConvLSTM']
+    previous=results['One-day persistence']
+    three_of_seven=results['At least three of seven days']
+    union_seven=results['Seven-day union']
+    lo,hi=previous['ci95_model_minus_baseline']
     z1,z2,z3,z4=st.columns(4)
-    z1.metric('Test ConvLSTM F1',f'{mm.f1:.4f}')
-    z2.metric('Test persistence F1',f'{bm.f1:.4f}')
-    z3.metric('Relative F1 improvement',f'{(mm.f1/bm.f1-1)*100:.1f}%')
-    z4.metric('False-positive reduction',f'{(1-mm.fp/bm.fp)*100:.1f}%')
-    st.caption(f'Chronological split: 870 train / 292 validation / 292 test target dates. Validation F1: {valm.f1:.4f} vs {valb.f1:.4f} persistence. Selected threshold {threshold:.3f} on validation; test previously inspected during earlier V1 development, so this is exploratory evidence.')
+    z1.metric('ConvLSTM · matched-day F1',f"{main_model['f1']:.4f}")
+    z2.metric('Yesterday = today · F1',f"{previous['f1']:.4f}")
+    z3.metric('Active ≥3 of 7 days · F1',f"{three_of_seven['f1']:.4f}")
+    z4.metric('Model gain vs yesterday',f"+{previous['model_minus_baseline_f1']:.3f}",
+              delta=f"95% block CI +{lo:.3f} to +{hi:.3f}",delta_color='off')
+    table_rows=[]
+    for label,record in results.items():
+        table_rows.append({
+            'Method':label,'F1':round(record['f1'],4),
+            '95% block CI · low':round(record['ci95_f1'][0],4),
+            '95% block CI · high':round(record['ci95_f1'][1],4),
+            'Matched positive cells':record['tp'],
+            'Predicted-only cells':record['fp'],
+            'Recorded-only cells':record['fn'],
+        })
+    with st.expander('Full model and baseline evaluation · identical 285 days'):
+        st.dataframe(pd.DataFrame(table_rows),hide_index=True,use_container_width=True)
+        st.caption(
+            'All methods evaluated over March 22–December 31, 2025 (285 UTC days). '
+            'The first seven test dates were removed so each 7-day rule has '
+            'complete historical labels. A fixed 14-day circular block bootstrap '
+            'with 3,000 draws estimates day-clustered uncertainty; its intervals '
+            'do not correct for previously inspecting the test period.'
+        )
+        st.download_button('Download auditable model evaluation (JSON)',
+                           json.dumps(audit,indent=2),
+                           file_name='firelens_model_research_audit.json',
+                           mime='application/json')
+    st.caption(
+        'The archived test period was previously inspected in model development, '
+        'so these are **exploratory** next-day recorded-hotspot-grid overlap scores, '
+        'not independent wildfire-forecast accuracy. Baselines use historical '
+        'positive reports only; the model threshold was locked on validation.'
+    )
     st.divider()
     replay_date=st.select_slider('Choose next-day target date (UTC)',dates,value='2025-09-03')
     idx=dates.index(replay_date)
