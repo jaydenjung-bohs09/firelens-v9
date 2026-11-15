@@ -142,7 +142,7 @@ k3.metric('Test F1 · ConvLSTM','0.4212')
 k4.metric('Test F1 · persistence','0.3818',delta='Model higher by 10.3% relative',delta_color='normal')
 st.caption('Different studies: 2022–2025 model training dataset vs July 2024 V8 evidence audit. Performance measures recorded-hotspot overlap, not real wildfire detection accuracy. 2025 evaluation is exploratory.')
 
-section=st.radio('Choose section', ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL','METHODS & SOURCES'], horizontal=True, label_visibility='collapsed')
+section=st.radio('Choose section', ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'], horizontal=True, label_visibility='collapsed')
 
 if section == '01  EXPLORE HISTORY':
     section_eyebrow('Observe / Four-year calendar')
@@ -403,6 +403,10 @@ if section == '03  REPLAY THE MODEL':
         st.plotly_chart(figure,use_container_width=True)
         st.markdown('**Limitations:** The positive class is sparse (~0.31% of train grid cells). Sensor passes, clouds, and validated zero-fire labels are absent. Test period examined during earlier iterations; no independent deployment evaluation. Strong day-to-day correlation means pooled pixel F1 is not event-level generalization.')
     source_footer()
+
+if section == '04  AMAZON 2022–2025':
+    from v10.amazon_section import render_amazon
+    render_amazon()
 
 if section == 'METHODS & SOURCES':
     section_eyebrow('Validity / Reproducible evidence')
