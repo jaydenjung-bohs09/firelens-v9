@@ -15,7 +15,7 @@ ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/"v11/processed/global/global_country_year.csv"
 REGIONS=ROOT/"v15/iso_regions.csv"
 MONTH_COLS=[f"m{i:02d}" for i in range(1,13)]
-METHODS=("none","ratio","log")
+METHODS=("none","ratio","log","global_ratio")
 MIN_COUNTRY_MONTHS=36
 COUNTRY_PRIOR_STRENGTH=24.0
 REGION_PRIOR_STRENGTH=48.0
@@ -102,6 +102,7 @@ class FittedCalibration:
     ratios_country:dict
     ratios_region:dict
     ratios_global:dict
+    single_global_ratio:float
     beta_global:np.ndarray
     beta_region:dict
     beta_country:dict
@@ -127,6 +128,8 @@ class FittedCalibration:
             code=str(r.iso3);region=str(r.continent);month=int(r.month)
             if method=="none":
                 pred=m
+            elif method=="global_ratio":
+                pred=m*self.single_global_ratio
             elif method=="ratio":
                 ratio=self.ratios_country.get((code,month))
                 if ratio is None:
@@ -158,6 +161,7 @@ def fit_calibration(rows:pd.DataFrame,*,years:tuple[int,...]|None=None)->FittedC
     country=ratios(["iso3","month"])
     region=ratios(["continent","month"])
     global_ratios=ratios(["month"])
+    single_global_ratio=float(positive.viirs.sum()/positive.modis.sum())
     beta_global=ridge_fit(design(positive),np.log1p(positive.viirs.to_numpy(dtype=float)))
     beta_region={}
     for continent,g in positive.groupby("continent"):
@@ -177,5 +181,5 @@ def fit_calibration(rows:pd.DataFrame,*,years:tuple[int,...]|None=None)->FittedC
     for (continent,month),g in zero.groupby(["continent","month"]):
         zero_by_month[(str(continent),int(month))]=float((g.viirs.gt(0).sum()+1)/(len(g)+2))
     global_prob=float((zero.viirs.gt(0).sum()+1)/(len(zero)+2))
-    return FittedCalibration(eligible,country,region,global_ratios,beta_global,
+    return FittedCalibration(eligible,country,region,global_ratios,single_global_ratio,beta_global,
                              beta_region,beta_country,zero_by_month,global_prob)

@@ -28,7 +28,7 @@ def render_validation():
     global_results=summary.loc[summary.level.eq("global")].copy()
     selected=selected_method(summary)
     human={"none":"Unadjusted MODIS","ratio":"Monthly country ratio",
-           "log":"Region-shrunk log regression"}
+           "log":"Region-shrunk log regression","global_ratio":"Single global ratio"}
     label=human[selected]
     st.write(
         f"**Lowest held-out median absolute percentage error: {label}.** "

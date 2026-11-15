@@ -31,13 +31,27 @@ class CalibrationTests(unittest.TestCase):
             self.assertAlmostEqual(float((predicted.predicted/rows.viirs).median()),
                                    1,delta=.08)
 
+    def test_single_global_ratio_equals_country_month_ratio_when_uniform(self):
+        rows=self.synthetic()
+        additional=rows.copy()
+        additional["iso3"]="BRA"
+        additional["country"]="Brazil"
+        additional["continent"]="South America"
+        additional["modis"]=additional["modis"]*3
+        additional["viirs"]=additional["modis"]*2
+        same_ratio=pd.concat([rows,additional],ignore_index=True)
+        fit=fit_calibration(same_ratio,years=tuple(range(2019,2025)))
+        global_pred=fit.predict(same_ratio,"global_ratio").predicted.to_numpy()
+        country_pred=fit.predict(same_ratio,"ratio").predicted.to_numpy()
+        np.testing.assert_allclose(global_pred,country_pred,rtol=1e-12,atol=1e-9)
+
     def test_zero_modis_returns_nan_and_conditional_viirs_probability(self):
         rows=self.synthetic()
         extra=dict(iso3="AUS",country="Australia",continent="Oceania",
                    year=2024,month=12,modis=0,viirs=5)
         rows=pd.concat([rows,pd.DataFrame([extra])],ignore_index=True)
         fit=fit_calibration(rows,years=tuple(range(2019,2025)))
-        for method in ("none","ratio","log"):
+        for method in ("none","ratio","log","global_ratio"):
             result=fit.predict(rows.iloc[[-1]],method)
             self.assertTrue(np.isnan(result.predicted.iloc[0]))
             self.assertTrue(0<result.p_viirs_positive_when_modis_zero.iloc[0]<1)
