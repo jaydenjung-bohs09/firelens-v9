@@ -20,5 +20,12 @@
   "interpretation": "Counts are positive hotspot records. Not unique wildfire events, burned area, sensor-normalized rates, full observation coverage, or verified negatives.",
   "methods": "Per-country CSV archive streaming; type=0 filter; calendar year/date checks; monthly aggregation; 34 archive integrity checksums in separately exported source manifest archive.",
   "generated_at_utc": "2026-11-15",
-  "archive_source": "https://firms.modaps.eosdis.nasa.gov/data/country/"
+  "archive_source": "https://firms.modaps.eosdis.nasa.gov/data/country/",
+  "archive_checksums_file": "archive_checksums.csv",
+  "archive_coverage_note": "All source ZIP checksums are from the 34 user-uploaded NASA yearly all-country archives. The worldwide raw files themselves are not committed to GitHub.",
+  "source_record_breakdown": {
+    "MODIS": 107673642,
+    "VIIRS_NOAA20": 145241663
+  },
+  "country_count": 238
 }
