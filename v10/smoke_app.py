@@ -22,11 +22,32 @@ if nav("v11_workspace").value!="01 · GLOBAL ATLAS":
 if not any(s.key=="v11_global_year" for s in app.get("select_slider")):
     raise AssertionError("Global archive year control not found")
 
+# The secondary global sensor has a shorter historical era.
+nav("v11_global_sensor").set_value("VIIRS_NOAA20")
+app.run()
+assert_clean("Global NOAA-20")
+global_years=[v for v in app.get("select_slider") if v.key=="v11_global_year"]
+if not global_years:
+    raise AssertionError("Global NOAA-20 year selector missing")
+global_years[0].set_value(2025)
+app.run()
+assert_clean("Global NOAA-20 year 2025")
+
 nav("v11_workspace").set_value("02 · COUNTRY COMPARISON")
 app.run()
 assert_clean("Country comparison")
 if not any(m.key=="v11_compare_countries" for m in app.multiselect):
     raise AssertionError("Country selection UI not found")
+
+nav("v11_compare_sensor").set_value("VIIRS_NOAA20")
+app.run()
+assert_clean("Country comparison with NOAA-20")
+compare_years=[v for v in app.get("select_slider") if v.key=="v11_overlap_year"]
+if not compare_years:
+    raise AssertionError("Two-sensor perspective year control missing")
+compare_years[0].set_value(2025)
+app.run()
+assert_clean("Two-sensor perspective 2025")
 
 nav("v11_workspace").set_value("03 · CALIFORNIA FIRE LABORATORY")
 app.run()
