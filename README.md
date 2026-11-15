@@ -1,3 +1,15 @@
+# FireLens V10 — Evidence Before Assumptions
+
+**Now includes a verified Amazon regional research panel.** The two user-provided NASA archive ZIPs (MODIS `DL_FIRE_M-C61_850616.zip`; VIIRS S-NPP `DL_FIRE_SV-C2_850617.zip`) contain **4,404,388** raw thermal-anomaly records for the Amazon study rectangle `[-74, -15, -48, 2]` spanning 2022–2025. After filtering to NASA Type-0 presumed vegetation-fire observations, **4,386,124** records contribute **917,907 union 10-km cell-days**. These are not distinct wildfires, burned area, or ground-truth labels.
+
+The lightweight regional summaries, 1° spatial raster and source checksums are in [`v10/processed/amazon/`](v10/processed/amazon); preprocessing, methods and tests are in [`v10/`](v10/). Open **04 AMAZON 2022–2025** in the Streamlit app. The California ConvLSTM is **not** trained or validated on Amazon data.
+
+**Scientific caution:** Satellite archives may omit detections because of acquisition conditions, sensor disruptions, clouds, or other factors. The screening tool uses positive records and retrospective reference years; it is not an operational fire-warning service. Same-day/same-cell sensor co-occurrence is not acquisition-time matching or sensor accuracy.
+
+## Preserved California V9.1 pilot
+
+The sections and methodology documented below are retained.
+
 # FireLens V9 — Evidence Before Assumptions
 
 NASA Space Apps Challenge 2026 • Harmonization of MODIS and VIIRS Hot Spots • California pilot
