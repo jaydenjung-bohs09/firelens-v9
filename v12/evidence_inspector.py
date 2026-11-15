@@ -257,7 +257,8 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
     match = int(base["Time-compatible"].sum())
     active_groups = len(base)
     a, b, c, d = st.columns(4)
-    a.metric("Positive-report groups", f"{active_groups:,}")
+    a.metric("Detected cell-day groups", f"{active_groups:,}",
+             help="Cell-day-phase groups with any positive hotspot detection; distinct day/night groups count separately.")
     b.metric("Both sensors positive", f"{both:,}")
     c.metric("Within selected tolerance", f"{match:,}")
     st.caption(
@@ -268,7 +269,8 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
         f"Time-compatible share: {100*match/both:.1f}% of both-positive"
         if both else "Time-compatible share: no both-positive groups"
     )
-    d.metric("One-to-one time pairs", f"{int(base['One-to-one matched pairs'].sum()):,}")
+    d.metric("Matched acquisition pairs", f"{int(base['One-to-one matched pairs'].sum()):,}",
+             help="One-to-one positive hotspot-record time matches, not verified coincident satellite passes or confirmed individual fires.")
 
     if tolerance == 180 and not type0_only and not exclude_flags:
         expected = (316, 54, 45)
@@ -332,12 +334,13 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
     selected_index = st.selectbox(
         "Inspect grid cell (5 km)", keys,
         format_func=lambda ix: (
-            f"{day.loc[ix, 'Cell ID']} · "
+            f"{float(day.loc[ix, 'cell_center_lat']):.2f}°N, "
+            f"{abs(float(day.loc[ix, 'cell_center_lon'])):.2f}°W · "
             f"{'Day' if day.loc[ix, 'Day/night']=='D' else 'Night'} · "
             f"M {int(day.loc[ix, 'MODIS records'])} / "
-            f"V {int(day.loc[ix, 'VIIRS records'])} · "
-            f"{day.loc[ix, 'Evidence class']}"
-        ), key="v12_selected_group"
+            f"V {int(day.loc[ix, 'VIIRS records'])}"
+        ), key="v12_selected_group",
+        help="Each option shows the approximate projected-cell center and UTC day/night phase. The original grid-cell ID is displayed in the detailed record panel."
     )
     chosen = day.loc[selected_index]
     mapcol, detailcol = st.columns([1.55, 1.0])
@@ -357,7 +360,8 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
             fig.add_trace(go.Scattergl(
                 x=subset.cell_center_lon, y=subset.cell_center_lat,
                 mode="markers",
-                name=category,
+                name=(f"Both satellites reported hotspots within {tolerance} min"
+                      if category == EVIDENCE_ORDER[0] else category),
                 marker=dict(size=8.5, color=EVIDENCE_COLORS[category],
                             opacity=.9, line=dict(color="#112638", width=.5)),
                 customdata=custom,
@@ -388,11 +392,18 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
         )
     with detailcol:
         st.markdown("#### Evidence interpretation")
-        st.markdown(f"**{chosen['Evidence class']}**")
+        evidence_label = (
+            f"Both satellites reported hotspots within {tolerance} min"
+            if chosen["Evidence class"] == EVIDENCE_ORDER[0]
+            else chosen["Evidence class"]
+        )
+        st.markdown(f"**{evidence_label}**")
         st.write(
-            f"**{chosen['Cell ID']}** · "
+            f"**{chosen['cell_center_lat']:.2f}°N, "
+            f"{abs(chosen['cell_center_lon']):.2f}°W** · "
             f"{'Day' if chosen['Day/night']=='D' else 'Night'}"
         )
+        st.caption(f"Grid-cell ID: {chosen['Cell ID']}")
         st.write(f"MODIS positive records: **{int(chosen['MODIS records'])}**")
         st.write(f"VIIRS S-NPP positive records: **{int(chosen['VIIRS records'])}**")
         if chosen["Both sensors positive"]:
