@@ -1,4 +1,4 @@
-"""FireLens V10: California evidence + Amazon regional archive explorer.
+"""FireLens V11: Global Atlas, Country Comparison and California Fire Laboratory.
 
 Run: streamlit run app.py
 Data: NASA FIRMS archives; all results are detection proxies, NOT fire truth.
@@ -29,7 +29,7 @@ BLUE = "#77ACF8"
 RED = "#FA6C75"
 PALETTE = ["#101F2B", "#15394B", "#236576", "#C98A43", "#F2B36E", "#FA7355"]
 
-st.set_page_config(page_title="FireLens V10 | Evidence to Foresight", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="FireLens V11 | NASA FIRMS Evidence", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"]{background:linear-gradient(155deg,#071422 0%,#081B28 55%,#0A1422 100%);}
@@ -104,6 +104,41 @@ def counts(pred, truth):
 def source_footer():
     st.caption("NASA FIRMS archived positive-hotspot records · EPSG:6933 equal-area grids · Not fire area, verified negatives, or an operational alert system.")
 
+
+# Three primary workspaces are intentionally routed before loading California's
+# frozen model arrays. Global browsing stays fast and memory-conscious.
+with st.sidebar:
+    st.markdown("## FIRELENS / V11")
+    st.caption("NASA SPACE APPS 2026  ·  EVIDENCE BEFORE ASSUMPTIONS")
+    workspace = st.radio(
+        "Explore FireLens",
+        ["01 · GLOBAL ATLAS", "02 · COUNTRY COMPARISON", "03 · CALIFORNIA FIRE LABORATORY"],
+        key="v11_workspace"
+    )
+    st.divider()
+    if workspace.startswith("01"):
+        st.caption("Worldwide records · 2000–2025")
+        st.caption("MODIS and VIIRS NOAA-20 remain separate sensor layers.")
+    elif workspace.startswith("02"):
+        st.caption("Compare countries, seasons and historical signals.")
+        st.caption("Same sensor and years · Non-calibrated archive counts.")
+    else:
+        st.caption("Park Fire case study · California ConvLSTM.")
+        st.caption("Evidence-aware regional investigation and research replay.")
+    st.divider()
+    st.markdown("[NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/download/) · "
+                "[Space Apps challenge](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/)")
+    st.caption("Research prototype only — not an emergency response system.")
+
+if workspace.startswith("01"):
+    from v11.world import render_global_atlas
+    render_global_atlas()
+    st.stop()
+if workspace.startswith("02"):
+    from v11.world import render_country_compare
+    render_country_compare()
+    st.stop()
+
 # Verify frozen model evidence at startup. Never silently display incompatible arrays.
 manifest=load_manifest()
 scores, actual, dates, metrics, baselines, mcard, dcard=load_model_data()
@@ -117,8 +152,8 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.stop()
 
 with st.sidebar:
-    st.markdown('### FIRELENS / V10')
-    st.caption('CALIFORNIA + AMAZON  /  OBSERVATIONS → EVIDENCE → FORESIGHT')
+    st.markdown('### CALIFORNIA FIRE LAB')
+    st.caption('LOCAL EVIDENCE  /  INDEPENDENT MODEL REPLAY')
     st.divider()
     st.markdown('**Data that power this app**')
     st.markdown('• NASA FIRMS MODIS + VIIRS S-NPP\n\n• California real July 2024 evidence study\n\n• Amazon region 2022–2025 (4.4M observations)\n\n• California frozen 2025 AI replay')
@@ -131,18 +166,30 @@ with st.sidebar:
     st.caption('V8 source remains unchanged in /legacy_v8/')
 
 section_eyebrow('NASA SPACE APPS CHALLENGE 2026  /  HARMONIZATION OF MODIS & VIIRS HOT SPOTS')
-st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V10</span></h1>",unsafe_allow_html=True)
-st.markdown("<div style='font-size:1.25rem;color:#D2E2EB;font-weight:510;margin-bottom:.8rem'>When a satellite doesn't report a hotspot, what do we actually know?</div>",unsafe_allow_html=True)
-paragraph('A multi-region research prototype combining a California evidence-and-model pilot with four years of Amazon MODIS–VIIRS observations. Explore archived hotspot signals, evidence gaps, spatial patterns and retrospective candidate activity periods.')
+st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V11</span></h1>",unsafe_allow_html=True)
+st.markdown("<div style='font-size:1.25rem;color:#D2E2EB;font-weight:510;margin-bottom:.8rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
+paragraph('The local research layer of FireLens: 2022–2025 California hotspot activity, a time-aware Park Fire sensor investigation, a frozen experimental ConvLSTM forecast replay, and an optional Amazon case study. These are distinct datasets and validation tasks.')
 
 k1,k2,k3,k4=st.columns(4)
-k1.metric('Amazon archive records','4,404,388')
-k2.metric('California archive records','173,471')
-k3.metric('Park Fire positive groups','316')
+k1.metric('California training-archive records','173,471')
+k2.metric('Park Fire positive groups','316')
+k3.metric('Time-compatible positive groups','45 / 316')
 k4.metric('California ConvLSTM F1','0.4212',delta='Persistence F1 0.3818',delta_color='off')
-st.caption('Separate studies: Amazon historical archive (4,404,388 raw records, 2022–2025), California 2022–2025 model archive (173,471 records), and July 2024 Park Fire evidence audit. The ConvLSTM F1 applies to California recorded-hotspot proxy cells only; 2025 evaluation is exploratory, not wildfire prediction accuracy.')
+st.caption('California research: the Park Fire comparison counts positive-record cell/day/phase groups. The ConvLSTM test F1 (0.4212 vs persistence 0.3818) is a California **recorded-hotspot proxy** metric from exploratory 2025 evaluation, not wildfire detection accuracy or global model performance.')
 
-section=st.radio('Choose section', ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'], horizontal=True, label_visibility='collapsed')
+section=st.sidebar.radio(
+    'California research tools',
+    ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE',
+     '03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'],
+    format_func=lambda v:{
+        '01  EXPLORE HISTORY':'Historical Calendar',
+        '02  INVESTIGATE EVIDENCE':'Sensor Harmonization',
+        '03  REPLAY THE MODEL':'AI Forecasting & Validation',
+        '04  AMAZON 2022–2025':'Amazon Field Study',
+        'METHODS & SOURCES':'Methods & Provenance'
+    }[v],
+    key='v11_california_tool'
+)
 
 if section == '01  EXPLORE HISTORY':
     section_eyebrow('Observe / Four-year calendar')
@@ -238,11 +285,13 @@ if section == '01  EXPLORE HISTORY':
     st.subheader('Explore a selected area: July 2024')
     paragraph('For an arbitrary geographic rectangle, this view uses the actual July 2024 FIRMS geolocations rather than the 4-year aggregated sequence manifest. Change the study area to see the observed daily cell counts.')
     july=load_july()
-    preset=st.radio('Area', ['California archive extent','Park Fire vicinity (~60 km screening rectangle)','Custom rectangle'],horizontal=True,index=1)
+    preset=st.radio('Area', ['California archive extent','Park Fire vicinity (~60 km screening rectangle)','Brea / North Orange County vicinity','Custom rectangle'],horizontal=True,index=1)
     if preset=='California archive extent':
         lat_lo,lat_hi,lon_lo,lon_hi=32.5,42.1,-124.5,-114.0
     elif preset.startswith('Park Fire'):
         lat_lo,lat_hi,lon_lo,lon_hi=39.2,40.3,-122.5,-121.0
+    elif preset.startswith('Brea'):
+        lat_lo,lat_hi,lon_lo,lon_hi=33.65,34.10,-118.25,-117.40
     else:
         u,v=st.columns(2)
         with u:
