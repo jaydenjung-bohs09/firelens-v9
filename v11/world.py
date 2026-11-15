@@ -159,6 +159,23 @@ def render_global_atlas():
     fig.add_annotation(x=int(years[0]),y=int(annual.vegetation_records.iloc[0]),
                        text="Partial first year",font=dict(color=AMBER,size=11),
                        showarrow=True,ax=55,ay=-40)
+    if sensor=="MODIS" and 2002 in annual.year.values:
+        aqua_year=annual.loc[annual.year.eq(2002)].iloc[0]
+        fig.add_annotation(
+            x=2002,y=int(aqua_year.vegetation_records),
+            text="2001: Terra only; Aqua added in 2002",
+            showarrow=True,ax=95,ay=-63,
+            font=dict(color=BLUE,size=11)
+        )
+    last_year=int(annual.year.iloc[-1])
+    last_months=annual.iloc[-1][MCOLS].to_numpy(dtype=float)
+    available_months=int(np.count_nonzero(last_months>0))
+    fig.add_annotation(
+        x=last_year,y=int(annual.vegetation_records.iloc[-1]),
+        text=f"{last_year}: {available_months} positive-record months; completeness unverified",
+        showarrow=True,ax=-106,ay=-60,
+        font=dict(color=AMBER,size=11)
+    )
     style(fig,300,xaxis_title="Archive year",yaxis_title="Type-0 positive records")
     st.plotly_chart(fig,use_container_width=True)
     st.caption("Tracking one satellite product through time reveals shifts in its recorded activity; see Data provenance for measurement limits.")
