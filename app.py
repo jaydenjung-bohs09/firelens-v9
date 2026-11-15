@@ -560,14 +560,20 @@ if section == '03  REPLAY THE MODEL':
     previous=results['One-day persistence']
     three_of_seven=results['At least three of seven days']
     union_seven=results['Seven-day union']
-    lo,hi=previous['ci95_model_minus_baseline']
+    best_lo,best_hi=three_of_seven['ci95_model_minus_baseline']
+    yesterday_lo,yesterday_hi=previous['ci95_model_minus_baseline']
     z1,z2,z3,z4=st.columns(4)
     z1.metric('ConvLSTM · matched-day F1',f"{main_model['f1']:.4f}")
     z2.metric('Yesterday = today · F1',f"{previous['f1']:.4f}")
     z3.metric('Active ≥3 of 7 days · F1',f"{three_of_seven['f1']:.4f}")
-    z4.metric('Gain vs yesterday',f"+{previous['model_minus_baseline_f1']:.3f}",
-              help='Exploratory F1 gain over one-day persistence on the same archived test dates')
-    st.caption(f'95% block-bootstrap CI for gain vs yesterday: +{lo:.3f} to +{hi:.3f} F1.')
+    z4.metric('Gain vs best baseline',f"+{three_of_seven['model_minus_baseline_f1']:.3f}",
+              help='Exploratory F1 gain relative to the strongest included baseline: active on at least three of the previous seven days.')
+    st.caption(
+        f"Gain vs strongest baseline (3 of 7 days): 95% block-bootstrap CI "
+        f"+{best_lo:.3f} to +{best_hi:.3f} F1. "
+        f"Gain vs yesterday: +{previous['model_minus_baseline_f1']:.3f} F1 "
+        f"(95% CI +{yesterday_lo:.3f} to +{yesterday_hi:.3f})."
+    )
     table_rows=[]
     for label,record in results.items():
         table_rows.append({
