@@ -47,7 +47,8 @@ a{color:#50DCC2!important}
 
 @st.cache_data(show_spinner=False)
 def load_manifest():
-    m=pd.read_csv(PRED/'sequence_manifest.csv',parse_dates=['target_date_utc'])
+    m=pd.read_csv(PRED/'sequence_manifest.csv')
+    m['target_date_utc']=pd.to_datetime(m['target_date_utc'],errors='raise',utc=True).dt.tz_convert(None)
     m['year']=m.target_date_utc.dt.year
     m['month']=m.target_date_utc.dt.month
     m['day_name']=m.target_date_utc.dt.day_name()
@@ -196,7 +197,12 @@ if section == '01  EXPLORE HISTORY':
         m,window_days=14,peer_quantile=peer_q,
         ratio_threshold=ratio,min_occupied_cells=20,min_peers=30,min_streak=min_run)
     dyear=critical_daily[critical_daily.year==yr].copy()
-    periods_year=critical_periods[critical_periods.start_date.dt.year==yr].copy()
+    # Empty screen results must not invoke .dt on object-typed columns.
+    if critical_periods.empty:
+        periods_year=critical_periods.copy()
+    else:
+        starts=pd.to_datetime(critical_periods['start_date'],errors='coerce',utc=True)
+        periods_year=critical_periods.loc[starts.dt.year.eq(yr)].copy()
     r1,r2,r3=st.columns(3)
     r1.metric('Candidate multi-day periods',len(periods_year))
     r2.metric('Year days not comparable (coarse proxy)',int((~dyear.comparison_eligible).sum()))
