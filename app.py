@@ -801,6 +801,11 @@ if section == 'METHODS & SOURCES':
 
 **Important:** Four-year model features include a VIIRS daily-record-presence indicator and documented 2024 S-NPP anomaly windows. These are coarse date-level proxies and cannot verify valid satellite observations at a pixel.
     ''')
+    st.markdown(
+        "Terra MODIS data collection planned to end January 2027 and Aqua MODIS "
+        "around September 2027 ([Copernicus CAMS, citing NASA plans]"
+        "(https://atmosphere.copernicus.eu/drifting-away-modis-cams-global-fire-assimilation-system))."
+    )
     st.caption("2000–2002: Terra-only MODIS — modeled values likely low; Aqua joined during 2002, and the calibration was trained on later Terra+Aqua years.")
     st.subheader('Data lineage')
     st.code('''California July 2024 source observations (kept unchanged):
