@@ -4,6 +4,8 @@ on:
     branches: [v10-data-foundation]
     paths:
       - "v10/**"
+      - "app.py"
+      - "critical_periods.py"
       - ".github/workflows/v10-data-tests.yml"
   workflow_dispatch:
 
