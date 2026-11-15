@@ -34,7 +34,7 @@ st.markdown("""
 <style>
 [data-testid="stAppViewContainer"]{background:linear-gradient(155deg,#071422 0%,#081B28 55%,#0A1422 100%);}
 [data-testid="stSidebar"]{background:#091927;min-width:270px;}
-.block-container{padding-top:1.1rem;padding-bottom:2.3rem;max-width:1450px;}
+.block-container{padding-top:3.75rem;padding-bottom:2.3rem;max-width:1450px;}
 [data-testid="stMarkdownContainer"] p,
 [data-testid="stMarkdownContainer"] li{font-size:1.08rem;line-height:1.58;}
 [data-testid="stCaptionContainer"],
