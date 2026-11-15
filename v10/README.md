@@ -38,6 +38,12 @@ For four annual files per sensor, append additional file paths after each
 flag, ending each list before the next flag. Existing outputs require
 \`--overwrite\` to regenerate.
 
+## Real NASA Amazon data received
+
+The source archive ZIPs `DL_FIRE_M-C61_850616.zip` and `DL_FIRE_SV-C2_850617.zip` cover 2022–2025 and were processed separately. The observed total is **4,404,388 raw records**; after filtering to type-0 presumed vegetation-fire records, **4,386,124** remained. This is **917,907 positive union 10-km cell-days**, not unique wildfire events or burned area.
+
+The repository bundles lightweight derived `processed/amazon/` daily, annual, spatial-1° and provenance files, not the original 75 MB of archive ZIPs. The exact source SHA-256 values are recorded in `source_inventory.json`.
+
 ## Generated artifacts
 
 | Artifact | Purpose |
@@ -46,6 +52,8 @@ flag, ending each list before the next flag. Existing outputs require
 | \`annual_summary.csv\` | Yearly positive-record counts and positive cell-days |
 | \`grid_10km_daily.csv.gz\` | GIS-ready 10-km same-UTC-day grid, both sensors represented separately |
 | \`source_inventory.json\` | File SHA-256, provenance, observed counts, preprocessing scope and limitations |
+
+Only source `type=0` presumed vegetation-fire records are processed for the regional view; type-2 and other thermal anomalies are counted in provenance but excluded. This does **not** identify distinct wildfires; agricultural and managed burning may remain. NASA's VIIRS archive uses `instrument=SNPP`, which is recognized as VIIRS S-NPP.
 
 All dates are **UTC**. Coordinates use **EPSG:6933** and **10-km projected
 equal-area bins**, for exploratory spatial comparisons. Cells are NOT burned
@@ -74,6 +82,12 @@ python -m unittest discover -s v10 -p "test_*.py" -v
 Tests cover ZIP parsing, sensor label validation, file duplication, raw-record
 counts vs unique occupied grid cells, cross-sensor cell co-occurrence, the
 yearly totals, and zero-positive-record days.
+
+## Staging dashboard
+
+On branch `v10-data-foundation`, run `streamlit run app.py` and choose **04 AMAZON 2022–2025**. The panel provides an archive-wide record count, annual trends, monthly seasonality, daily sensor-positive indicators, a spatial 1° summary from 10-km equal-area cell-days, and retrospective critical-period screening.
+
+The displayed spatial tiles are coarse index bins, not true fire perimeters. Model replay continues to use only the original California trained model.
 
 ## Staging and deployment
 
