@@ -53,10 +53,9 @@ nav("v11_workspace").set_value("03 · CALIFORNIA FIRE LABORATORY")
 app.run()
 assert_clean("California laboratory")
 sections=[
-    "01  EXPLORE HISTORY",
     "02  INVESTIGATE EVIDENCE",
     "03  REPLAY THE MODEL",
-    "04  AMAZON 2022–2025",
+    "01  EXPLORE HISTORY",
     "METHODS & SOURCES"
 ]
 for section in sections:
@@ -64,13 +63,20 @@ for section in sections:
     app.run()
     assert_clean("California subsection: "+section)
 
-nav("v11_california_tool").set_value("04  AMAZON 2022–2025")
+# The Amazon field study moved to the optional global research expander.
+nav("v11_workspace").set_value("01 · GLOBAL ATLAS")
 app.run()
-assert_clean("Amazon load")
+assert_clean("Global after California")
+amazon=[c for c in app.checkbox if c.key=="v13_open_amazon"]
+if len(amazon)!=1:
+    raise AssertionError("Global Amazon research toggle missing")
+amazon[0].set_value(True)
+app.run()
+assert_clean("Optional Amazon study")
 years=[x for x in app.selectbox if x.key=="amazon_year"]
 if not years:
-    raise AssertionError("Amazon year selector not found")
+    raise AssertionError("Amazon year selector missing from optional panel")
 years[0].set_value(2025)
 app.run()
 assert_clean("Amazon 2025")
-print("PASS: Global + Country + all 5 California research tools + Amazon 2025")
+print("PASS: Global + Country + 4 California tools + optional Amazon 2025")
