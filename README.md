@@ -1,4 +1,8 @@
-# MODVIIR — NASA MODIS/VIIRS Hotspot Evidence
+# MODVIIR — One Fire Calendar from Two NASA Satellites
+
+Formerly FireLens. Repository URL kept as firelens-v9 so the live app link stays stable.
+
+https://u98xspjn5tsz9kysvyppmw.streamlit.app/
 
 **MODVIIR helps researchers inspect where satellite hotspot records agree, where documented interruptions affect interpretation, and whether historical count conversions withstand held-out testing.**
 
