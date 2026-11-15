@@ -1,4 +1,16 @@
-# MODVIIR V11 — Evidence Before Assumptions
+# MODVIIR — NASA MODIS/VIIRS Hotspot Evidence
+
+**MODVIIR helps researchers inspect where satellite hotspot records agree, where documented interruptions affect interpretation, and whether historical count conversions withstand held-out testing.**
+
+**Source code:** [GitHub repository](./) · **Live app:** A verified Streamlit deployment URL has **not yet been supplied**; do not substitute the repository URL for a tested live application.
+
+![Held-out calibration validation chart: 80.65% unadjusted MODIS, 20.43% country-month ratio, 21.46% continent-shrunk log model](v15/calibration_validation.svg)
+
+**Data limits:** Country-scale historical estimates are statistical conversions of **type-0 hotspot record counts**, not burned area or distinct wildfire events. NASA MODIS begins in November 2000; NOAA-20 VIIRS begins in April 2018. Reported positive records cannot establish satellite observation opportunity or independently verified non-fire cells. The California ConvLSTM test was inspected during development and is not an operational wildfire warning.
+
+---
+
+# MODVIIR — Evidence Before Assumptions
 **Global Atlas → Country Comparison → California Fire Laboratory.** MODVIIR V11 now combines the preserved V10 Amazon/California research with 34 NASA worldwide annual country archives (MODIS 2000–2025, VIIRS NOAA-20 2018–2025). The worldwide analysis uses **252,915,305 NASA type-0 presumed vegetation-fire positive records** summarized into 7,033 country-year entries, not unique wildfire counts or sensor-calibrated fire rates.
 
 Navigate using the **three primary workspaces in the Streamlit sidebar**. The California workspace retains Sensor Harmonization, AI Forecasting & Validation, the Amazon field study and source methods as secondary tools. Details, exact source hashes and reproducible methods: [V11 research documentation](v11/README.md).

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 450" width="1060" height="450" role="img" aria-label="Held-out 2019 to 2025 NOAA-20 record-count calibration median absolute percentage error: unadjusted MODIS 80.65%, country-month ratio 20.43%, region-shrunk log model 21.46%">
+<rect width="1060" height="450" fill="#0c1e2b"/>
+<text x="30" y="42" fill="#ffffff" font-size="30" font-weight="700">Does calibration reduce held-out record-count error?</text>
+<text x="30" y="72" fill="#cbdde8" font-size="18">MODIS → VIIRS NOAA-20 | 2019–2025 leave-one-year-out, global monthly country records</text>
+<text x="30" y="128" fill="#e5f2f9" font-size="20">Unadjusted MODIS</text><rect x="305" y="110" width="536" height="28" rx="6" fill="#759fcf"/><text x="856" y="131" fill="#ffffff" font-size="20" font-weight="700">80.65%</text>
+<text x="30" y="216" fill="#e5f2f9" font-size="20">Country-month ratio</text><rect x="305" y="198" width="136" height="28" rx="6" fill="#43b8a9"/><text x="456" y="219" fill="#ffffff" font-size="20" font-weight="700">20.43%</text>
+<text x="30" y="304" fill="#e5f2f9" font-size="20">Region-shrunk log model</text><rect x="305" y="286" width="143" height="28" rx="6" fill="#e5b76c"/><text x="463" y="307" fill="#ffffff" font-size="20" font-weight="700">21.46%</text>
+<text x="30" y="408" fill="#b2cbd9" font-size="16">Median absolute % error; smaller is better. MODIS-zero estimates are undefined.</text>
+<text x="30" y="433" fill="#b2cbd9" font-size="16">Source: v15/calibration_validation.csv. This does not measure satellite detection accuracy.</text>
+</svg>
