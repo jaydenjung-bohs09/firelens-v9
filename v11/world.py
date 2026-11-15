@@ -301,6 +301,89 @@ def render_country_compare():
     style(fig,375,xaxis_title="Acquisition month",
           yaxis=dict(autorange="reversed"))
     st.plotly_chart(fig,use_container_width=True)
+    st.divider()
+    st.subheader("Retrospective unusual-month screen")
+    st.markdown(
+        "Compare this country's monthly archive records against only **earlier "
+        "years of the same calendar month**. This is exploratory evidence "
+        "screening, not a statistically calibrated anomaly alert."
+    )
+    choice_year=st.selectbox(
+        "Year to investigate",sorted(rows.year.unique().tolist(),reverse=True),
+        index=0,key="v11_critical_year"
+    )
+    lookback=st.slider("Prior-year reference window",3,10,5,key="v11_critical_lookback")
+    first_full=2001 if sensor=="MODIS" else 2019
+    peers=rows.loc[rows.year.between(max(first_full,choice_year-lookback),
+                                      choice_year-1)]
+    target=rows.loc[rows.year.eq(choice_year)]
+    if len(peers)<3 or target.empty:
+        st.info("Fewer than three prior full-year references are available. "
+                "Choose a later year or a longer reference window.")
+    else:
+        observed=target.iloc[0][MCOLS].to_numpy(dtype=float)
+        older=peers[MCOLS].to_numpy(dtype=float)
+        med=np.median(older,axis=0)
+        upper=np.quantile(older,.90,axis=0)
+        ratio=observed/np.maximum(med,1.)
+        unusual=(observed>upper)&(ratio>=1.5)&(observed>=100)
+        evidence=pd.DataFrame({
+            "Month":MONTHS,"Observed archived positives":observed.astype(int),
+            "Prior median":med.round(1),"Prior 90th percentile":upper.round(1),
+            "Current / median":ratio.round(2),"Candidate":unusual
+        })
+        c1,c2=st.columns(2)
+        c1.metric("Candidate high-activity months",int(unusual.sum()))
+        c2.metric("Previous full-year references",len(peers))
+        fig=go.Figure([
+            go.Bar(x=MONTHS,y=observed,name=f"{choice_year} records",marker_color=AMBER),
+            go.Scatter(x=MONTHS,y=med,name="Earlier-years median",mode="lines+markers",
+                       line=dict(color=TEAL,width=2.5))
+        ])
+        style(fig,310,yaxis_title="NASA type-0 positive records")
+        st.plotly_chart(fig,use_container_width=True)
+        st.dataframe(evidence,hide_index=True,use_container_width=True)
+        st.caption(
+            "Candidate rule: above historical same-month 90th percentile, ≥1.5× "
+            "previous-years median, and ≥100 records; reference years: "+
+            ", ".join(str(int(v)) for v in peers.year.tolist())+
+            ". No satellite-coverage normalization or calibrated significance."
+        )
+        st.download_button("Export monthly screening audit",evidence.to_csv(index=False),
+                           f"firelens_{focus.lower()}_{choice_year}_screen.csv","text/csv")
+
+    st.divider()
+    st.subheader("Two-satellite geographic perspectives")
+    st.write(
+        "Compare each selected country's **share of the worldwide recorded "
+        "positives of each separate sensor**. The shares do not represent "
+        "harmonized fire rates or detection agreement."
+    )
+    overlap_year=st.select_slider("Common archive year",options=list(range(2019,2026)),
+                                  value=2024,key="v11_overlap_year")
+    both=df.loc[df.year.eq(overlap_year)&
+                df.sensor.isin(["MODIS","VIIRS_NOAA20"])].copy()
+    totals=both.groupby("sensor").vegetation_records.sum().to_dict()
+    both=both.loc[both.iso3.isin(chosen)].copy()
+    both["share_pct"]=both.apply(
+        lambda r:100*r.vegetation_records/max(totals[r.sensor],1),axis=1
+    )
+    chart=go.Figure()
+    for product,hue in [("MODIS",BLUE),("VIIRS_NOAA20",AMBER)]:
+        subset=(both.loc[both.sensor.eq(product)].set_index("iso3")
+                .reindex(chosen))
+        chart.add_trace(go.Bar(
+            x=[names[c] for c in chosen],y=subset.share_pct,
+            marker_color=hue,name="MODIS" if product=="MODIS" else "VIIRS NOAA-20"
+        ))
+    style(chart,305,barmode="group",
+          yaxis_title="Share of this sensor's worldwide positives (%)")
+    st.plotly_chart(chart,use_container_width=True)
+    st.caption("This visual normalizes the worldwide **composition within a "
+               "sensor/year only**. Different sensor sampling and detection "
+               "capabilities still apply. This is not a fire-severity or "
+               "sensor-performance metric.")
+
     st.download_button("Export selected country's historical table",
                        rows.to_csv(index=False),
                        f"firelens_{focus.lower()}_archive.csv","text/csv")
