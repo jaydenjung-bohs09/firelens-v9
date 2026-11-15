@@ -407,9 +407,14 @@ if section == '01  EXPLORE HISTORY':
             fig.add_vrect(x0='2024-07-24',x1='2024-07-29',
                           fillcolor='rgba(250,108,117,.20)',
                           opacity=.5,line_width=0,
-                          annotation_text='S-NPP data disruption',
-                          annotation_position='top left')
+                          )
+            fig.add_annotation(
+                x='2024-07-26',xref='x',y=1.05,yref='paper',showarrow=False,
+                text='S-NPP data disruption',font=dict(color=RED,size=11),
+            )
         theme(fig,305,title='Selected area · July 2024 · 5 km grid',xaxis_title='UTC date',yaxis_title='Positive occupied cells')
+        if preset.startswith('Park Fire'):
+            fig.update_layout(margin=dict(l=35,r=20,t=90,b=45))
         st.plotly_chart(fig,use_container_width=True)
         if preset.startswith('Park Fire'):
             st.warning(
