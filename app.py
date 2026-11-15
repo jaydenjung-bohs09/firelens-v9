@@ -478,10 +478,14 @@ if section == '02  INVESTIGATE EVIDENCE':
     timeline.add_vrect(
         x0='2024-07-24',x1='2024-07-29',
         fillcolor='rgba(250,108,117,.18)',opacity=.5,line_width=0,
-        annotation_text='S-NPP data gap',annotation_position='top left'
+    )
+    timeline.add_annotation(
+        x='2024-07-26',xref='x',y=1.05,yref='paper',showarrow=False,
+        text='S-NPP data gap',font=dict(color=RED,size=11),
     )
     theme(timeline,320,title='Park Fire vicinity · archived positive records by UTC date',
           barmode='group',xaxis_title='Date (UTC)',yaxis_title='Raw satellite hotspot records')
+    timeline.update_layout(margin=dict(l=35,r=20,t=90,b=45))
     st.plotly_chart(timeline,use_container_width=True)
     st.warning(
         "**Evidence gap, not a disappearance of fire:** NASA documents "
