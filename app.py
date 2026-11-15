@@ -220,8 +220,13 @@ k1,k2,k3,k4=st.columns(4)
 k1.metric('CA archive records','173,471',help='California training-archive records')
 k2.metric('Park Fire positive groups','316')
 k3.metric('Time-aligned groups','45 / 316',help='Time-compatible positive groups in the Park Fire reference audit')
-k4.metric('California ConvLSTM F1','0.4212')
-st.caption('Comparison reference: persistence F1 0.3818.')
+header_audit=json.loads((ROOT/'v13'/'forecast_audit_results.json').read_text())['methods']
+k4.metric('California ConvLSTM F1 · matched 285 days',
+          f"{header_audit['ConvLSTM']['f1']:.4f}")
+st.caption(
+    f"Matched 285-day comparison: strongest baseline 'Active ≥3 of 7 days' "
+    f"F1 {header_audit['At least three of seven days']['f1']:.4f}."
+)
 st.markdown('**For emergency managers, land managers and scientists:** MODVIIR helps investigate historical hotspot reporting gaps and time-aligned satellite evidence before interpreting burning-activity records. The separate California forecasting experiment is retrospective research.')
 
 
@@ -808,7 +813,7 @@ Original methods and archived source are preserved in legacy_v8/.''',language='t
         st.markdown('- [NASA FIRMS archives](https://firms.modaps.eosdis.nasa.gov/download/)\n- [NASA FIRMS missing-data page](https://firms.modaps.eosdis.nasa.gov/api/missing_data/)\n- [NASA MODAPS Suomi NPP disruptions](https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html)\n- [CAL FIRE historical perimeters](https://www.fire.ca.gov/what-we-do/fire-resource-assessment-program/fire-perimeters)')
     with c2:
         st.markdown('**Measured results**')
-        st.markdown('- 2024 Park Fire final footprint: 316 positive-only groups, 54 both-positive, 45 time-compatible.\n- Validation F1: ConvLSTM 0.4301; persistence 0.3955.\n- Exploratory test F1: ConvLSTM 0.4212; persistence 0.3818.\n- The model generated 4,363 predicted-only cells vs 5,603 for persistence across the exploratory test period.')
+        st.markdown('- 2024 Park Fire final footprint: 316 positive-only groups, 54 both-positive, 45 time-compatible.\n- Validation F1: ConvLSTM 0.4301; persistence 0.3955.\n- Exploratory all test days (292): ConvLSTM F1 0.4212; persistence F1 0.3818. The matched-day comparison above uses 285 days.\n- The model generated 4,363 predicted-only cells vs 5,603 for persistence across the exploratory test period.')
     qa=json.loads((ROOT/'data'/'qa_reproduction.json').read_text())
     st.success('Offline integrity checks passed: original July raw-record totals, the Park Fire reference-audit denominators, sequence dates and split counts, plus 2025 prediction TP/FP/FN.')
     with st.expander('Reproducibility report (JSON)'):
