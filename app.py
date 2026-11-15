@@ -800,9 +800,7 @@ if section == 'METHODS & SOURCES':
 
 **Important:** Four-year model features include a VIIRS daily-record-presence indicator and documented 2024 S-NPP anomaly windows. These are coarse date-level proxies and cannot verify valid satellite observations at a pixel.
     ''')
-    st.caption("Terra-only MODIS — modeled values for 2000–2002 are likely low. "
-               "Aqua began in 2002; the historical conversion was calibrated on later "
-               "Terra+Aqua observations.")
+    st.caption("2000–2002: Terra-only MODIS — modeled values likely low; Aqua joined during 2002, and the calibration was trained on later Terra+Aqua years.")
     st.subheader('Data lineage')
     st.code('''California July 2024 source observations (kept unchanged):
 MODIS  fire_archive_M-C61_850130.csv   4,851 records
