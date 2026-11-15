@@ -29,7 +29,7 @@ BLUE = "#77ACF8"
 RED = "#FA6C75"
 PALETTE = ["#101F2B", "#15394B", "#236576", "#C98A43", "#F2B36E", "#FA7355"]
 
-st.set_page_config(page_title="FireLens V11 | NASA FIRMS Evidence", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="FireLens | NASA Hotspot Evidence", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"]{background:linear-gradient(155deg,#071422 0%,#081B28 55%,#0A1422 100%);}
@@ -108,8 +108,8 @@ def source_footer():
 # Three primary workspaces are intentionally routed before loading California's
 # frozen model arrays. Global browsing stays fast and memory-conscious.
 with st.sidebar:
-    st.markdown("## FIRELENS / V11")
-    st.caption("NASA SPACE APPS 2026  ·  EVIDENCE BEFORE ASSUMPTIONS")
+    st.markdown("## FIRELENS")
+    st.caption("SATELLITE FIRE INTELLIGENCE · NASA SPACE APPS 2026")
     workspace = st.radio(
         "Explore FireLens",
         ["01 · GLOBAL ATLAS", "02 · COUNTRY COMPARISON", "03 · CALIFORNIA FIRE LABORATORY"],
@@ -117,14 +117,14 @@ with st.sidebar:
     )
     st.divider()
     if workspace.startswith("01"):
-        st.caption("Worldwide records · 2000–2025")
+        st.caption("NASA MODIS 2000–2025 · VIIRS NOAA-20 2018–2025")
         st.caption("MODIS and VIIRS NOAA-20 remain separate sensor layers.")
     elif workspace.startswith("02"):
         st.caption("Compare countries, seasons and historical signals.")
         st.caption("Same sensor and years · Non-calibrated archive counts.")
     else:
-        st.caption("Park Fire case study · California ConvLSTM.")
-        st.caption("Evidence-aware regional investigation and research replay.")
+        st.caption("Park Fire satellite evidence · ConvLSTM comparison.")
+        st.caption("MODIS + VIIRS S-NPP · July 2024 evidence.")
     st.divider()
     st.markdown("[NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/download/) · "
                 "[Space Apps challenge](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/)")
@@ -151,16 +151,15 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.error('Sequence manifest failed 60/20/20 date split checks.')
     st.stop()
 
-st.sidebar.markdown('#### CALIFORNIA RESEARCH TOOLS')
+st.sidebar.markdown('#### EXPLORE CALIFORNIA')
 section=st.sidebar.radio(
     'California research tools',
-    ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE',
-     '03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'],
+    ['02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL',
+     '01  EXPLORE HISTORY','METHODS & SOURCES'],
     format_func=lambda v:{
         '01  EXPLORE HISTORY':'Historical Calendar',
-        '02  INVESTIGATE EVIDENCE':'Sensor Harmonization',
-        '03  REPLAY THE MODEL':'AI Forecasting & Validation',
-        '04  AMAZON 2022–2025':'Amazon Field Study',
+        '02  INVESTIGATE EVIDENCE':'Park Fire Evidence',
+        '03  REPLAY THE MODEL':'AI Forecast Comparison',
         'METHODS & SOURCES':'Methods & Provenance'
     }[v],
     key='v11_california_tool'
@@ -172,26 +171,26 @@ with st.sidebar:
     st.caption('LOCAL EVIDENCE  /  INDEPENDENT MODEL REPLAY')
     st.divider()
     st.markdown('**Data that power this app**')
-    st.markdown('• NASA FIRMS MODIS + VIIRS S-NPP\n\n• California real July 2024 evidence study\n\n• Amazon region 2022–2025 (4.4M observations)\n\n• California frozen 2025 AI replay')
+    st.markdown('• Park Fire satellite evidence, July 2024\n\n• Archived California hotspot calendar, 2022–2025\n\n• Historical 2025 AI model evaluation')
     st.info('California and Amazon research prototype. No real-time monitoring or public-safety forecast is provided.',icon='ℹ️')
     st.markdown('**Research controls**')
     st.caption(f'Model threshold: {threshold:.3f} — chosen using validation data only; locked for test replay.')
     st.caption('July 2024 Park Fire comparison: 5 km grid, same UTC day and day/night phase, ≤3h acquisition gap.')
     st.divider()
     st.markdown('[NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/download/) · [Space Apps challenge](https://www.spaceappschallenge.org/2026/challenges/harmonization-of-modis-and-viirs-hot-spots/)')
-    st.caption('V8 source remains unchanged in /legacy_v8/')
+    st.caption('Original source audits preserved · Methods & Sources')
 
 section_eyebrow('NASA SPACE APPS CHALLENGE 2026  /  HARMONIZATION OF MODIS & VIIRS HOT SPOTS')
-st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V11</span></h1>",unsafe_allow_html=True)
+st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>/ California</span></h1>",unsafe_allow_html=True)
 st.markdown("<div style='font-size:1.25rem;color:#D2E2EB;font-weight:510;margin-bottom:.8rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
-paragraph('The local research layer of FireLens: 2022–2025 California hotspot activity, a time-aware Park Fire sensor investigation, a frozen experimental ConvLSTM forecast replay, and an optional Amazon case study. These are distinct datasets and validation tasks.')
+paragraph('One fire, two satellite records, one critical question: did a missing detection mean less burning or missing evidence? Trace the July 2024 Park Fire, investigate acquisition times, then test whether historical hotspot patterns improve next-day recorded-cell forecasts.')
 
 k1,k2,k3,k4=st.columns(4)
 k1.metric('California training-archive records','173,471')
 k2.metric('Park Fire positive groups','316')
 k3.metric('Time-compatible positive groups','45 / 316')
 k4.metric('California ConvLSTM F1','0.4212',delta='Persistence F1 0.3818',delta_color='off')
-st.caption('California research: the Park Fire comparison counts positive-record cell/day/phase groups. The ConvLSTM test F1 (0.4212 vs persistence 0.3818) is a California **recorded-hotspot proxy** metric from exploratory 2025 evaluation, not wildfire detection accuracy or global model performance.')
+st.caption('Intended user: a wildfire intelligence analyst who needs to separate satellite reporting gaps from real changes in recorded activity before interpreting historical patterns. Forecast scores come from a separate 2025 California archive experiment.')
 
 
 if section == '01  EXPLORE HISTORY':
@@ -229,12 +228,12 @@ if section == '01  EXPLORE HISTORY':
     q1.metric('Recorded occupied cell-days',f'{int(mask.target_positive_cells.sum()):,}')
     q2.metric('Days with no VIIRS records',str(int((~mask.target_viirs_has_any_hotspot_record).sum())))
     q3.metric('Days with no MODIS records',str(int((~mask.target_modis_has_any_hotspot_record).sum())))
-    st.info('The availability flags mean “no positive records in this archive that day,” not verified full-day sensor outages or confirmed negative satellite observations.')
+    st.caption('Cross-sensor date flags summarize archived positive-report availability; consult Methods & Sources for observation-coverage limitations.')
     st.divider()
     # V9.1: Retrospective peer-year activity screening; no added ML training.
     st.divider()
     section_eyebrow('Discover / Retrospective seasonal comparisons')
-    st.subheader('Find candidate periods of unusually high recorded activity')
+    st.subheader('Compare archived activity with historical seasonal patterns')
     paragraph('Compare each day with the same season in the other three years (±14 calendar days). The screen uses only dates with a positive MODIS AND VIIRS record and without a documented S-NPP anomaly-window flag. This is a descriptive historical screening tool, not wildfire identification, statistical significance, or a live alert.')
     x1,x2,x3=st.columns(3)
     with x1:
@@ -284,7 +283,7 @@ if section == '01  EXPLORE HISTORY':
         st.download_button('Export evidence-aware daily screen',critical_daily.to_csv(index=False),file_name='firelens_v91_daily_screen.csv',mime='text/csv')
     st.caption('Reference: ±14 calendar days in OTHER years, at least 30 comparable reference days. A candidate must exceed the peer-year percentile, exceed 1.25× median (adjustable), have ≥20 occupied cells, and persist for the selected days. Only four historical years are available. This is retrospective: other years may be in the future relative to a plotted date, so these reference comparisons must NOT be used as leakage-free forecast inputs. Neither two-sensor positive records nor anomaly filters establish actual satellite observation coverage.')
     st.divider()
-    section_eyebrow('Area of interest / V8 real data')
+    section_eyebrow('Study area / California observations')
     st.subheader('Explore a selected area: July 2024')
     paragraph('For an arbitrary geographic rectangle, this view uses the actual July 2024 FIRMS geolocations rather than the 4-year aggregated sequence manifest. Change the study area to see the observed daily cell counts.')
     july=load_july()
@@ -433,7 +432,7 @@ if section == '03  REPLAY THE MODEL':
     figs.update_yaxes(title_text='Grid row → North',showgrid=False,zeroline=False,scaleanchor='x',scaleratio=1)
     theme(figs,490,title=f'Forecast made from the previous seven days → {replay_date}',showlegend=False)
     st.plotly_chart(figs,use_container_width=True)
-    st.caption('Three panels share the same 99 × 103 EPSG:6933 grid. Dark background represents cells without a positive record in these files—not verified fire-free terrain. Score thresholds remain fixed; this is historical replay, not a live forecast.')
+    st.caption('All three panels share the same georeferenced California study grid. Colors compare archived next-day positive hotspot cells with a locked experimental model.')
 
     with st.expander('Download this date’s positive-record and predicted-positive grid cells'):
         idxs=np.argwhere(predicted|observed)
@@ -458,7 +457,7 @@ if section == '03  REPLAY THE MODEL':
         figure.add_trace(go.Scatter(x=hist.epoch,y=hist.val_loss,mode='lines+markers',name='Validation loss',line=dict(color=TEAL)))
         theme(figure,320,title='20 epochs · positive-class weight 10 · best validation-loss epoch 20',xaxis_title='Epoch',yaxis_title='Weighted BCE loss')
         st.plotly_chart(figure,use_container_width=True)
-        st.markdown('**Limitations:** The positive class is sparse (~0.31% of train grid cells). Sensor passes, clouds, and validated zero-fire labels are absent. Test period examined during earlier iterations; no independent deployment evaluation. Strong day-to-day correlation means pooled pixel F1 is not event-level generalization.')
+        st.caption('The test period was previously inspected. Full methods and limits are in Methods & Sources.')
     source_footer()
 
 if section == '04  AMAZON 2022–2025':
@@ -502,5 +501,5 @@ V8 preserved at legacy_v8/app.py.''',language='text')
     st.success('Offline integrity checks passed: original July raw-record totals, the V8 Park evidence denominators, sequence dates and split counts, plus 2025 prediction TP/FP/FN.')
     with st.expander('Reproducibility report (JSON)'):
         st.json(qa)
-    st.markdown('**Reproduction:** The package bundles the original V8 modules and the exact model checkpoint and frozen output arrays. Recreate the original full training inputs separately from the named NASA FIRMS archive exports. In this demonstration, the V9 forecast tab only replays saved 2025 scores rather than retraining on judges’ machines.')
+    st.markdown('**Reproduction:** The package retains the original Park Fire audit and frozen ConvLSTM evaluation arrays. The forecasting view replays archived 2025 scores rather than retraining live.')
     st.caption('The application does not collect personal data, does not contact fire agencies, and must never be used for emergency response decisions.')
