@@ -103,6 +103,9 @@ def render_global_atlas():
         "Explore **where and when NASA satellites recorded presumed vegetation-fire hotspots**. "
         "Select a satellite and year; country-level counts are intentionally kept separate by sensor."
     )
+    from v15.validation_view import render_validation
+    render_validation()
+    st.divider()
     sensor = selector("v11_global_sensor")
     years = sorted(df.loc[df.sensor.eq(sensor),"year"].unique().tolist())
     year = st.select_slider("Explore archive year",options=years,
