@@ -40,6 +40,17 @@ class TestJudgeEvidence(unittest.TestCase):
             self.assertFalse(bool(row["comparison_eligible"]))
             self.assertFalse(bool(row["candidate_day"]))
 
+    def test_2024_separate_data_gap_review_track(self):
+        manifest=pd.read_csv(ROOT/"data"/"predict"/"sequence_manifest.csv")
+        subset=manifest.loc[manifest.target_date_utc.str.startswith("2024")]
+        gap=(subset.target_snpp_known_anomaly_window.astype(bool)
+             &subset.target_modis_has_any_hotspot_record.astype(bool)
+             &~subset.target_viirs_has_any_hotspot_record.astype(bool))
+        dates=set(subset.loc[gap,"target_date_utc"])
+        self.assertEqual(len(dates),11)
+        for day in pd.date_range("2024-07-24","2024-07-28"):
+            self.assertIn(day.strftime("%Y-%m-%d"),dates)
+
     def test_usa_australia_calendar_score_source(self):
         df=pd.read_csv(ROOT/"v11"/"processed"/"global"/"global_country_year.csv")
         subset=df.loc[df.sensor.eq("MODIS")&
