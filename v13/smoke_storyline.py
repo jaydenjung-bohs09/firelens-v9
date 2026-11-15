@@ -24,7 +24,7 @@ assert find(app,"radio","v11_california_tool").value=="02  INVESTIGATE EVIDENCE"
 find(app,"button","v13_park_to_model").click().run()
 clean(app,"Navigate to model")
 assert find(app,"radio","v11_california_tool").value=="03  REPLAY THE MODEL"
-if not any("Forecast" in str(x.value) or "ConvLSTM" in str(x.value)
+if not any("ConvLSTM" in str(x.label)
            for x in app.get("metric")):
     raise AssertionError("Forecast metrics missing")
 print("PASS: guided global → Park Fire → AI evaluation navigation")
