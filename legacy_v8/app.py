@@ -11,8 +11,8 @@ from perimeter import fetch_official_park_perimeter, read_perimeter_geojson, fil
 from analysis import (normalize_firms, sensitivity as scientific_sensitivity, overlap as scientific_overlap,
                       park_region, daily_series, quality_table, PARK_START_UTC, PARK_LAT, PARK_LON)
 
-st.set_page_config(page_title='FireLens | NASA Space Apps 2026', page_icon='🔥', layout='wide')
-st.title('FireLens')
+st.set_page_config(page_title='MODVIIR | NASA Space Apps 2026', page_icon='🔥', layout='wide')
+st.title('MODVIIR')
 st.caption('Harmonizing MODIS and VIIRS active-fire observations | NASA Space Apps 2026')
 st.info('Research prototype, not an operational fire-warning system. Hotspot detections are not fire perimeters, fire counts, or independent confirmations.')
 
