@@ -88,6 +88,11 @@ def evidence_notes():
                     "observations or observation-opportunity normalization.")
         st.markdown("[NASA FIRMS download](https://firms.modaps.eosdis.nasa.gov/download/) · "
                     "[NASA challenge](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/)")
+        st.caption(
+            "Future work: near-real-time FIRMS area-API coverage. "
+            "This archived dashboard ends in 2025 and does not currently "
+            "connect to the area API or store an API key."
+        )
 
 
 def render_global_atlas():
@@ -158,7 +163,7 @@ def render_global_atlas():
     st.plotly_chart(fig,use_container_width=True)
     st.caption("Tracking one satellite product through time reveals shifts in its recorded activity; see Data provenance for measurement limits.")
 
-    st.subheader("Global historical calendar")
+    st.subheader(f"Global historical calendar · {years[0]}–{years[-1]}")
     vals=annual[MCOLS].to_numpy(dtype=float)
     percentages=100*vals/np.maximum(vals.sum(axis=1,keepdims=True),1)
     fig=go.Figure(go.Heatmap(
