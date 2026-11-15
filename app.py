@@ -105,6 +105,12 @@ def source_footer():
     st.caption("NASA FIRMS historical records · Detailed methods and interpretation limits are in Methods & Sources.")
 
 
+def _jump_to_california(section):
+    """Navigate before Streamlit instantiates sidebar widgets on rerun."""
+    st.session_state["v11_workspace"]="03 · CALIFORNIA FIRE LABORATORY"
+    st.session_state["v11_california_tool"]=section
+
+
 # Three primary workspaces are intentionally routed before loading California's
 # frozen model arrays. Global browsing stays fast and memory-conscious.
 with st.sidebar:
@@ -136,19 +142,15 @@ if workspace.startswith("01"):
         "FireLens moves from recorded hotspots to a documented California "
         "satellite-data gap and an experimental model comparison."
     )
-    if st.button("Follow the flagship story: Park Fire → California",
-                 key="v13_global_story",type="primary"):
-        st.session_state["v11_workspace"]="03 · CALIFORNIA FIRE LABORATORY"
-        st.session_state["v11_california_tool"]="02  INVESTIGATE EVIDENCE"
-        st.rerun()
+    st.button("Follow the flagship story: Park Fire → California",
+              key="v13_global_story",type="primary",
+              on_click=_jump_to_california,args=("02  INVESTIGATE EVIDENCE",))
     from v11.world import render_global_atlas
     render_global_atlas()
     st.stop()
 if workspace.startswith("02"):
-    if st.button("Continue to Park Fire evidence",key="v13_country_story"):
-        st.session_state["v11_workspace"]="03 · CALIFORNIA FIRE LABORATORY"
-        st.session_state["v11_california_tool"]="02  INVESTIGATE EVIDENCE"
-        st.rerun()
+    st.button("Continue to Park Fire evidence",key="v13_country_story",
+              on_click=_jump_to_california,args=("02  INVESTIGATE EVIDENCE",))
     from v11.world import render_country_compare
     render_country_compare()
     st.stop()
@@ -505,9 +507,9 @@ if section == '02  INVESTIGATE EVIDENCE':
         st.download_button('Download real V8 Park evidence CSV',groups.to_csv(index=False).encode(),file_name='firelens_v9_park_evidence_316_groups.csv',mime='text/csv')
         st.write('Scope: July 15–31, 2024, exact unbuffered retrospective final Park Fire footprint, 5 km EPSG:6933 grid, UTC date & day/night, 3-hour time tolerance.')
         st.write('The archived geometry was user-exported in the prior V8 workflow and has not been independently re-downloaded and compared with the live CAL FIRE service in this package.')
-    if st.button("Next: evaluate the experimental model",key="v13_park_to_model",type="primary"):
-        st.session_state['v11_california_tool']='03  REPLAY THE MODEL'
-        st.rerun()
+    st.button("Next: evaluate the experimental model",key="v13_park_to_model",
+              type="primary",on_click=_jump_to_california,
+              args=("03  REPLAY THE MODEL",))
     source_footer()
 
 if section == '03  REPLAY THE MODEL':
