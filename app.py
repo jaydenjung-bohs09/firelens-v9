@@ -223,11 +223,11 @@ st.divider()
 
 k1,k2,k3,k4=st.columns(4)
 k1.metric('CA archive records','173,471',help='California training-archive records')
-k2.metric('Park Fire positive groups','316')
+k2.metric('Park Fire groups',help="Positive-record groups in the retrospective Park Fire audit",value='316')
 k3.metric('Time-aligned groups','45 / 316',help='Time-compatible positive groups in the Park Fire reference audit')
 header_audit=json.loads((ROOT/'v13'/'forecast_audit_results.json').read_text())['methods']
-k4.metric('California ConvLSTM F1 · matched 285 days',
-          f"{header_audit['ConvLSTM']['f1']:.4f}")
+k4.metric('ConvLSTM F1 (285 days)',help="Matched 285-day comparison; strongest baseline 'Active ≥3 of 7 days' F1 0.3922.",
+          value=f"{header_audit['ConvLSTM']['f1']:.4f}")
 st.caption(
     f"Matched 285-day comparison: strongest baseline 'Active ≥3 of 7 days' "
     f"F1 {header_audit['At least three of seven days']['f1']:.4f}."
@@ -267,9 +267,9 @@ if section == '01  EXPLORE HISTORY':
         st.plotly_chart(daily_fig,use_container_width=True)
     mask=m[m.year==yr]
     q1,q2,q3=st.columns(3)
-    q1.metric('Recorded occupied cell-days',f'{int(mask.target_positive_cells.sum()):,}')
-    q2.metric('Days with no VIIRS records',str(int((~mask.target_viirs_has_any_hotspot_record).sum())))
-    q3.metric('Days with no MODIS records',str(int((~mask.target_modis_has_any_hotspot_record).sum())))
+    q1.metric('Occupied cell-days',help="Recorded satellite hotspot-positive grid cell-days",value=f'{int(mask.target_positive_cells.sum()):,}')
+    q2.metric('VIIRS no-record days',help="Days with no recorded VIIRS hotspots; not necessarily no satellite observation",value=str(int((~mask.target_viirs_has_any_hotspot_record).sum())))
+    q3.metric('MODIS no-record days',help="Days with no recorded MODIS hotspots; not necessarily no satellite observation",value=str(int((~mask.target_modis_has_any_hotspot_record).sum())))
     st.caption('Cross-sensor date flags summarize archived positive-report availability; consult Methods & Sources for observation-coverage limitations.')
     st.divider()
     # Descriptive retrospective peer-year screening; separate from AI model.
@@ -303,10 +303,10 @@ if section == '01  EXPLORE HISTORY':
         & ~dyear['target_viirs_has_any_hotspot_record'].astype(bool)
     ].copy()
     r1,r2,r3,r4=st.columns(4)
-    r1.metric('Candidate activity periods',len(periods_year))
+    r1.metric('Activity periods',help="Candidate historical periods screened for elevated archived activity",value=len(periods_year))
     r2.metric('Days not comparable',int((~dyear.comparison_eligible).sum()))
-    r3.metric('Candidate activity days',int(dyear.candidate_day.sum()))
-    r4.metric('S-NPP data-gap review days',len(gap_review))
+    r3.metric('Activity days',help="Candidate historical days screened for elevated archived activity",value=int(dyear.candidate_day.sum()))
+    r4.metric('S-NPP gap days',help="Days flagged for S-NPP data-gap review",value=len(gap_review))
     trace=go.Figure()
     trace.add_trace(go.Scatter(x=dyear.date,y=dyear.occupied_cells,name='Recorded occupied cells',mode='lines',line=dict(color=TEAL,width=2.4)))
     trace.add_trace(go.Scatter(x=dyear.date,y=dyear.peer_median,name='Other-years seasonal median',mode='lines',line=dict(color=BLUE,width=1.8,dash='dash')))
@@ -530,9 +530,9 @@ if section == '02  INVESTIGATE EVIDENCE':
     st.markdown("### Reference audit · fixed three-hour rule")
     st.caption("The reference results below use the unchanged July 2024 Park Fire archive and the independently preserved grouping method. They are independent of the inspector sliders above.")
     p1,p2,p3=st.columns(3)
-    p1.metric('Both positive · of 316 groups','54')
-    p2.metric('Within 3h · of 54 both-positive','45')
-    p3.metric('Within 3h · of all 316','45')
+    p1.metric('Both sensors positive',help="Groups with records from both sensors among the 316 positive groups",value='54')
+    p2.metric('Time-matched / both',help="Groups within 3 hours among 54 both-positive groups",value='45')
+    p3.metric('Time-matched / total',help="Time-compatible groups among 316 positive groups",value='45')
     st.caption('54/316 = 17.09% of positive groups; 45/54 = 83.33% conditional; 45/316 = 14.24% of positive groups.')
     st.caption(
         "These group shares do not measure detection sensitivity or confirmed "
@@ -574,7 +574,7 @@ if section == '02  INVESTIGATE EVIDENCE':
     with detailcol:
         st.markdown(f'#### {dd} — what the records show')
         daystate=status[status['UTC date']==dd].iloc[0]
-        st.metric('Positive groups inside footprint',str(len(selection)))
+        st.metric('Groups in footprint',help="Positive-record groups in the retrospective Park Fire footprint",value=str(len(selection)))
         st.markdown('**Statewide satellite record context**')
         st.write(f'MODIS raw detections: **{int(daystate["MODIS hotspot records"]):,}**')
         st.write(f'VIIRS raw detections: **{int(daystate["VIIRS hotspot records"]):,}**')
@@ -607,9 +607,9 @@ if section == '03  REPLAY THE MODEL':
     best_lo,best_hi=three_of_seven['ci95_model_minus_baseline']
     yesterday_lo,yesterday_hi=previous['ci95_model_minus_baseline']
     z1,z2,z3,z4=st.columns(4)
-    z1.metric('ConvLSTM · matched-day F1',f"{main_model['f1']:.4f}")
-    z2.metric('Yesterday = today · F1',f"{previous['f1']:.4f}")
-    z3.metric('Active ≥3 of 7 days · F1',f"{three_of_seven['f1']:.4f}")
+    z1.metric('ConvLSTM F1',help="F1 over matched 285-day evaluation",value=f"{main_model['f1']:.4f}")
+    z2.metric('Persistence F1',help="Yesterday=today persistence baseline over matched days",value=f"{previous['f1']:.4f}")
+    z3.metric('3-of-7-days F1',help="Baseline active on at least three of the preceding seven days",value=f"{three_of_seven['f1']:.4f}")
     z4.metric('Gain vs best baseline',f"+{three_of_seven['model_minus_baseline_f1']:.3f}",
               help='Exploratory F1 gain relative to the strongest included baseline: active on at least three of the previous seven days.')
     st.caption(
@@ -656,7 +656,7 @@ if section == '03  REPLAY THE MODEL':
     observed=actual[idx]
     day=counts(predicted,observed)
     cc1,cc2,cc3,cc4=st.columns(4)
-    cc1.metric('Matched occupied cells',str(day['tp']))
+    cc1.metric('Matched cells',help="Predicted-positive and recorded-positive cells",value=str(day['tp']))
     cc2.metric('Predicted only',str(day['fp']))
     cc3.metric('Recorded only',str(day['fn']))
     cc4.metric('Day-specific F1',f'{day["f1"]:.3f}')

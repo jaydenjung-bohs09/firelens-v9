@@ -112,10 +112,10 @@ def render_global_atlas():
     unadjusted = global_rows.loc["none"]
     calibrated = global_rows.loc["ratio"]
     a, b, c = st.columns(3)
-    a.metric("Held-out median error · uncalibrated",
-             f"{unadjusted.median_abs_pct_error:.1f}%")
-    b.metric("Held-out median error · calibrated",
-             f"{calibrated.median_abs_pct_error:.1f}%")
+    a.metric("Uncalibrated error",help="Held-out median absolute percentage error for unadjusted MODIS",
+             value=f"{unadjusted.median_abs_pct_error:.1f}%")
+    b.metric("Calibrated error",help="Held-out median absolute percentage error for monthly country ratio",
+             value=f"{calibrated.median_abs_pct_error:.1f}%")
     c.metric("Tested on",
              f"{int(calibrated.n_predictions):,} country-months, "
              f"{str(calibrated.holdout_years).split(',')[0]}–"
@@ -144,7 +144,7 @@ def render_global_atlas():
               [["vegetation_records"]+MCOLS].sum().sort_values("year"))
     a,b,c,d=st.columns(4)
     a.metric("NASA type-0 records",f"{int(selected.vegetation_records.sum()):,}")
-    b.metric("Countries / territories",str(len(selected)))
+    b.metric("Countries / areas",help="Countries and territories represented by source records",value=str(len(selected)))
     c.metric("Most archived records",selected.country.iloc[0] if len(selected) else "—")
     d.metric("Years represented",str(len(years)))
     if year==years[0]:
@@ -266,7 +266,7 @@ def render_country_compare():
     x,y,z=st.columns(3)
     x.metric("Countries selected",str(len(chosen)))
     y.metric("Calendar years",str(end-start+1))
-    z.metric("Archived type-0 records",f"{int(sub.vegetation_records.sum()):,}")
+    z.metric("Type-0 records",help="Archived type-0 vegetation fire positive records",value=f"{int(sub.vegetation_records.sum()):,}")
 
     st.subheader("Country activity over time")
     show=st.radio("Chart mode",
@@ -396,8 +396,8 @@ def render_country_compare():
             "Current / median":ratio.round(2),"Candidate":unusual
         })
         c1,c2=st.columns(2)
-        c1.metric("Candidate high-activity months",int(unusual.sum()))
-        c2.metric("Previous full-year references",len(peers))
+        c1.metric("High-activity months",help="Months flagged for high recorded positive activity",value=int(unusual.sum()))
+        c2.metric("Reference years",help="Previous full calendar years used for comparison",value=len(peers))
         fig=go.Figure([
             go.Bar(x=MONTHS,y=observed,name=f"{choice_year} records",marker_color=AMBER),
             go.Scatter(x=MONTHS,y=med,name="Earlier-years median",mode="lines+markers",
