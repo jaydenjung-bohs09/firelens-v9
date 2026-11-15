@@ -51,7 +51,7 @@ def render_validation():
     for col in ("Median absolute % error","Median bias (%)","Spearman ρ"):
         table[col]=table[col].round(3)
     st.dataframe(table,hide_index=True,use_container_width=True)
-    with st.expander("Inspect withheld-year predicted vs actual NOAA-20 records",expanded=True):
+    if True:  # Scatter is contained in the Global Atlas proof expander.
         method=st.radio("Conversion",list(human),
                         format_func=lambda m:human[m],horizontal=True,
                         index=list(human).index(selected),key="v15_scatter_method")

@@ -104,11 +104,26 @@ def render_global_atlas():
         "The default view displays the statistically calibrated NOAA-20 archive-count calendar. "
         "Use the raw-sensor switch below to inspect unadjusted MODIS and VIIRS records."
     )
-    from v15.validation_view import render_validation
-    render_validation()
-    st.divider()
+    from v15.validation import VALIDATION_CSV
     from v15.calendar_view import render_country_calendar
+    from v15.validation_view import render_validation
+    calibration = pd.read_csv(VALIDATION_CSV)
+    global_rows = calibration.loc[calibration.continent.eq("GLOBAL")].set_index("method")
+    unadjusted = global_rows.loc["none"]
+    calibrated = global_rows.loc["ratio"]
+    a, b, c = st.columns(3)
+    a.metric("Held-out median error · uncalibrated",
+             f"{unadjusted.median_abs_pct_error:.1f}%")
+    b.metric("Held-out median error · calibrated",
+             f"{calibrated.median_abs_pct_error:.1f}%")
+    c.metric("Tested on",
+             f"{int(calibrated.n_predictions):,} country-months, "
+             f"{str(calibrated.holdout_years).split(',')[0]}–"
+             f"{str(calibrated.holdout_years).split(',')[-1]}")
+    st.caption("Calibration was trained on other years and tested on each withheld year.")
     render_country_calendar()
+    with st.expander("How we tested the calibration (held-out years)", expanded=False):
+        render_validation()
     st.divider()
     show_raw = st.checkbox(
         "Show raw MODIS / VIIRS archive charts",
