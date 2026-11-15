@@ -1,7 +1,7 @@
 name: FireLens global archive and app checks
 on:
   push:
-    branches: [v11-global-navigation, v12-california-evidence-inspector, v13-judge-readiness, main]
+    branches: [v11-global-navigation, v12-california-evidence-inspector, v13-judge-readiness, v14-visual-usability, main]
     paths:
       - "v10/**"
       - "v11/**"
