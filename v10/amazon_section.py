@@ -220,6 +220,48 @@ def render_amazon():
                      use_container_width=True,hide_index=True)
     else:
         st.info("No periods match these screening settings in the selected year.")
+    st.divider()
+    st.subheader("Forecasting reference: one-day persistence")
+    st.write(
+        "How hard is it to predict tomorrow's recorded hotspots from today's "
+        "positive 10-km cells alone? We tested that fixed baseline against the "
+        "next day's recorded union cells in the archive. The scores describe "
+        "**positive-record spatial overlap**, not operational wildfire "
+        "prediction accuracy. Zero-record cells are NOT independently "
+        "verified fire-free cells."
+    )
+    base_annual=pd.read_csv(DATA / "persistence_baseline_annual.csv")
+    base_daily=pd.read_csv(DATA / "persistence_baseline_daily.csv",parse_dates=["target_date_utc"])
+    compare_type=st.radio(
+        "Evaluation subset",
+        ["both_record_eligible", "all_days"],
+        format_func=lambda v: ("Both sensors have positive records on both consecutive days (quality proxy)"
+                               if v=="both_record_eligible" else "All consecutive archive days"),
+        key="amazon_baseline_subset"
+    )
+    selected=base_annual.loc[base_annual["subset"].eq(compare_type)].copy()
+    base_fig=go.Figure(go.Bar(
+        x=selected.year,y=selected.f1_recorded_positive_overlap,
+        marker_color=BLUE,text=selected.f1_recorded_positive_overlap.map(lambda v:f"{v:.3f}"),
+        textposition="outside"
+    ))
+    _layout(base_fig,265,title="Retrospective next-day persistence F1 · recorded-hotspot proxy",
+            xaxis=dict(tickmode="array",tickvals=[2022,2023,2024,2025]),
+            yaxis=dict(title="Positive-cell overlap F1",range=[0,max(.6,float(selected.f1_recorded_positive_overlap.max())+.1)]))
+    st.plotly_chart(base_fig,use_container_width=True)
+    st.dataframe(selected[["year","days","tp","fp","fn",
+                          "f1_recorded_positive_overlap","iou_recorded_positive_overlap"]],
+                 use_container_width=True,hide_index=True)
+    st.caption(
+        "Only source-positive 10-km cells enter this overlap metric; false "
+        "positives and false negatives refer to recorded grid-cell labels, NOT "
+        "confirmed non-fire and missed wildfire. 'Both-record' screening "
+        "checks positive records at region/day level, not full sensor coverage. "
+        "The fixed baseline has no learned parameters and is not the California "
+        "ConvLSTM. Previous-day records may not be available at forecast time "
+        "in a real operational setting."
+    )
+
     with st.expander("Data audit, methods and downloads"):
         st.json(inv)
         st.download_button("Download Amazon daily summary CSV",daily.to_csv(index=False),
