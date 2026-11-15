@@ -131,10 +131,24 @@ with st.sidebar:
     st.caption("Research prototype only — not an emergency response system.")
 
 if workspace.startswith("01"):
+    st.info(
+        "**Explore the whole planet—or follow the Park Fire case study.** "
+        "FireLens moves from recorded hotspots to a documented California "
+        "satellite-data gap and an experimental model comparison."
+    )
+    if st.button("Follow the flagship story: Park Fire → California",
+                 key="v13_global_story",type="primary"):
+        st.session_state["v11_workspace"]="03 · CALIFORNIA FIRE LABORATORY"
+        st.session_state["v11_california_tool"]="02  INVESTIGATE EVIDENCE"
+        st.rerun()
     from v11.world import render_global_atlas
     render_global_atlas()
     st.stop()
 if workspace.startswith("02"):
+    if st.button("Continue to Park Fire evidence",key="v13_country_story"):
+        st.session_state["v11_workspace"]="03 · CALIFORNIA FIRE LABORATORY"
+        st.session_state["v11_california_tool"]="02  INVESTIGATE EVIDENCE"
+        st.rerun()
     from v11.world import render_country_compare
     render_country_compare()
     st.stop()
@@ -491,6 +505,9 @@ if section == '02  INVESTIGATE EVIDENCE':
         st.download_button('Download real V8 Park evidence CSV',groups.to_csv(index=False).encode(),file_name='firelens_v9_park_evidence_316_groups.csv',mime='text/csv')
         st.write('Scope: July 15–31, 2024, exact unbuffered retrospective final Park Fire footprint, 5 km EPSG:6933 grid, UTC date & day/night, 3-hour time tolerance.')
         st.write('The archived geometry was user-exported in the prior V8 workflow and has not been independently re-downloaded and compared with the live CAL FIRE service in this package.')
+    if st.button("Next: evaluate the experimental model",key="v13_park_to_model",type="primary"):
+        st.session_state['v11_california_tool']='03  REPLAY THE MODEL'
+        st.rerun()
     source_footer()
 
 if section == '03  REPLAY THE MODEL':
@@ -713,4 +730,22 @@ V8 preserved at legacy_v8/app.py.''',language='text')
     with st.expander('Reproducibility report (JSON)'):
         st.json(qa)
     st.markdown('**Reproduction:** The package retains the original Park Fire audit and frozen ConvLSTM evaluation arrays. The forecasting view replays archived 2025 scores rather than retraining live.')
-    st.caption('The application does not collect personal data, does not contact fire agencies, and must never be used for emergency response decisions.')
+    st.markdown(
+        "**Sensor identity:** Global country views use MODIS (Terra/Aqua) "
+        "and **VIIRS NOAA-20 (JPSS-1)** from the worldwide archive. "
+        "California Park Fire and experimental model views use MODIS "
+        "and **VIIRS S-NPP**, which is a different satellite."
+    )
+    st.markdown(
+        "**Model verification:** The frozen 285-day audit compares the "
+        "ConvLSTM with one-day persistence, seven-day union, and a fixed "
+        "three-of-seven-day rule. A 14-day block bootstrap with 3,000 draws "
+        "summarizes uncertainty; the test dates were previously inspected."
+    )
+    st.markdown(
+        "**Geographic outline:** Model panels use the true 10-km "
+        "EPSG:6933 training-grid origin with a contextual California outline "
+        "from [PublicaMundi MappingAPI](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json). "
+        "The outline is not a fire boundary or a validation mask."
+    )
+    st.caption('The application does not collect personal data, contact fire agencies, or provide operational emergency guidance.')
