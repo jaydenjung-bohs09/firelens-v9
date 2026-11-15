@@ -36,3 +36,5 @@ jobs:
         run: python v10/smoke_app.py
       - name: Test interactive Evidence Inspector controls
         run: python v12/smoke_inspector.py
+      - name: Test guided judge storyline navigation
+        run: python v13/smoke_storyline.py
