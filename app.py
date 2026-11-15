@@ -246,7 +246,7 @@ if section == '01  EXPLORE HISTORY':
     q3.metric('Days with no MODIS records',str(int((~mask.target_modis_has_any_hotspot_record).sum())))
     st.caption('Cross-sensor date flags summarize archived positive-report availability; consult Methods & Sources for observation-coverage limitations.')
     st.divider()
-    # V9.1: Retrospective peer-year activity screening; no added ML training.
+    # Descriptive retrospective peer-year screening; separate from AI model.
     st.divider()
     section_eyebrow('Discover / Retrospective seasonal comparisons')
     st.subheader('Compare archived activity with historical seasonal patterns')
@@ -454,8 +454,8 @@ if section == '02  INVESTIGATE EVIDENCE':
     from v12.evidence_inspector import render_inspector
     render_inspector(parkrec, status, groups, geometry)
     st.divider()
-    st.markdown("### Original reference audit · fixed three-hour rule")
-    st.caption("The reference results below use the unchanged July 2024 Park Fire archive and the frozen V8 grouping method. They are independent of the inspector sliders above.")
+    st.markdown("### Reference audit · fixed three-hour rule")
+    st.caption("The reference results below use the unchanged July 2024 Park Fire archive and the independently preserved grouping method. They are independent of the inspector sliders above.")
     p1,p2,p3=st.columns(3)
     p1.metric('Both positive · of 316 groups','54','17.09% of positive groups',delta_color='off')
     p2.metric('Within 3h · of 54 both-positive','45','83.33% conditional',delta_color='off')
@@ -518,7 +518,6 @@ if section == '03  REPLAY THE MODEL':
     paragraph('This is a retrospective 2025 replay from the saved ConvLSTM V2 checkpoint. The score is an uncalibrated prediction of next-day positive NASA hotspot records in a 10 km grid—not the probability of ignition, spread, or observed absence of fire.')
     # Judge-facing matched-day comparison: identical dates for all four
     # methods; figures come from the separately reproducible frozen-audit script.
-    from v13.forecast_audit import compute as recompute_forecast_audit
     audit=json.loads((ROOT/'v13'/'forecast_audit_results.json').read_text())
     results=audit['methods']
     main_model=results['ConvLSTM']
@@ -678,7 +677,7 @@ if section == '03  REPLAY THE MODEL':
                              'proxy_score':scores[idx][idxs[:,0],idxs[:,1]],
                              'above_frozen_threshold':predicted[idxs[:,0],idxs[:,1]],
                              'recorded_positive':observed[idxs[:,0],idxs[:,1]]})
-        st.download_button('Download selected-day positive-union cell audit',export.to_csv(index=False),file_name=f'FireLens_V9_replay_{replay_date}.csv',mime='text/csv')
+        st.download_button('Download selected-day positive-union cell audit',export.to_csv(index=False),file_name=f'FireLens_California_replay_{replay_date}.csv',mime='text/csv')
     st.divider()
     with st.expander('Training curve and validation-only model selection'):
         hist=pd.read_csv(PRED/'training_history.csv')
@@ -709,7 +708,7 @@ if section == 'METHODS & SOURCES':
 **Important:** Four-year model features include a VIIRS daily-record-presence indicator and documented 2024 S-NPP anomaly windows. These are coarse date-level proxies and cannot verify valid satellite observations at a pixel.
     ''')
     st.subheader('Data lineage')
-    st.code('''V8 July 2024 California science reference (kept unchanged):
+    st.code('''California July 2024 source observations (kept unchanged):
 MODIS  fire_archive_M-C61_850130.csv   4,851 records
 VIIRS  fire_archive_SV-C2_850131.csv   7,770 records
 
@@ -717,9 +716,9 @@ Expanded model archive recorded in dataset_card.json:
 MODIS  fire_archive_M-C61_850338.csv  33,738 records
 VIIRS  fire_archive_SV-C2_850339.csv 139,733 records
 
-The full four-year raw ZIPs were not included in this V9 package.
+Full raw training archives are omitted from the compact deployed application.
 Model replay: frozen 2025 test_predictions.npz from trained V2.
-V8 preserved at legacy_v8/app.py.''',language='text')
+Original methods and archived source are preserved in legacy_v8/.''',language='text')
     c1,c2=st.columns(2)
     with c1:
         st.markdown('**Official data and sources**')
