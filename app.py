@@ -632,10 +632,12 @@ if section == '03  REPLAY THE MODEL':
                            file_name='MODVIIR_model_research_audit.json',
                            mime='application/json')
     st.caption(
-        'The archived test period was previously inspected in model development, '
-        'so these are **exploratory** next-day recorded-hotspot-grid overlap scores, '
-        'not independent wildfire-forecast accuracy. Baselines use historical '
-        'positive reports only; the model threshold was locked on validation.'
+        '**Development test period (previously inspected):** the reported F1 '
+        'and gain are exploratory next-day recorded-hotspot-grid overlap scores. '
+        'The 95% confidence intervals use a **14-day circular moving-block '
+        'bootstrap** (3,000 draws), not independent wildfire ground truth. '
+        'Baselines use historical positive reports only; the model threshold '
+        'was locked using the validation split.'
     )
     st.divider()
     replay_date=st.select_slider('Choose next-day target date (UTC)',dates,value='2025-09-03')
