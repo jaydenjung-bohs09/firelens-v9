@@ -193,11 +193,16 @@ st.metric(
     f"{len(flagged_modis_only)} of {len(headline_groups)}",
     help="Positive-only 5-km cell/date/day-night groups inside the retrospective final Park Fire footprint; the affected groups are dated July 25–28, 2024.",
 )
+placebo_headline = json.loads((ROOT/'v15'/'amazon_placebo_results.json').read_text())
 st.write(
     "208 of 316 Park Fire evidence groups are MODIS-only during a documented "
     "VIIRS S-NPP data interruption (Jul 24–28, 2024); VIIRS was not observed, "
     "not zero. This is positive-record evidence, not verified per-cell "
-    "satellite coverage. **No calibrated replacement series has been built.**"
+    "satellite coverage. We tested filling outage days from MODIS: on "
+    f"{placebo_headline['sampled_day_count']} placebo days, a MODIS-based daily "
+    f"estimate had a {placebo_headline['records']['median_abs_pct_error']:.0f}% "
+    "median error, so MODVIIR marks these days 'not observed' rather than guessing. "
+    "This Amazon-based test is not Park Fire reconstruction validation."
 )
 st.markdown("### Choose a California investigation")
 section=st.radio(
