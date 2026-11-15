@@ -33,13 +33,29 @@ st.set_page_config(page_title="FireLens | NASA Hotspot Evidence", page_icon="�
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"]{background:linear-gradient(155deg,#071422 0%,#081B28 55%,#0A1422 100%);}
-[data-testid="stSidebar"]{background:#091927;}
-.block-container{padding-top:1.25rem;padding-bottom:3rem;max-width:1450px;}
-[data-testid="stMetric"]{background:#0F2332;border:1px solid #244052;border-radius:12px;padding:1rem;}
-[data-testid="stMetricLabel"]{color:#9BB1C0}
-[data-testid="stMetricValue"]{color:#F6F4EC;font-weight:750}
-[data-testid="stMetricDelta"]{color:#50DBBE}
-button[data-baseweb="tab"]{font-weight:650}
+[data-testid="stSidebar"]{background:#091927;min-width:270px;}
+.block-container{padding-top:1.1rem;padding-bottom:2.3rem;max-width:1450px;}
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li{font-size:1.08rem;line-height:1.58;}
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] p{font-size:.95rem!important;color:#C5D4E1!important;line-height:1.5!important;}
+[data-testid="stWidgetLabel"] p{font-size:1.03rem!important;font-weight:650!important;color:#E8F0F6!important;}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2{font-size:1.65rem!important;color:#F7FCFF!important;}
+[data-testid="stSidebar"] [data-testid="stRadio"] label p{font-size:1.07rem!important;font-weight:700!important;color:#E4F3F8!important;}
+[data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"]{gap:.62rem!important;}
+[data-testid="stSidebar"] [data-testid="stRadio"] label{padding:.33rem 0!important;}
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"]{gap:.70rem!important;}
+[data-testid="stSidebar"] hr{margin:.55rem 0!important;}
+button[kind="primary"],button[kind="secondary"]{font-size:1rem!important;font-weight:680!important;}
+[data-testid="stMetric"]{background:#0F2332;border:1px solid #345469;border-radius:12px;padding:.9rem;}
+[data-testid="stMetricLabel"]{color:#CEE1EF;font-size:.98rem!important}
+[data-testid="stMetricValue"]{color:#FFFFFF;font-weight:770;font-size:1.68rem!important}
+[data-testid="stMetricDelta"]{color:#71E6CA}
+button[data-baseweb="tab"]{font-weight:680;font-size:1.06rem}
+@media (max-width:750px){
+ .block-container{padding-left:1rem;padding-right:1rem;}
+ [data-testid="stMetricValue"]{font-size:1.35rem!important;}
+}
 div.stAlert{border-radius:12px;}
 a{color:#50DCC2!important}
 </style>
@@ -89,10 +105,10 @@ def theme(fig, height=350, **kwargs):
     return fig
 
 def paragraph(text):
-    st.markdown(f"<p style='color:{MUTED};font-size:0.97rem;max-width:950px'>{text}</p>",unsafe_allow_html=True)
+    st.markdown(f"<p style='color:#C7D7E4;font-size:1.13rem;line-height:1.6;max-width:1000px'>{text}</p>",unsafe_allow_html=True)
 
 def section_eyebrow(text):
-    st.markdown(f"<div style='font-size:.73rem;font-weight:850;letter-spacing:.18em;color:{TEAL};text-transform:uppercase;margin-bottom:.3rem'>{text}</div>",unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size:.87rem;font-weight:830;letter-spacing:.12em;color:{TEAL};text-transform:uppercase;margin-bottom:.3rem'>{text}</div>",unsafe_allow_html=True)
 
 def counts(pred, truth):
     tp=int(np.logical_and(pred,truth).sum());fp=int(np.logical_and(pred,~truth).sum());fn=int(np.logical_and(~pred,truth).sum())
@@ -115,26 +131,19 @@ def _jump_to_california(section):
 # frozen model arrays. Global browsing stays fast and memory-conscious.
 with st.sidebar:
     st.markdown("## FIRELENS")
-    st.caption("SATELLITE FIRE INTELLIGENCE · NASA SPACE APPS 2026")
+    st.caption("NASA SATELLITE EVIDENCE")
     workspace = st.radio(
-        "Explore FireLens",
+        "MAIN SECTIONS",
         ["01 · GLOBAL ATLAS", "02 · COUNTRY COMPARISON", "03 · CALIFORNIA FIRE LABORATORY"],
         key="v11_workspace"
     )
     st.divider()
-    if workspace.startswith("01"):
-        st.caption("NASA MODIS 2000–2025 · VIIRS NOAA-20 2018–2025")
-        st.caption("MODIS and VIIRS NOAA-20 remain separate sensor layers.")
-    elif workspace.startswith("02"):
-        st.caption("Compare countries, seasons and historical signals.")
-        st.caption("Same sensor and years · Non-calibrated archive counts.")
-    else:
-        st.caption("Park Fire satellite evidence · ConvLSTM comparison.")
-        st.caption("MODIS + VIIRS S-NPP · July 2024 evidence.")
-    st.divider()
-    st.markdown("[NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/download/) · "
-                "[Space Apps challenge](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/)")
-    st.caption("Research prototype only — not an emergency response system.")
+    st.markdown("**Follow the evidence**")
+    st.caption("Global → Country → Park Fire → Forecast")
+    st.markdown(
+        "[NASA data](https://firms.modaps.eosdis.nasa.gov/download/) · "
+        "[Challenge](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/)"
+    )
 
 if workspace.startswith("01"):
     st.info(
@@ -167,39 +176,26 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.error('Sequence manifest failed 60/20/20 date split checks.')
     st.stop()
 
-st.sidebar.markdown('#### EXPLORE CALIFORNIA')
-section=st.sidebar.radio(
+section_eyebrow('NASA SPACE APPS CHALLENGE 2026 / HARMONIZING MODIS & VIIRS HOTSPOTS')
+st.markdown("<h1 style='font-size:3.2rem;letter-spacing:-.04em;margin:.12rem 0 .32rem'>FireLens <span style='color:#FFAE65'>/ California</span></h1>",unsafe_allow_html=True)
+st.markdown("<div style='font-size:1.38rem;color:#E4F1F8;font-weight:620;margin-bottom:.7rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
+paragraph('One fire, two satellite records, one critical question: did a missing detection mean less burning or missing evidence? Investigate the July 2024 Park Fire and test whether historical hotspot patterns improve next-day recorded-cell forecasts.')
+st.markdown("### Choose a California investigation")
+section=st.radio(
     'California research tools',
     ['02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL',
      '01  EXPLORE HISTORY','METHODS & SOURCES'],
     format_func=lambda v:{
-        '01  EXPLORE HISTORY':'Historical Calendar',
         '02  INVESTIGATE EVIDENCE':'Park Fire Evidence',
         '03  REPLAY THE MODEL':'AI Forecast Comparison',
-        'METHODS & SOURCES':'Methods & Provenance'
+        '01  EXPLORE HISTORY':'Historical Calendar',
+        'METHODS & SOURCES':'Methods & Sources',
     }[v],
-    key='v11_california_tool'
+    horizontal=True,
+    label_visibility='collapsed',
+    key='v11_california_tool',
 )
-
-
-with st.sidebar:
-    st.markdown('### CALIFORNIA FIRE LAB')
-    st.caption('LOCAL EVIDENCE  /  INDEPENDENT MODEL REPLAY')
-    st.divider()
-    st.markdown('**Data that power this app**')
-    st.markdown('• Park Fire satellite evidence, July 2024\n\n• Archived California hotspot calendar, 2022–2025\n\n• Historical 2025 AI model evaluation')
-    st.caption('Historical research only · No operational fire alert.')
-    st.markdown('**Research controls**')
-    st.caption(f'Frozen model threshold: {threshold:.3f} · Validation-selected.')
-    st.caption('Park Fire: 5-km grid · UTC phase · 3-hour reference matching.')
-    st.divider()
-    st.markdown('[NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/download/) · [Space Apps challenge](https://www.spaceappschallenge.org/2026/challenges/harmonization-of-modis-and-viirs-hot-spots/)')
-    st.caption('Original source audits preserved · Methods & Sources')
-
-section_eyebrow('NASA SPACE APPS CHALLENGE 2026  /  HARMONIZATION OF MODIS & VIIRS HOT SPOTS')
-st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>/ California</span></h1>",unsafe_allow_html=True)
-st.markdown("<div style='font-size:1.25rem;color:#D2E2EB;font-weight:510;margin-bottom:.8rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
-paragraph('One fire, two satellite records, one critical question: did a missing detection mean less burning or missing evidence? Trace the July 2024 Park Fire, investigate acquisition times, then test whether historical hotspot patterns improve next-day recorded-cell forecasts.')
+st.divider()
 
 k1,k2,k3,k4=st.columns(4)
 k1.metric('California training-archive records','173,471')
