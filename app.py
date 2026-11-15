@@ -151,6 +151,22 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.error('Sequence manifest failed 60/20/20 date split checks.')
     st.stop()
 
+st.sidebar.markdown('#### CALIFORNIA RESEARCH TOOLS')
+section=st.sidebar.radio(
+    'California research tools',
+    ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE',
+     '03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'],
+    format_func=lambda v:{
+        '01  EXPLORE HISTORY':'Historical Calendar',
+        '02  INVESTIGATE EVIDENCE':'Sensor Harmonization',
+        '03  REPLAY THE MODEL':'AI Forecasting & Validation',
+        '04  AMAZON 2022–2025':'Amazon Field Study',
+        'METHODS & SOURCES':'Methods & Provenance'
+    }[v],
+    key='v11_california_tool'
+)
+
+
 with st.sidebar:
     st.markdown('### CALIFORNIA FIRE LAB')
     st.caption('LOCAL EVIDENCE  /  INDEPENDENT MODEL REPLAY')
@@ -177,19 +193,6 @@ k3.metric('Time-compatible positive groups','45 / 316')
 k4.metric('California ConvLSTM F1','0.4212',delta='Persistence F1 0.3818',delta_color='off')
 st.caption('California research: the Park Fire comparison counts positive-record cell/day/phase groups. The ConvLSTM test F1 (0.4212 vs persistence 0.3818) is a California **recorded-hotspot proxy** metric from exploratory 2025 evaluation, not wildfire detection accuracy or global model performance.')
 
-section=st.sidebar.radio(
-    'California research tools',
-    ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE',
-     '03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'],
-    format_func=lambda v:{
-        '01  EXPLORE HISTORY':'Historical Calendar',
-        '02  INVESTIGATE EVIDENCE':'Sensor Harmonization',
-        '03  REPLAY THE MODEL':'AI Forecasting & Validation',
-        '04  AMAZON 2022–2025':'Amazon Field Study',
-        'METHODS & SOURCES':'Methods & Provenance'
-    }[v],
-    key='v11_california_tool'
-)
 
 if section == '01  EXPLORE HISTORY':
     section_eyebrow('Observe / Four-year calendar')
