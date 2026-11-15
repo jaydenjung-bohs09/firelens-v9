@@ -532,7 +532,7 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
     st.caption(
         "The curve reports groups with **at least one potential acquisition-time "
         "pair**, not independent observed fire locations, physical matching "
-        "certainty, or one-to-one pair counts. The raw V8 reference at 180 "
+        "certainty, or one-to-one pair counts. The reference audit at 180 "
         "minutes is preserved and verifiable. Restricting to NASA type 0 "
         "removes non-vegetation thermal anomalies and alters the group universe."
     )

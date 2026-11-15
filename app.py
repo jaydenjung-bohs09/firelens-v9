@@ -522,9 +522,9 @@ if section == '02  INVESTIGATE EVIDENCE':
         if len(selection):
             st.dataframe(selection[['Cell ID','Day/night','MODIS records','VIIRS records','At least one time-matched pair','Evidence classification']],hide_index=True,use_container_width=True,height=240)
     with st.expander('Export the complete 316-group audit'):
-        st.download_button('Download real V8 Park evidence CSV',groups.to_csv(index=False).encode(),file_name='firelens_v9_park_evidence_316_groups.csv',mime='text/csv')
+        st.download_button('Download Park Fire reference audit CSV',groups.to_csv(index=False).encode(),file_name='firelens_v9_park_evidence_316_groups.csv',mime='text/csv')
         st.write('Scope: July 15–31, 2024, exact unbuffered retrospective final Park Fire footprint, 5 km EPSG:6933 grid, UTC date & day/night, 3-hour time tolerance.')
-        st.write('The archived geometry was user-exported in the prior V8 workflow and has not been independently re-downloaded and compared with the live CAL FIRE service in this package.')
+        st.write('The archived geometry was user-exported in the original reference workflow and has not been independently re-downloaded and compared with the live CAL FIRE service in this package.')
     st.button("Next: evaluate the experimental model",key="v13_park_to_model",
               type="primary",on_click=_jump_to_california,
               args=("03  REPLAY THE MODEL",))
@@ -533,7 +533,7 @@ if section == '02  INVESTIGATE EVIDENCE':
 if section == '03  REPLAY THE MODEL':
     section_eyebrow('Anticipate / Frozen experimental model')
     st.header('Can seven days of hotspots improve on tomorrow = today?')
-    paragraph('This is a retrospective 2025 replay from the saved ConvLSTM V2 checkpoint. The score is an uncalibrated prediction of next-day positive NASA hotspot records in a 10 km grid—not the probability of ignition, spread, or observed absence of fire.')
+    paragraph('This is a retrospective 2025 replay from the saved ConvLSTM checkpoint. The score is an uncalibrated prediction of next-day positive NASA hotspot records in a 10 km grid—not the probability of ignition, spread, or observed absence of fire.')
     # Judge-facing matched-day comparison: identical dates for all four
     # methods; figures come from the separately reproducible frozen-audit script.
     audit=json.loads((ROOT/'v13'/'forecast_audit_results.json').read_text())
@@ -722,7 +722,7 @@ if section == 'METHODS & SOURCES':
 
 **Historical geometry:** The Park Fire boundary is the **retrospective final perimeter**, approximately 429,603 acres from the earlier CAL FIRE archive export. It must not be portrayed as the extent of fire on each July 2024 date.
 
-**Experimental ML:** ConvLSTM V2 (one recurrent convolution block, eight hidden channels) uses seven days of 10 km grids with four channels. It forecasts the next day's union of MODIS and VIIRS positive-record grid cells. Train 2022-01-08 to 2024-05-26 (870 sequences); validate 2024-05-27 to 2025-03-14 (292); exploratory test 2025-03-15 to 2025-12-31 (292). Validation selection used threshold 0.675 after 20 epochs and positive-class loss weight 10.
+**Experimental ML:** ConvLSTM model (one recurrent convolution block, eight hidden channels) uses seven days of 10 km grids with four channels. It forecasts the next day's union of MODIS and VIIRS positive-record grid cells. Train 2022-01-08 to 2024-05-26 (870 sequences); validate 2024-05-27 to 2025-03-14 (292); exploratory test 2025-03-15 to 2025-12-31 (292). Validation selection used threshold 0.675 after 20 epochs and positive-class loss weight 10.
 
 **Important:** Four-year model features include a VIIRS daily-record-presence indicator and documented 2024 S-NPP anomaly windows. These are coarse date-level proxies and cannot verify valid satellite observations at a pixel.
     ''')
@@ -736,7 +736,7 @@ MODIS  fire_archive_M-C61_850338.csv  33,738 records
 VIIRS  fire_archive_SV-C2_850339.csv 139,733 records
 
 Full raw training archives are omitted from the compact deployed application.
-Model replay: frozen 2025 test_predictions.npz from trained V2.
+Model replay: frozen 2025 test_predictions.npz from saved model checkpoint.
 Original methods and archived source are preserved in legacy_v8/.''',language='text')
     c1,c2=st.columns(2)
     with c1:
@@ -746,7 +746,7 @@ Original methods and archived source are preserved in legacy_v8/.''',language='t
         st.markdown('**Measured results**')
         st.markdown('- 2024 Park Fire final footprint: 316 positive-only groups, 54 both-positive, 45 time-compatible.\n- Validation F1: ConvLSTM 0.4301; persistence 0.3955.\n- Exploratory test F1: ConvLSTM 0.4212; persistence 0.3818.\n- The model generated 4,363 predicted-only cells vs 5,603 for persistence across the exploratory test period.')
     qa=json.loads((ROOT/'data'/'qa_reproduction.json').read_text())
-    st.success('Offline integrity checks passed: original July raw-record totals, the V8 Park evidence denominators, sequence dates and split counts, plus 2025 prediction TP/FP/FN.')
+    st.success('Offline integrity checks passed: original July raw-record totals, the Park Fire reference-audit denominators, sequence dates and split counts, plus 2025 prediction TP/FP/FN.')
     with st.expander('Reproducibility report (JSON)'):
         st.json(qa)
     st.markdown('**Reproduction:** The package retains the original Park Fire audit and frozen ConvLSTM evaluation arrays. The forecasting view replays archived 2025 scores rather than retraining live.')
