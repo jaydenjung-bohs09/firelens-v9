@@ -536,9 +536,10 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
     _fig_style(
         sensitivity, 285, title="Sensitivity of any-pair temporal compatibility",
         xaxis_title="Maximum acquisition-time gap (hours)",
-        yaxis_title="Both-positive groups with ≥1 compatible pair",
+        yaxis_title="Groups with ≥1 compatible pair",
         yaxis_range=[0, max(10, len(joint) + 3)],
     )
+    sensitivity.update_layout(margin=dict(l=80, r=20, t=75, b=45))
     st.plotly_chart(sensitivity, use_container_width=True)
     st.caption(
         "The curve reports groups with **at least one potential acquisition-time "
