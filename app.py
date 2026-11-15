@@ -508,21 +508,89 @@ if section == '03  REPLAY THE MODEL':
         previous=None
         st.caption('Previous-day raster was not included for the first test date in the compact replay export; see full-period persistence metrics above.')
 
-    # Displays fixed grid coordinates, not a fire perimeter. No invented basemap or georeference.
-    figs=make_subplots(rows=1,cols=3,subplot_titles=['Model proxy score (uncalibrated)','Actual positive-record cells','Error / overlap classification'],horizontal_spacing=.055)
-    figs.add_trace(go.Heatmap(z=scores[idx],colorscale=[[0,'#0F2030'],[.35,'#1E6274'],[.67,'#F6B76D'],[1,'#F45B53']],zmin=0,zmax=1,showscale=True,colorbar=dict(title='Score',len=.73,x=.32),hovertemplate='Grid x %{x}, y %{y}<br>Score %{z:.3f}<extra></extra>'),row=1,col=1)
-    figs.add_trace(go.Heatmap(z=observed.astype(int),zmin=0,zmax=1,colorscale=[[0,BG],[.5,BG],[1,TEAL]],showscale=False,hovertemplate='Grid x %{x}, y %{y}<br>Recorded positive %{z}<extra></extra>'),row=1,col=2)
+    # Recreate the same fixed EPSG:6933 grid origin used by the training
+    # dataset builder. Overlay a genuine (coarse) California outline so judges
+    # can understand the geographic footprint of the 99x103 raster.
+    cell_m=int(dcard['grid_km'])*1000
+    lo0,la0,lo1,la1=dcard['fixed_bbox_lonlat']
+    to_m=Transformer.from_crs('EPSG:4326','EPSG:6933',always_xy=True)
+    from_m=Transformer.from_crs('EPSG:6933','EPSG:4326',always_xy=True)
+    xx0,yy0=to_m.transform(lo0,la0);xx1,yy1=to_m.transform(lo1,la1)
+    xmin=math.floor(min(xx0,xx1)/cell_m)
+    ymin=math.floor(min(yy0,yy1)/cell_m)
+    row_grid,col_grid=np.indices(observed.shape)
+    lon_grid,lat_grid=from_m.transform(
+        (xmin+col_grid+.5)*cell_m,(ymin+row_grid+.5)*cell_m
+    )
+    geo_hover=np.stack([lon_grid,lat_grid],axis=-1)
+
+    figs=make_subplots(
+        rows=1,cols=3,horizontal_spacing=.08,
+        subplot_titles=['Locked model score','Next-day NASA positive records',
+                        'Model vs archived positives']
+    )
+    figs.add_trace(go.Heatmap(
+        z=scores[idx],customdata=geo_hover,
+        colorscale=[[0,'#0F2030'],[.35,'#1E6274'],[.67,'#F6B76D'],[1,'#F45B53']],
+        zmin=0,zmax=1,showscale=True,
+        colorbar=dict(title='Score',len=.54,thickness=9,
+                      x=.285,xanchor='right',y=.5),
+        hovertemplate='Approx. %{customdata[1]:.2f}°N, %{customdata[0]:.2f}°E'
+                      '<br>Uncalibrated model score %{z:.3f}<extra></extra>'
+    ),row=1,col=1)
+    figs.add_trace(go.Heatmap(
+        z=observed.astype(int),customdata=geo_hover,
+        zmin=0,zmax=1,
+        colorscale=[[0,BG],[.5,BG],[1,TEAL]],showscale=False,
+        hovertemplate='Approx. %{customdata[1]:.2f}°N, %{customdata[0]:.2f}°E'
+                      '<br>NASA positive record %{z}<extra></extra>'
+    ),row=1,col=2)
     confusion=np.zeros(observed.shape,dtype=np.uint8)
     confusion[predicted&observed]=1
     confusion[predicted&~observed]=2
     confusion[~predicted&observed]=3
-    colscale=[[0,BG],[.249,BG],[.25,TEAL],[.499,TEAL],[.5,ORANGE],[.749,ORANGE],[.75,RED],[1,RED]]
-    figs.add_trace(go.Heatmap(z=confusion,zmin=0,zmax=3,colorscale=colscale,showscale=True,colorbar=dict(title='0 bg · 1 match<br>2 pred only · 3 observed only',tickvals=[0,1,2,3],len=.73,x=1.01),hovertemplate='Grid x %{x}, y %{y}<br>Class %{z}<extra></extra>'),row=1,col=3)
-    figs.update_xaxes(title_text='Grid column → East',showgrid=False,zeroline=False)
-    figs.update_yaxes(title_text='Grid row → North',showgrid=False,zeroline=False,scaleanchor='x',scaleratio=1)
-    theme(figs,490,title=f'Forecast made from the previous seven days → {replay_date}',showlegend=False)
+    discrete=[[0,BG],[.249,BG],[.25,TEAL],[.499,TEAL],
+              [.5,ORANGE],[.749,ORANGE],[.75,RED],[1,RED]]
+    figs.add_trace(go.Heatmap(
+        z=confusion,customdata=geo_hover,zmin=0,zmax=3,
+        colorscale=discrete,showscale=True,
+        colorbar=dict(title='Record overlap',thickness=12,len=.6,
+                      x=1.02,tickvals=[0,1,2,3],
+                      ticktext=['No positive','Both','Model only','Recorded only']),
+        hovertemplate='Approx. %{customdata[1]:.2f}°N, %{customdata[0]:.2f}°E'
+                      '<br>Record-overlap class %{z}<extra></extra>'
+    ),row=1,col=3)
+
+    outline_path=ROOT/'v13'/'california_outline.geojson'
+    outline=json.loads(outline_path.read_text())
+    perimeter=outline['geometry']['coordinates'][0]
+    olon=np.array([p[0] for p in perimeter],dtype=float)
+    olat=np.array([p[1] for p in perimeter],dtype=float)
+    ox,oy=to_m.transform(olon,olat)
+    cx=np.asarray(ox)/cell_m-xmin-.5
+    cy=np.asarray(oy)/cell_m-ymin-.5
+    for col in (1,2,3):
+        figs.add_trace(go.Scatter(
+            x=cx,y=cy,mode='lines',showlegend=False,hoverinfo='skip',
+            line=dict(color='rgba(242,248,252,.90)',width=1.6),
+            name='California outline'
+        ),row=1,col=col)
+    figs.update_xaxes(title_text='10 km grid column → E',showgrid=False,
+                      zeroline=False,range=[-.5,observed.shape[1]-.5],
+                      tickvals=[0,25,50,75,100])
+    figs.update_yaxes(title_text='10 km grid row → N',showgrid=False,
+                      zeroline=False,range=[-.5,observed.shape[0]-.5],
+                      tickvals=[0,25,50,75])
+    theme(figs,485,title=f'California · archived next-day hotspot comparison · {replay_date}',
+          showlegend=False)
+    figs.update_layout(margin=dict(l=40,r=120,t=85,b=65))
     st.plotly_chart(figs,use_container_width=True)
-    st.caption('All three panels share the same georeferenced California study grid. Colors compare archived next-day positive hotspot cells with a locked experimental model.')
+    st.caption(
+        'California outline overlaid in the exact training-grid projection; '
+        'hover for approximate cell-center coordinates. White border is a '
+        'geographic reference, not a fire perimeter. The three panels show '
+        'historical records and a locked experimental model.'
+    )
 
     with st.expander('Download this date’s positive-record and predicted-positive grid cells'):
         idxs=np.argwhere(predicted|observed)
