@@ -118,7 +118,11 @@ def seasonal_screen(manifest: pd.DataFrame, *, window_days: int = 14,
     fields = ["start_date", "end_date", "days", "peak_date", "peak_occupied_cells",
               "sum_excess_cell_days", "median_peer_reference", "peak_ratio", "status"]
     if len(candidates) == 0:
-        return m, pd.DataFrame(columns=fields)
+        # Keep datetime dtypes even if no candidate dates survive screening.
+        empty=pd.DataFrame({field:pd.Series(dtype='object') for field in fields})
+        for field in ('start_date','end_date','peak_date'):
+            empty[field]=pd.Series(dtype='datetime64[ns]')
+        return m, empty
     new_period = candidates["date"].diff().dt.days.ne(1)
     candidates["period_id"] = new_period.cumsum()
     events = []
@@ -138,6 +142,8 @@ def seasonal_screen(manifest: pd.DataFrame, *, window_days: int = 14,
             "status": "Candidate unusually high recorded activity (retrospective)",
         })
     periods = pd.DataFrame(events,columns=fields)
+    for field in ('start_date','end_date','peak_date'):
+        periods[field]=pd.to_datetime(periods[field],errors='coerce')
     if len(periods):
         periods = periods.sort_values(["sum_excess_cell_days","start_date"],ascending=[False,True]).reset_index(drop=True)
     return m, periods
