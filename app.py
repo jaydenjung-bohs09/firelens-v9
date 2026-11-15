@@ -149,7 +149,7 @@ if workspace.startswith("01"):
     st.info(
         "NASA's MODIS satellites — the yardstick for 25 years of fire history — "
         "stop collecting data in 2027. Their replacement, VIIRS, records about "
-        "4× more hotspots. MODVIIR calibrates MODIS onto the VIIRS scale so any "
+        "4.5× more hotspots (worldwide, 2019–2025). MODVIIR calibrates MODIS onto the VIIRS scale so any "
         "country can still ask: is this fire season worse than normal?"
     )
     st.button("Follow the flagship story: Park Fire → California",
