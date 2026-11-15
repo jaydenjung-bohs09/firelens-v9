@@ -328,6 +328,11 @@ if section == '02  INVESTIGATE EVIDENCE':
     st.header('The missing data that changes the story')
     paragraph('July 2024 provides a case study in why raw sensor disagreements can mislead. FireLens compares positive-only cell/day/day-night groups within the final historical Park Fire footprint, then checks temporal compatibility and the documented S-NPP disruption window.')
     groups,parkrec,status,geometry=load_park()
+    from v12.evidence_inspector import render_inspector
+    render_inspector(parkrec, status, groups, geometry)
+    st.divider()
+    st.markdown("### Original reference audit · fixed three-hour rule")
+    st.caption("The reference results below use the unchanged July 2024 Park Fire archive and the frozen V8 grouping method. They are independent of the inspector sliders above.")
     p1,p2,p3=st.columns(3)
     p1.metric('Both positive · of 316 groups','54','17.09% of positive groups',delta_color='off')
     p2.metric('Within 3h · of 54 both-positive','45','83.33% conditional',delta_color='off')
