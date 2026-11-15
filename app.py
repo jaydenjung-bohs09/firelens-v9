@@ -180,6 +180,24 @@ section_eyebrow('NASA SPACE APPS CHALLENGE 2026 / HARMONIZING MODIS & VIIRS HOTS
 st.markdown("<h1 style='font-size:3.2rem;letter-spacing:-.04em;margin:.12rem 0 .32rem'>FireLens <span style='color:#FFAE65'>/ California</span></h1>",unsafe_allow_html=True)
 st.markdown("<div style='font-size:1.38rem;color:#E4F1F8;font-weight:620;margin-bottom:.7rem'>California Fire Laboratory · From orbit to evidence</div>",unsafe_allow_html=True)
 paragraph('One fire, two satellite records, one critical question: did a missing detection mean less burning or missing evidence? Investigate the July 2024 Park Fire and test whether historical hotspot patterns improve next-day recorded-cell forecasts.')
+# This headline uses the exact, unchanged groups powering the reference bar chart.
+headline_groups, _, _, _ = load_park()
+flagged_modis_only = headline_groups.loc[
+    headline_groups["Evidence classification"].eq(
+        "MODIS positive; VIIRS missing-data flag"
+    )
+    & headline_groups["UTC date"].between("2024-07-24", "2024-07-28")
+]
+st.metric(
+    "MODIS-only Park Fire evidence during the S-NPP outage",
+    f"{len(flagged_modis_only)} of {len(headline_groups)}",
+    help="Positive-only 5-km cell/date/day-night groups inside the retrospective final Park Fire footprint; the affected groups are dated July 25–28, 2024.",
+)
+st.write(
+    "These MODIS-positive records coincide with documented VIIRS S-NPP "
+    "missing-data dates. Treating VIIRS silence as no fire would discard "
+    "this evidence. **A calibrated replacement series has not yet been built.**"
+)
 st.markdown("### Choose a California investigation")
 section=st.radio(
     'California research tools',
