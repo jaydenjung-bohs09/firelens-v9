@@ -14,6 +14,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
 from pyproj import Transformer
+from critical_periods import seasonal_screen
 
 ROOT = Path(__file__).resolve().parent
 HIST = ROOT / "data" / "historic"
@@ -115,7 +116,7 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.stop()
 
 with st.sidebar:
-    st.markdown('### FIRELENS / V9')
+    st.markdown('### FIRELENS / V9.1')
     st.caption('OBSERVATIONS → EVIDENCE → FORESIGHT')
     st.divider()
     st.markdown('**Data that power this app**')
@@ -129,7 +130,7 @@ with st.sidebar:
     st.caption('V8 source remains unchanged in /legacy_v8/')
 
 section_eyebrow('NASA SPACE APPS CHALLENGE 2026  /  HARMONIZATION OF MODIS & VIIRS HOT SPOTS')
-st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V9</span></h1>",unsafe_allow_html=True)
+st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V9.1</span></h1>",unsafe_allow_html=True)
 st.markdown("<div style='font-size:1.25rem;color:#D2E2EB;font-weight:510;margin-bottom:.8rem'>When a satellite doesn't report a hotspot, what do we actually know?</div>",unsafe_allow_html=True)
 paragraph('A California pilot that aligns NASA satellite hotspot observations, distinguishes evidence gaps from apparent inactivity, and replays an experimental next-day detection model against recorded outcomes.')
 
@@ -140,9 +141,9 @@ k3.metric('Test F1 · ConvLSTM','0.4212')
 k4.metric('Test F1 · persistence','0.3818',delta='Model higher by 10.3% relative',delta_color='normal')
 st.caption('Different studies: 2022–2025 model training dataset vs July 2024 V8 evidence audit. Performance measures recorded-hotspot overlap, not real wildfire detection accuracy. 2025 evaluation is exploratory.')
 
-explore, investigate, forecast, methods=st.tabs(['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL','METHODS & SOURCES'])
+section=st.radio('Choose section', ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL','METHODS & SOURCES'], horizontal=True, label_visibility='collapsed')
 
-with explore:
+if section == '01  EXPLORE HISTORY':
     section_eyebrow('Observe / Four-year calendar')
     st.header('Four years of recorded satellite activity')
     paragraph('This historical overview counts 10 km cells with at least one positive MODIS or VIIRS hotspot record per UTC day. It uses the frozen training dataset manifest—not inferred burned area or a validated sensor-normalized fire rate.')
@@ -178,6 +179,54 @@ with explore:
     q2.metric('Days with no VIIRS records',str(int((~mask.target_viirs_has_any_hotspot_record).sum())))
     q3.metric('Days with no MODIS records',str(int((~mask.target_modis_has_any_hotspot_record).sum())))
     st.info('The availability flags mean “no positive records in this archive that day,” not verified full-day sensor outages or confirmed negative satellite observations.')
+    st.divider()
+    # V9.1: Retrospective peer-year activity screening; no added ML training.
+    st.divider()
+    section_eyebrow('Discover / Retrospective seasonal comparisons')
+    st.subheader('Find candidate periods of unusually high recorded activity')
+    paragraph('Compare each day with the same season in the other three years (±14 calendar days). The screen uses only dates with a positive MODIS AND VIIRS record and without a documented S-NPP anomaly-window flag. This is a descriptive historical screening tool, not wildfire identification, statistical significance, or a live alert.')
+    x1,x2,x3=st.columns(3)
+    with x1:
+        min_run=st.slider('Minimum consecutive candidate days',1,7,value=2,step=1,key='critical_run')
+    with x2:
+        ratio=st.slider('Minimum current / peer median',1.0,3.0,value=1.25,step=.05,key='critical_ratio')
+    with x3:
+        peer_q=st.select_slider('Historical reference percentile',options=[0.75,0.80,0.85,0.90,0.95],value=0.90,key='critical_quantile')
+    critical_daily,critical_periods=seasonal_screen(
+        m,window_days=14,peer_quantile=peer_q,
+        ratio_threshold=ratio,min_occupied_cells=20,min_peers=30,min_streak=min_run)
+    dyear=critical_daily[critical_daily.year==yr].copy()
+    periods_year=critical_periods[critical_periods.start_date.dt.year==yr].copy()
+    r1,r2,r3=st.columns(3)
+    r1.metric('Candidate multi-day periods',len(periods_year))
+    r2.metric('Year days not comparable (coarse proxy)',int((~dyear.comparison_eligible).sum()))
+    r3.metric('Candidate high-activity days',int(dyear.candidate_day.sum()))
+    trace=go.Figure()
+    trace.add_trace(go.Scatter(x=dyear.date,y=dyear.occupied_cells,name='Recorded occupied cells',mode='lines',line=dict(color=TEAL,width=2.4)))
+    trace.add_trace(go.Scatter(x=dyear.date,y=dyear.peer_median,name='Other-years seasonal median',mode='lines',line=dict(color=BLUE,width=1.8,dash='dash')))
+    trace.add_trace(go.Scatter(x=dyear.date,y=dyear.peer_upper_quantile,name=f'Other-years {int(peer_q*100)}th percentile',mode='lines',line=dict(color=ORANGE,width=1.5,dash='dot')))
+    limited=dyear[~dyear.comparison_eligible]
+    if len(limited):
+        trace.add_trace(go.Scatter(x=limited.date,y=limited.occupied_cells,mode='markers',name='Comparison limited',text=limited.record_context,hovertemplate='%{x|%Y-%m-%d}<br>%{text}<br>Positive cells %{y}<extra></extra>',marker=dict(color=RED,size=6,symbol='x')))
+    for _,p0 in periods_year.iterrows():
+        trace.add_vrect(x0=p0.start_date,x1=p0.end_date+pd.Timedelta(days=1),fillcolor=TEAL,opacity=.12,line_width=0)
+    theme(trace,345,title=f'{yr} recorded activity vs other-year seasonal reference',xaxis_title='UTC target date',yaxis_title='Occupied 10 km grid cells')
+    st.plotly_chart(trace,use_container_width=True)
+    if len(periods_year):
+        labels=[f"{row.start_date:%b %d}–{row.end_date:%b %d, %Y} · {int(row.days)} day(s)" for row in periods_year.itertuples()]
+        selected_index=st.selectbox('Inspect candidate period',list(range(len(periods_year))),format_func=lambda i: labels[i],key='selected_critical')
+        chosen=periods_year.iloc[selected_index]
+        st.info(f"Selected period: **{chosen.start_date:%Y-%m-%d} to {chosen.end_date:%Y-%m-%d}**. Peak **{chosen.peak_occupied_cells:.0f}** recorded occupied 10 km cells on {chosen.peak_date:%Y-%m-%d}; **{chosen.peak_ratio:.2f}×** the comparable peer-year seasonal median at peak. This does not identify a particular wildfire or establish a sensor-normalized increase.")
+        show=periods_year[['start_date','end_date','days','peak_occupied_cells','sum_excess_cell_days','peak_ratio']].copy()
+        st.dataframe(show,hide_index=True,use_container_width=True,height=225)
+    else:
+        st.info('No consecutive periods meet these descriptive settings in the selected year. You can change the screening controls.')
+    cexp1,cexp2=st.columns(2)
+    with cexp1:
+        st.download_button('Export candidate periods CSV',critical_periods.to_csv(index=False),file_name='firelens_v91_candidate_periods.csv',mime='text/csv')
+    with cexp2:
+        st.download_button('Export evidence-aware daily screen',critical_daily.to_csv(index=False),file_name='firelens_v91_daily_screen.csv',mime='text/csv')
+    st.caption('Reference: ±14 calendar days in OTHER years, at least 30 comparable reference days. A candidate must exceed the peer-year percentile, exceed 1.25× median (adjustable), have ≥20 occupied cells, and persist for the selected days. Only four historical years are available. This is retrospective: other years may be in the future relative to a plotted date, so these reference comparisons must NOT be used as leakage-free forecast inputs. Neither two-sensor positive records nor anomaly filters establish actual satellite observation coverage.')
     st.divider()
     section_eyebrow('Area of interest / V8 real data')
     st.subheader('Explore a selected area: July 2024')
@@ -216,7 +265,7 @@ with explore:
     st.caption(f'{len(region):,} positive FIRMS observations in selected rectangle. 5 km grid; rectangle is not a verified fire footprint. Sensor values should not be compared as equal-detection-efficiency measurements.')
     source_footer()
 
-with investigate:
+if section == '02  INVESTIGATE EVIDENCE':
     section_eyebrow('Interpret / Park Fire evidence investigation')
     st.header('The missing data that changes the story')
     paragraph('July 2024 provides a case study in why raw sensor disagreements can mislead. FireLens compares positive-only cell/day/day-night groups within the final historical Park Fire footprint, then checks temporal compatibility and the documented S-NPP disruption window.')
@@ -274,7 +323,7 @@ with investigate:
         st.write('The archived geometry was user-exported in the prior V8 workflow and has not been independently re-downloaded and compared with the live CAL FIRE service in this package.')
     source_footer()
 
-with forecast:
+if section == '03  REPLAY THE MODEL':
     section_eyebrow('Anticipate / Frozen experimental model')
     st.header('Can seven days of hotspots improve on tomorrow = today?')
     paragraph('This is a retrospective 2025 replay from the saved ConvLSTM V2 checkpoint. The score is an uncalibrated prediction of next-day positive NASA hotspot records in a 10 km grid—not the probability of ignition, spread, or observed absence of fire.')
@@ -349,7 +398,7 @@ with forecast:
         st.markdown('**Limitations:** The positive class is sparse (~0.31% of train grid cells). Sensor passes, clouds, and validated zero-fire labels are absent. Test period examined during earlier iterations; no independent deployment evaluation. Strong day-to-day correlation means pooled pixel F1 is not event-level generalization.')
     source_footer()
 
-with methods:
+if section == 'METHODS & SOURCES':
     section_eyebrow('Validity / Reproducible evidence')
     st.header('What is measured—and what is not')
     st.markdown('''
