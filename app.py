@@ -198,9 +198,9 @@ section=st.radio(
 st.divider()
 
 k1,k2,k3,k4=st.columns(4)
-k1.metric('California training-archive records','173,471')
+k1.metric('CA archive records','173,471',help='California training-archive records')
 k2.metric('Park Fire positive groups','316')
-k3.metric('Time-compatible positive groups','45 / 316')
+k3.metric('Time-aligned groups','45 / 316',help='Time-compatible positive groups in the Park Fire reference audit')
 k4.metric('California ConvLSTM F1','0.4212')
 st.caption('Comparison reference: persistence F1 0.3818.')
 st.caption('Intended user: a wildfire intelligence analyst who needs to separate satellite reporting gaps from real changes in recorded activity before interpreting historical patterns. Forecast scores come from a separate 2025 California archive experiment.')
@@ -547,8 +547,9 @@ if section == '03  REPLAY THE MODEL':
     z1.metric('ConvLSTM · matched-day F1',f"{main_model['f1']:.4f}")
     z2.metric('Yesterday = today · F1',f"{previous['f1']:.4f}")
     z3.metric('Active ≥3 of 7 days · F1',f"{three_of_seven['f1']:.4f}")
-    z4.metric('Model gain vs yesterday',f"+{previous['model_minus_baseline_f1']:.3f}",
-              delta=f"95% block CI +{lo:.3f} to +{hi:.3f}",delta_color='off')
+    z4.metric('Gain vs yesterday',f"+{previous['model_minus_baseline_f1']:.3f}",
+              help='Exploratory F1 gain over one-day persistence on the same archived test dates')
+    st.caption(f'95% block-bootstrap CI for gain vs yesterday: +{lo:.3f} to +{hi:.3f} F1.')
     table_rows=[]
     for label,record in results.items():
         table_rows.append({

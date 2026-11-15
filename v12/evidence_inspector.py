@@ -233,16 +233,16 @@ def render_inspector(records: pd.DataFrame, status: pd.DataFrame,
         )
     with ctl2:
         type0_only = st.checkbox(
-            "Presumed vegetation fires (type 0) only",
+            "Vegetation hotspots only",
             value=False, key="v12_type0_only",
-            help="Off reproduces all 3,092 archived Park records, including "
+            help="Only presumed vegetation fires (NASA type 0). Off reproduces all 3,092 archived Park records, including "
                  "eight type-2 thermal anomalies; changing it changes the denominators."
         )
     with ctl3:
         exclude_flags = st.checkbox(
-            "Exclude flagged S-NPP dates from rate",
+            "Exclude outage dates",
             value=False, key="v12_exclude_flags",
-            help="Flagged dates remain accessible in the evidence inspector; "
+            help="Exclude flagged S-NPP dates from rate. Flagged dates remain accessible in the evidence inspector; "
                  "this checkbox only changes the summary denominator."
         )
 
