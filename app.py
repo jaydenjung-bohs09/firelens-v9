@@ -102,7 +102,7 @@ def counts(pred, truth):
     return dict(tp=tp,fp=fp,fn=fn,precision=precision,recall=recall,f1=f1)
 
 def source_footer():
-    st.caption("NASA FIRMS archived positive-hotspot records · EPSG:6933 equal-area grids · Not fire area, verified negatives, or an operational alert system.")
+    st.caption("NASA FIRMS historical records · Detailed methods and interpretation limits are in Methods & Sources.")
 
 
 # Three primary workspaces are intentionally routed before loading California's
@@ -186,10 +186,10 @@ with st.sidebar:
     st.divider()
     st.markdown('**Data that power this app**')
     st.markdown('• Park Fire satellite evidence, July 2024\n\n• Archived California hotspot calendar, 2022–2025\n\n• Historical 2025 AI model evaluation')
-    st.info('California and Amazon research prototype. No real-time monitoring or public-safety forecast is provided.',icon='ℹ️')
+    st.caption('Historical research only · No operational fire alert.')
     st.markdown('**Research controls**')
-    st.caption(f'Model threshold: {threshold:.3f} — chosen using validation data only; locked for test replay.')
-    st.caption('July 2024 Park Fire comparison: 5 km grid, same UTC day and day/night phase, ≤3h acquisition gap.')
+    st.caption(f'Frozen model threshold: {threshold:.3f} · Validation-selected.')
+    st.caption('Park Fire: 5-km grid · UTC phase · 3-hour reference matching.')
     st.divider()
     st.markdown('[NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/download/) · [Space Apps challenge](https://www.spaceappschallenge.org/2026/challenges/harmonization-of-modis-and-viirs-hot-spots/)')
     st.caption('Original source audits preserved · Methods & Sources')
@@ -220,12 +220,12 @@ if section == '01  EXPLORE HISTORY':
     fig.update_yaxes(autorange='reversed')
     theme(fig,270,title='Monthly sum of occupied 10 km cell-days (detection proxy)')
     st.plotly_chart(fig,use_container_width=True)
-    st.caption('January 1–7, 2022 cannot appear because the model requires a seven-day history. Calendar values are not corrected for satellite observation opportunities, clouds, or differences in detection sensitivity.')
+    st.caption('The calendar begins January 8, 2022 because each next-day target needs seven prior days.')
     a,b=st.columns([1,3])
     with a:
         yr=st.selectbox('Explore year',[2022,2023,2024,2025],index=2)
         only_both=st.checkbox('Show days with hotspot records from both sensors only',value=False)
-        st.caption('A date with zero records does not establish an observed absence of fire.')
+        st.caption('Zero here means no archived positive records on that date.')
     with b:
         local=m[m.year==yr].copy()
         if only_both:
@@ -318,7 +318,7 @@ if section == '01  EXPLORE HISTORY':
         st.download_button('Export candidate periods CSV',critical_periods.to_csv(index=False),file_name='firelens_v91_candidate_periods.csv',mime='text/csv')
     with cexp2:
         st.download_button('Export evidence-aware daily screen',critical_daily.to_csv(index=False),file_name='firelens_v91_daily_screen.csv',mime='text/csv')
-    st.caption('Reference: ±14 calendar days in OTHER years, at least 30 comparable reference days. A candidate must exceed the peer-year percentile, exceed 1.25× median (adjustable), have ≥20 occupied cells, and persist for the selected days. Only four historical years are available. This is retrospective: other years may be in the future relative to a plotted date, so these reference comparisons must NOT be used as leakage-free forecast inputs. Neither two-sensor positive records nor anomaly filters establish actual satellite observation coverage.')
+    st.caption('Retrospective screening: ±14 calendar days in other archive years, ≥30 comparable reference days, ≥20 positive cells, configurable percentile, median ratio and duration. See Methods & Sources for inference limits.')
     st.divider()
     section_eyebrow('Study area / California observations')
     st.subheader('Explore a selected area: July 2024')
@@ -390,7 +390,7 @@ if section == '01  EXPLORE HISTORY':
                 }),hide_index=True,use_container_width=True)
     else:
         st.warning('No positive hotspot records in the selected area and month. This is not proof there were no fires.')
-    st.caption(f'{len(region):,} positive FIRMS observations in selected rectangle. 5 km grid; rectangle is not a verified fire footprint. Sensor values should not be compared as equal-detection-efficiency measurements.')
+    st.caption(f'{len(region):,} NASA FIRMS hotspot records in this rectangular study area; 5-km grid overlay.')
     source_footer()
 
 if section == '02  INVESTIGATE EVIDENCE':
