@@ -1,4 +1,4 @@
-"""FireLens V9: evidence-aware historical hotspot explorer + frozen ConvLSTM replay.
+"""FireLens V10: California evidence + Amazon regional archive explorer.
 
 Run: streamlit run app.py
 Data: NASA FIRMS archives; all results are detection proxies, NOT fire truth.
@@ -29,7 +29,7 @@ BLUE = "#77ACF8"
 RED = "#FA6C75"
 PALETTE = ["#101F2B", "#15394B", "#236576", "#C98A43", "#F2B36E", "#FA7355"]
 
-st.set_page_config(page_title="FireLens V9 | Evidence to Foresight", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="FireLens V10 | Evidence to Foresight", page_icon="🔥", layout="wide", initial_sidebar_state="expanded")
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"]{background:linear-gradient(155deg,#071422 0%,#081B28 55%,#0A1422 100%);}
@@ -117,12 +117,12 @@ if len(manifest)!=1454 or manifest.split.value_counts().to_dict()!={'train':870,
     st.stop()
 
 with st.sidebar:
-    st.markdown('### FIRELENS / V9.1')
-    st.caption('OBSERVATIONS → EVIDENCE → FORESIGHT')
+    st.markdown('### FIRELENS / V10')
+    st.caption('CALIFORNIA + AMAZON  /  OBSERVATIONS → EVIDENCE → FORESIGHT')
     st.divider()
     st.markdown('**Data that power this app**')
-    st.markdown('• NASA FIRMS MODIS + VIIRS S-NPP\n\n• Real July 2024 evidence study\n\n• 2022–2025 archived daily grid summary\n\n• Frozen 2025 AI replay')
-    st.info('California research prototype. No real-time monitoring or public-safety forecast is provided.',icon='ℹ️')
+    st.markdown('• NASA FIRMS MODIS + VIIRS S-NPP\n\n• California real July 2024 evidence study\n\n• Amazon region 2022–2025 (4.4M observations)\n\n• California frozen 2025 AI replay')
+    st.info('California and Amazon research prototype. No real-time monitoring or public-safety forecast is provided.',icon='ℹ️')
     st.markdown('**Research controls**')
     st.caption(f'Model threshold: {threshold:.3f} — chosen using validation data only; locked for test replay.')
     st.caption('July 2024 Park Fire comparison: 5 km grid, same UTC day and day/night phase, ≤3h acquisition gap.')
@@ -131,16 +131,16 @@ with st.sidebar:
     st.caption('V8 source remains unchanged in /legacy_v8/')
 
 section_eyebrow('NASA SPACE APPS CHALLENGE 2026  /  HARMONIZATION OF MODIS & VIIRS HOT SPOTS')
-st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V9.1</span></h1>",unsafe_allow_html=True)
+st.markdown("<h1 style='font-size:3.05rem;letter-spacing:-.04em;margin:.15rem 0 .35rem'>FireLens <span style='color:#FF9E54'>V10</span></h1>",unsafe_allow_html=True)
 st.markdown("<div style='font-size:1.25rem;color:#D2E2EB;font-weight:510;margin-bottom:.8rem'>When a satellite doesn't report a hotspot, what do we actually know?</div>",unsafe_allow_html=True)
-paragraph('A California pilot that aligns NASA satellite hotspot observations, distinguishes evidence gaps from apparent inactivity, and replays an experimental next-day detection model against recorded outcomes.')
+paragraph('A multi-region research prototype combining a California evidence-and-model pilot with four years of Amazon MODIS–VIIRS observations. Explore archived hotspot signals, evidence gaps, spatial patterns and retrospective candidate activity periods.')
 
 k1,k2,k3,k4=st.columns(4)
-k1.metric('2022–2025 archive records','173,471')
-k2.metric('Park Fire positive groups','316')
-k3.metric('Test F1 · ConvLSTM','0.4212')
-k4.metric('Test F1 · persistence','0.3818',delta='Model higher by 10.3% relative',delta_color='normal')
-st.caption('Different studies: 2022–2025 model training dataset vs July 2024 V8 evidence audit. Performance measures recorded-hotspot overlap, not real wildfire detection accuracy. 2025 evaluation is exploratory.')
+k1.metric('Amazon archive records','4,404,388')
+k2.metric('California archive records','173,471')
+k3.metric('Park Fire positive groups','316')
+k4.metric('California ConvLSTM F1','0.4212',delta='Persistence F1 0.3818',delta_color='off')
+st.caption('Separate studies: Amazon historical archive (4,404,388 raw records, 2022–2025), California 2022–2025 model archive (173,471 records), and July 2024 Park Fire evidence audit. The ConvLSTM F1 applies to California recorded-hotspot proxy cells only; 2025 evaluation is exploratory, not wildfire prediction accuracy.')
 
 section=st.radio('Choose section', ['01  EXPLORE HISTORY','02  INVESTIGATE EVIDENCE','03  REPLAY THE MODEL','04  AMAZON 2022–2025','METHODS & SOURCES'], horizontal=True, label_visibility='collapsed')
 
