@@ -80,6 +80,8 @@ def render_continuity_chart(code):
                       paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(15,33,51,.8)",
                       margin=dict(l=30,r=20,t=25,b=45),legend=dict(orientation="h"))
     st.plotly_chart(fig,use_container_width=True)
+    st.caption("2001–2002: Terra-only MODIS — modeled values likely low; "
+               "Aqua began observations in 2002. The fitted calibration uses later Terra+Aqua years.")
     st.caption("Annual values count satellite positive-record reports, not individual fires; "
                "modeled intervals are empirical held-out residual bands, not verified historical coverage.")
 
@@ -130,6 +132,10 @@ def render_country_calendar():
                       "<br>%{customdata} source<extra></extra>",
         **extra,
     ))
+    fig.add_hrect(y0=1999.5,y1=2002.5,fillcolor="#D8D7CF",opacity=.17,
+                  line_width=0,layer="above",
+                  annotation_text="Terra-only MODIS — modeled values likely low",
+                  annotation_position="top right")
     fig.add_hline(y=2017.5,line_color="#FDF8E8",line_width=2,line_dash="dash",
                   annotation_text="2018: observed NOAA-20 begins in April",
                   annotation_position="top left")
@@ -156,6 +162,9 @@ def render_country_calendar():
         "archive data (from April 2018). Blank indicates unavailable or "
         "undefined; the horizontal line separates modeled from observed years."
     )
+    st.caption("2000–2002: Terra-only MODIS — modeled values likely low; "
+               "Aqua joined during 2002, so its early-era record coverage differs "
+               "from the later Terra+Aqua calibration training period.")
     render_continuity_chart(code)
     ycol,mcol=st.columns(2)
     with ycol:
