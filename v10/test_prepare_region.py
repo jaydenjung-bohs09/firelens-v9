@@ -19,15 +19,15 @@ class RegionPreparationTests(unittest.TestCase):
             modis = root / "modis.csv"
             viirs_zip = root / "viirs.zip"
             pd.DataFrame([
-                {"latitude": -5, "longitude": -60, "acq_date": "2024-01-01", "instrument": "MODIS"},
-                {"latitude": -5, "longitude": -60, "acq_date": "2024-01-01", "instrument": "MODIS"},  # same cell/date
-                {"latitude": -5, "longitude": -61, "acq_date": "2024-01-02", "instrument": "MODIS"},
-                {"latitude": -5, "longitude": -20, "acq_date": "2024-01-01", "instrument": "MODIS"},  # outside AOI
+                {"latitude": -5, "longitude": -60, "acq_date": "2024-01-01", "instrument": "MODIS", "type": 0},
+                {"latitude": -5, "longitude": -60, "acq_date": "2024-01-01", "instrument": "MODIS", "type": 0},  # same cell/date
+                {"latitude": -5, "longitude": -61, "acq_date": "2024-01-02", "instrument": "MODIS", "type": 0},
+                {"latitude": -5, "longitude": -20, "acq_date": "2024-01-01", "instrument": "MODIS", "type": 0},  # outside AOI
             ]).to_csv(modis, index=False)
             viirs_csv = root / "viirs.csv"
             pd.DataFrame([
-                {"latitude": -5, "longitude": -60, "acq_date": "2024-01-01", "instrument": "VIIRS"},
-                {"latitude": -5, "longitude": -62, "acq_date": "2024-01-02", "instrument": "VIIRS"},
+                {"latitude": -5, "longitude": -60, "acq_date": "2024-01-01", "instrument": "SNPP", "type": 0},
+                {"latitude": -5, "longitude": -62, "acq_date": "2024-01-02", "instrument": "SNPP", "type": 0},
             ]).to_csv(viirs_csv, index=False)
             with zipfile.ZipFile(viirs_zip, "w") as z:
                 z.write(viirs_csv, arcname="nested/viirs.csv")
@@ -57,9 +57,9 @@ class RegionPreparationTests(unittest.TestCase):
             wrong = root / "wrong.csv"
             right = root / "right.csv"
             pd.DataFrame([{"latitude": -5, "longitude": -60,
-                           "acq_date": "2024-01-01", "instrument": "VIIRS"}]).to_csv(wrong, index=False)
+                           "acq_date": "2024-01-01", "instrument": "SNPP", "type": 0}]).to_csv(wrong, index=False)
             pd.DataFrame([{"latitude": -5, "longitude": -60,
-                           "acq_date": "2024-01-01", "instrument": "VIIRS"}]).to_csv(right, index=False)
+                           "acq_date": "2024-01-01", "instrument": "SNPP", "type": 0}]).to_csv(right, index=False)
             with self.assertRaisesRegex(ValueError, "instrument"):
                 prepare("amazon", [wrong], [right], root / "out",
                         start="2024-01-01", end="2024-01-03")
@@ -69,7 +69,7 @@ class RegionPreparationTests(unittest.TestCase):
             root = Path(folder)
             sensor_file = root / "same.csv"
             pd.DataFrame([{"latitude": -5, "longitude": -60,
-                           "acq_date": "2024-01-01"}]).to_csv(sensor_file, index=False)
+                           "acq_date": "2024-01-01", "type": 0}]).to_csv(sensor_file, index=False)
             with self.assertRaisesRegex(ValueError, "Duplicate input archive"):
                 prepare("amazon", [sensor_file], [sensor_file], root / "out",
                         start="2024-01-01", end="2024-01-03")
