@@ -101,11 +101,23 @@ def render_global_atlas():
         "01 / Global Atlas · NASA FIRMS",
         "Earth's burning signals, across decades",
         "Explore **where and when NASA satellites recorded presumed vegetation-fire hotspots**. "
-        "Select a satellite and year; country-level counts are intentionally kept separate by sensor."
+        "The default view displays the statistically calibrated NOAA-20 archive-count calendar. "
+        "Use the raw-sensor switch below to inspect unadjusted MODIS and VIIRS records."
     )
     from v15.validation_view import render_validation
     render_validation()
     st.divider()
+    from v15.calendar_view import render_country_calendar
+    render_country_calendar()
+    st.divider()
+    show_raw = st.checkbox(
+        "Show raw MODIS / VIIRS archive charts",
+        value=False,key="v15_show_raw_sensor_atlas",
+        help="The unadjusted records remain separate by sensor and have not been normalized for observation opportunity.",
+    )
+    if not show_raw:
+        evidence_notes()
+        return
     sensor = selector("v11_global_sensor")
     years = sorted(df.loc[df.sensor.eq(sensor),"year"].unique().tolist())
     year = st.select_slider("Explore archive year",options=years,

@@ -19,8 +19,16 @@ app.run()
 assert_clean("Global startup")
 if nav("v11_workspace").value!="01 · GLOBAL ATLAS":
     raise AssertionError("Global Atlas must be landing page")
+if any(s.key=="v11_global_year" for s in app.get("select_slider")):
+    raise AssertionError("Raw year control should be hidden by default")
+raw_view=[item for item in app.checkbox if item.key=="v15_show_raw_sensor_atlas"]
+if len(raw_view)!=1:
+    raise AssertionError("Global raw-sensor toggle is missing")
+raw_view[0].set_value(True)
+app.run()
+assert_clean("Raw atlas toggle")
 if not any(s.key=="v11_global_year" for s in app.get("select_slider")):
-    raise AssertionError("Global archive year control not found")
+    raise AssertionError("Global archive year control missing when raw view enabled")
 
 # The secondary global sensor has a shorter historical era.
 nav("v11_global_sensor").set_value("VIIRS_NOAA20")
@@ -67,6 +75,13 @@ for section in sections:
 nav("v11_workspace").set_value("01 · GLOBAL ATLAS")
 app.run()
 assert_clean("Global after California")
+# Streamlit clears state of hidden widgets when users switch workspaces.
+raw_return=[c for c in app.checkbox if c.key=="v15_show_raw_sensor_atlas"]
+if len(raw_return)!=1:
+    raise AssertionError("Raw-sensor toggle missing on return to global")
+raw_return[0].set_value(True)
+app.run()
+assert_clean("Reopen raw source charts")
 amazon=[c for c in app.checkbox if c.key=="v13_open_amazon"]
 if len(amazon)!=1:
     raise AssertionError("Global Amazon research toggle missing")
