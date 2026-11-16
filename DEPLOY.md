@@ -1,4 +1,4 @@
-# Deploy FireLens V9 to Streamlit Community Cloud
+# Deploy MODVIIR to Streamlit Community Cloud
 
 1. Extract `FireLens_V9_Global_Candidate.zip` locally. Open the extracted `FireLens_V9_Global_Candidate` folder.
 2. Create a public GitHub repository and upload **the contents of this folder** (so `app.py`, `requirements.txt` and `.streamlit/` are at the repository root). Do not place a ZIP file alone in GitHub.
