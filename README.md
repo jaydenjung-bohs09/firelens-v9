@@ -118,11 +118,7 @@ python reproduction/train_predict_v2.py --data data_new/MODVIIR_sequences.npz --
 
 ## Submission materials
 
-- `submission/MODVIIR_V9_Seven_Slide_Pitch.pptx` — concise visual narrative with actual plots.
-- `submission/MODVIIR_V9_Seven_Slide_Pitch.pdf` — presentation preview.
-- `submission/PROJECT_PAGE.md` — draft description and technical claims.
-- `submission/DEMO_SCRIPT_30_SECONDS.md` — short demonstration narration and shot list.
-- `submission/FINAL_CHECKLIST.md` — eligibility, deployment, risk, link and claims checklist.
+- `submission/` — final 7-slide demo (MODVIIR_slides.pdf) and links.
 
 ## Official source links
 
